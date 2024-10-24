@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AgentSidebar from "../components/dashboardComp/AgentSidebar";
 import Header from "../components/dashboardComp/Header";
-import OffLetterPersonalInfo from "../components/dashboardComp/editfiles/offLetterPersonalInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { applicationById } from "../features/agentSlice";
 import OfferLetterEducationDetails from "../components/dashboardComp/editfiles/OfferLetterEducationDetails";
@@ -13,6 +12,7 @@ import PteScoreEdit from "../components/dashboardComp/editfiles/PteScoreEdit";
 import CertificateEdit from "../components/dashboardComp/editfiles/CertificateEdit";
 import { toast } from "react-toastify";
 import { offerLetterReSubmit } from "../features/generalApi";
+import OffLetterPersonalInfo from "../components/dashboardComp/editfiles/offLetterPersonalInfo";
 
 const OfferLetterEdit = () => {
   const {applicationDataById}  = useSelector((state)=> state.agent)
