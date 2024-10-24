@@ -1,0 +1,78 @@
+import React, { useEffect } from "react";
+import ImageComponent from "../reusable/Input";
+import { loginBanner, logo, profileSkeleton } from "../../assets";
+import { CiBellOn, CiStar } from "react-icons/ci";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { agentInformation } from "../../features/agentSlice";
+
+const Header = ({ icon, customLink }) => {
+  const dispatch = useDispatch();
+  const role = localStorage.getItem("role");
+  const { agentData } = useSelector((state) => state.agent);
+  useEffect(() => {
+    if (role === "2") {
+      dispatch(agentInformation());
+    }
+  }, [dispatch]);
+  return (
+    <>
+      <div className="flex flex-row items-center w-[82vw] py-2.5 z-10 bg-primary font-poppins pr-6 fixed ml-[17.5vw] ">
+    
+
+        <span className="w-[85vw]">
+          <span className="flex justify-end flex-row gap-6">
+            <Link
+              to={customLink}
+              className="bg-white rounded-full px-[11px] py-2 text-[27px] cursor-pointer "
+            >
+              {icon ? (
+                <span className="text-primary text-[26px]">{icon}</span>
+              ) : (
+                <CiStar />
+              )}
+            </Link>
+            <span className="bg-white rounded-full px-[11px] py-2 text-[27px] cursor-pointer relative">
+              <CiBellOn />
+              <span className="absolute rounded-full w-5 h-5 text-[13px] -top-1 -right-2 bg-[#FBD5D5] text-primary text-center">
+                2
+              </span>
+            </span>
+            <span className="bg-white rounded-full flex items-center gap-3 px-2 pr-6 py-[4px] cursor-pointer">
+              <img
+                src={
+                  role === "2" && agentData?.primaryContact?.profilePicture
+                    ? agentData.primaryContact.profilePicture
+                    : profileSkeleton
+                }
+                alt="img"
+                className="w-10 h-10 rounded-full"
+                onError={(e) => {
+                  e.target.src = profileSkeleton;
+                }}
+                loading="lazy"
+              />
+
+              <span className="flex flex-col">
+                <span className="font-normal text-[14px]">
+                  {role === "2"
+                    ? agentData?.primaryContact?.firstName +
+                      " " +
+                      agentData?.primaryContact?.lastName
+                    : null}
+                </span>
+                <span className="font-light text-[13px]">
+                  {role === "2"
+                    ? agentData?.agentEmail
+                    : null}{" "}
+                </span>
+              </span>
+            </span>
+          </span>
+        </span>
+      </div>
+    </>
+  );
+};
+
+export default Header;
