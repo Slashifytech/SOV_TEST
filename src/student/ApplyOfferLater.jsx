@@ -387,7 +387,7 @@ const ApplyOfferLater = () => {
       };
 
       const certificateUrls = Array.isArray(offerLater.certificate.urls)
-        ? offerLater.certificate.urls // Use existing array if valid
+        ? offerLater.certificate.urls 
         : offerLater.certificate.urls
         ? [offerLater.certificate.urls]
         : [];
@@ -444,7 +444,7 @@ const ApplyOfferLater = () => {
   };
 
   useEffect(() => {
-    if (studentData) {
+    if (studentData?.studentInformation) {
       setOfferLater((prevState) => ({
         ...prevState,
         preferences: {
@@ -455,18 +455,18 @@ const ApplyOfferLater = () => {
         personalInformation: {
           ...prevState.personalInformation, // Spread previous personalInformation state to retain other fields
           fullName:
-            (studentData?.personalInformation?.firstName || "") +
+            (studentData?.studentInformation?.personalInformation?.firstName || "") +
             " " +
-            (studentData?.personalInformation?.lastName || ""),
-          email: studentData?.personalInformation?.email || "",
-          phoneNumber: studentData?.personalInformation?.phone?.phone || "",
+            (studentData?.studentInformation?.personalInformation?.lastName || ""),
+          email: studentData?.studentInformation?.personalInformation?.email || "",
+          phoneNumber: studentData?.studentInformation?.personalInformation?.phone?.phone || "",
           address: {
             ...prevState.personalInformation?.address, // Spread previous address state
-            street: studentData?.residenceAddress?.address || "",
-            city: studentData?.residenceAddress?.city || "",
-            state: studentData?.residenceAddress?.state || "",
-            postalCode: studentData?.residenceAddress?.zipcode || "",
-            country: studentData?.residenceAddress?.country || "",
+            street: studentData?.studentInformation?.residenceAddress?.address || "",
+            city: studentData?.studentInformation?.residenceAddress?.city || "",
+            state: studentData?.studentInformation?.residenceAddress?.state || "",
+            postalCode: studentData?.studentInformation?.residenceAddress?.zipcode || "",
+            country: studentData?.studentInformation?.residenceAddress?.country || "",
           },
         },
       }));
@@ -705,7 +705,7 @@ const ApplyOfferLater = () => {
             <Register
               imp="*"
               name="preferences.offerLetterPrice"
-              type="text"
+              type="number"
               label="Offer letter price in USD"
               handleInput={handleInput}
               value={offerLater.preferences.offerLetterPrice}

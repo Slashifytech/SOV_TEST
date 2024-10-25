@@ -39,11 +39,11 @@ const Form1 = ({ customClass, hide, handleCancel, studentFormId, updateData }) =
   const [resetProfilePic, setResetProfilePic] = useState(false);
   const [resetPassportUpload, setResetPassportUpload] = useState(false);
   const studentId = IdToAddStudent || localStorage.getItem("form");
-  const personalInfo = studentInformation?.data?.personalInformation;
+  const personalInfo = studentInformation?.data?.studentInformation?.personalInformation;
   console.log(personalInfo)
 
   const dispatch = useDispatch();
-  const passportInfo = studentInformation?.data?.passportDetails;
+  const passportInfo = studentInformation?.data?.studentInformation?.passportDetails;
   const editForm = hide === true ? "edit" : null;
 
   const [personalData, setPersonalData] = useState({

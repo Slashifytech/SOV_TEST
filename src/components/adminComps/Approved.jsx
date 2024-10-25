@@ -42,11 +42,16 @@ useEffect(()=>{
                 name={application.fullName}
                 userId={application?.customUserId}
                 applicationType={application?.type}
-                description={`${application?.fullName}`}
                 currentStatus="approved"
                 linkTwo="/application-view"
                 id={application?.institutionId}
-
+                description={
+                  application?.customUserId?.startsWith("AG-")
+                    ? `${application?.agentName} has filled ${application?.type} for his/her student ${application?.fullName}`
+                    : application?.customUserId?.startsWith("ST-")
+                    ? `${application?.fullName} has filled ${application?.type}`
+                    : "Unknown type"
+                }
               />
             </div>
           ))

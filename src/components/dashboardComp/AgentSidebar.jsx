@@ -104,7 +104,7 @@ const AgentSidebar = () => {
           <ul className="sm:mt-2 list-none text-[16px]">
             <Link to="/account-settings/profile-edit">
               <li
-                className={`text-sidebar py-2 mb-2 cursor-pointer px-14 hover:bg-[#f5ebeb] hover:text-primary ${
+                className={`text-sidebar py-2 mb-2 cursor-pointer md:px-14 sm:pl-14 md:ml-0 hover:bg-[#f5ebeb] hover:text-primary ${
                   path === "/account-settings/profile-edit"  &&
                   "bg-[#FBD5D5] border-l-4 border-primary text-primary"
                 }`}
@@ -112,9 +112,9 @@ const AgentSidebar = () => {
                 Edit Profile
               </li>
             </Link>
-            <Link to="/settings/change-password">
+            {/* <Link to="/settings/change-password">
               <li
-                className={`text-sidebar py-2 mb-2 cursor-pointer px-14 hover:bg-[#f5ebeb] hover:text-primary ${
+                className={`text-sidebar py-2 mb-2 cursor-pointer md:px-14 sm:pl-14 md:ml-0  hover:bg-[#f5ebeb] hover:text-primary ${
                   path === "/settings/change-password" &&
                   "bg-[#FBD5D5] border-l-4 border-primary text-primary"
                 }`}
@@ -124,7 +124,7 @@ const AgentSidebar = () => {
             </Link>
             <Link to="/settings/delete-account">
               <li
-                className={`text-sidebar py-2 mb-2 cursor-pointer px-14 hover:bg-[#f5ebeb] hover:text-primary ${
+                className={`text-sidebar py-2 mb-2 cursor-pointer md:px-14 sm:pl-14 md:ml-0  hover:bg-[#f5ebeb] hover:text-primary ${
                   path === "/settings/delete-account" &&
                   "bg-[#FBD5D5] border-l-4 border-primary text-primary"
                 }`}
@@ -134,17 +134,17 @@ const AgentSidebar = () => {
             </Link>
             <Link to="/settings/delete-account">
               <li
-                className={`text-sidebar py-2 mb-2 cursor-pointer px-14 hover:bg-[#f5ebeb] hover:text-primary ${
+                className={`text-sidebar py-2 mb-2 cursor-pointer md:px-14 sm:pl-14 md:ml-0  hover:bg-[#f5ebeb] hover:text-primary ${
                   path === "/settings/delete-account" &&
                   "bg-[#FBD5D5] border-l-4 border-primary text-primary"
                 }`}
               >
                 Delete Account
               </li>
-            </Link>
+            </Link> */}
           </ul>
         </div>
-        <div
+        {/* <div
           className={`cursor-pointer py-4 hover:bg-[#f5ebeb] hover:text-primary hover:border-l-4 hover:font-medium ${
             path === "/student/payment-details"
               ? "bg-[#FBD5D5] text-primary border-l-4 border-primary font-medium"
@@ -161,8 +161,8 @@ const AgentSidebar = () => {
             </span>{" "}
             <span>Payment Details</span>
           </Link>
-        </div>
-        <div
+        </div> */}
+        {/* <div
           className={`cursor-pointer py-4 hover:bg-[#f5ebeb] hover:text-primary hover:border-l-4 hover:font-medium ${
             path === "/student/help"
               ? "bg-[#FBD5D5] text-primary border-l-4 border-primary font-medium"
@@ -176,7 +176,7 @@ const AgentSidebar = () => {
             </span>{" "}
             <span>Help & Support</span>
           </Link>
-        </div>
+        </div> */}
         <div
           className={`cursor-pointer py-4 hover:bg-[#f5ebeb] hover:text-primary hover:border-l-4 hover:font-medium text-secondary`}
         >

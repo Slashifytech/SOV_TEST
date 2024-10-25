@@ -10,7 +10,7 @@ const Dnf = ({headingText, bodyText, dnfImg,isButton, buttonText}) => {
           <p className="text-sidebar font-semibold mt-3 text-[24px]">
        {headingText}
           </p>
-          <p className=" text-body font-normal mt-3 px-20 text-[15px] text-center">
+          <p className=" text-body font-normal mt-3 md:x-20 text-[15px] text-center">
            {bodyText}
           </p>
 {isButton === true &&

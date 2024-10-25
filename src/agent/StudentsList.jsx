@@ -83,15 +83,15 @@ const StudentsList = () => {
         <span className="fixed overflow-y-scroll scrollbar-hide bg-white ">
           <AgentSidebar />
         </span>
-        <div className="ml-[17%] pt-14 font-poppins bg-white pb-6">
-          <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
+        <div className="md:ml-[17%] sm:ml-[23%] pt-14 font-poppins bg-white pb-6">
+          <p className="md:text-[28px] sm:text-[22px] font-bold text-sidebar mt-6 ml-9">
             Student Directory ({totalUsersCount})
           </p>
           <p className="font-normal text-body pr-[20%] text-[16px] ml-9">
             Manage and view student details in one place.
           </p>
         </div>
-        <div className="flex items-center justify-between mr-7 ml-[19.5%] mt-6">
+        <div className="flex items-center justify-between  md:mr-7 sm:mr-5 md:ml-[19.5%] sm:ml-[27%] mt-6">
           <span className="flex flex-row items-center">
             {" "}
             <span className="text-body">Show</span>
@@ -107,9 +107,9 @@ const StudentsList = () => {
               ))}
             </select>
             <span className="px-3 text-body">entries</span>
-            <span className="flex flex-row items-center ml-9">
+            <span className="flex flex-row items-center md:ml-9">
               <CustomInput
-                className="h-11 w-96 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
+                className="h-11 md:w-96 sm:w-48 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
                 type="text"
                 placeHodler="Search Student, Phone Number, & Email"
                 name="search"
@@ -150,7 +150,7 @@ const StudentsList = () => {
           </p>
         ) : (
           <>
-            <div className="grid grid-cols-3 ml-[18.5%] mt-6 mr-6 gap-3 ">
+            <div className="grid md:grid-cols-3 sm:grid-cols-1 md:ml-[18.5%] sm:ml-[27%] mt-6 mr-6 gap-3 ">
               {studentData?.students?.map((data, index) => (
                 <StudentCards
                   key={index}

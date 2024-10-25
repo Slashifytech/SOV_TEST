@@ -19,7 +19,7 @@ const PopUp = ({
         ? navigate("/agent/application/lists")
         : heading === "Offer Letter Form Submitted" && role === "3"
         ? navigate("/student/application/lists")
-        : heading === "Your Student Registration is Complete!" && role === "2"
+        : heading === "Successfully Registered" && role === "2"
         ? navigate("/agent/student-lists")
         : navigate("/login");
     }
@@ -61,7 +61,7 @@ const PopUp = ({
                 {(heading === "Offer Letter Form Submitted" && role === "2") ||
                 (heading === "Offer Letter Form Submitted" && role === "3") 
                   ? "Back to Applications" : 
-                ( heading === "Your Student Registration is Complete!" && role === "2")
+                ( heading === "Successfully Registered" && role === "2")
                 ? "Back to Lists"
                   : "Back to login"}
               </div>

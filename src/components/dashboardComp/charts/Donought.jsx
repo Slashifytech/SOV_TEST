@@ -46,13 +46,18 @@ const DonoughtCharts = ({ data }) => {
   };
 
   return (
-      <div className="relative" style={{ width: "80%", margin: "0 auto" }}>
-        <Doughnut data={chartData} options={chartOptions} />
-        <span className="flex flex-col items-center absolute top-[70px] left-[73px]">
-          <span className="text-[#0B91BC] font-semibold text-[28px]">60</span>
-          <span className="text-[14px] font-light">Visa Application</span>
-        </span>
+    <div className="z-0" style={{ width: "80%", margin: "0 auto" }}>
+    <Doughnut data={chartData} options={chartOptions} />
+  
+    {/* New relative container */}
+    <div className="relative w-full h-full">
+      <span className="flex flex-col items-center absolute -top-48 left-[73px]">
+        <span className="text-[#0B91BC] font-semibold text-[28px]">60</span>
+        <span className="text-[14px] font-light">Visa Application</span>
+      </span>
     </div>
+  </div>
+  
   );
 };
 

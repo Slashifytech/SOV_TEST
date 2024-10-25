@@ -176,8 +176,8 @@ const AgentDashboard = () => {
         <span className="fixed overflow-y-scroll scrollbar-hide  bg-white ">
           <AgentSidebar />
         </span>
-        <div className="ml-[17%] pt-14 font-poppins">
-          <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
+        <div className="md:ml-[17%] ml-[22%] pt-14 font-poppins">
+          <p className="md:text-[28px] text-[24px] font-bold text-sidebar mt-6 ml-9">
             Dashboard
           </p>
           <span className="flex items-center justify-between mx-9">
@@ -190,12 +190,12 @@ const AgentDashboard = () => {
             </p>
             <span className="bg-white px-4 py-2 text-body">
               Your Id:{" "}
-              <span className="text-black font-semibold">
+              <span className="text-black font-semibold ">
                 {agentData?.agId}
               </span>
             </span>
           </span>
-          <span className="grid grid-cols-4 items-center mx-9 mt-6 gap-4">
+          <span className="grid md:grid-cols-4 sm:grid-cols-2 items-center mx-9 mt-6 gap-4">
             {cardData.map((data, index) => (
               <AgentDashCard
                 key={index}
@@ -208,8 +208,8 @@ const AgentDashboard = () => {
             ))}
           </span>
 
-          <div className="flex flex-row w-full gap-4 px-9 mt-6 mb-9">
-            <div className="px-9 bg-white py-4 rounded-md border border-[#E8E8E8] w-[40%] h-auto ">
+          <div className="flex md:flex-row flex-col w-full gap-4 px-9 mt-6 mb-9">
+            <div className="px-9 bg-white py-4 rounded-md border border-[#E8E8E8] md:w-[40%] h-auto ">
               <div className="  flex flex-row items-center justify-between">
                 <p className="text-sidebar text-[18px] font-semibold mt-3 mb-6">
                   Application Overview
@@ -223,12 +223,12 @@ const AgentDashboard = () => {
                   className="border w-10 p-2 rounded-md outline-none text-[13px]"
                 />
               </div>
-              <div className="mx-2">
+              <div className="md:mx-2 sm:px-16 md:px-0">
                 <DonoughtChart data={filteredDoughnutData} />
               </div>
             </div>
 
-            <div className="px-9 bg-white py-4 rounded-md border border-[#E8E8E8] w-[60%] h-auto">
+            <div className="px-9 bg-white py-4 rounded-md border border-[#E8E8E8] md:w-[60%] h-auto">
               <span className="flex flex-row justify-between mx-4">
                 <p className="text-sidebar text-[18px] font-semibold mt-3 mb-6">
                   Total Students
@@ -258,7 +258,7 @@ const AgentDashboard = () => {
           </div>
         </div>
 
-        <div className="ml-[19.5%] bg-white pt-4 rounded-md border border-[#E8E8E8] mr-10 mb-9 ">
+        <div className="md:ml-[19.5%] ml-[26%]  bg-white pt-4 rounded-md border border-[#E8E8E8] mr-10 mb-9 ">
           <span className="flex flex-row justify-between mx-9">
             <p className="text-sidebar text-[18px] font-bold mt-3 mb-9 ml-9">
               Total Applications

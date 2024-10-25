@@ -103,7 +103,7 @@ const ApplicationView = () => {
       </span>
 
       <div>
-        <span className="flex items-center pt-20 pb-6 pl-[18.5%] bg-white">
+        <span className="flex items-center pt-20 pb-6 md:pl-[18.5%] sm:pl-[27%] bg-white">
           <span>
             <div className="flex items-center gap-4 mt-1 ">
               <img
@@ -121,24 +121,24 @@ const ApplicationView = () => {
                   {totalUsersCount || "NA"} Applications
                 </span>
                 <span className="text-sidebar text-[18px] font-medium ">
-                  {studentData?.personalInformation?.firstName +
+                  {studentData?.studentInformation?.personalInformation?.firstName +
                     " " +
-                    studentData?.personalInformation?.lastName || "NA"}
+                    studentData?.studentInformation?.personalInformation?.lastName || "NA"}
                 </span>
                 <span className="text-[14px] pt-[1px] text-body font-normal">
-                  {studentData?.personalInformation?.email || "NA"}
+                  {studentData?.studentInformation?.personalInformation?.email || "NA"}
                 </span>
                 <span className="text-[14px] text-body font-normal">
-                  {studentData?.personalInformation?.phone?.phone || "NA"}
+                  {studentData?.studentInformation?.personalInformation?.phone?.phone || "NA"}
                 </span>
                 <span className="text-[14px] text-body font-normal">
-                  ID: {studentData?.stId || "NA"}
+                  ID: {studentData?.studentInformation?.stId || "NA"}
                 </span>
               </span>
             </div>
           </span>
         </span>
-        <div className="ml-[19.5%] mt-6 mr-6">
+        <div className="md:ml-[19.5%] sm:ml-[27%] mt-6 mr-6">
           <span className="flex flex-row items-center mb-3">
             <span className="flex flex-row justify-between w-full items-center">
               <span className="flex flex-row items-center ">
@@ -199,7 +199,7 @@ const ApplicationView = () => {
         </div>
       ) :  studentApplicationData?.applications && studentApplicationData?.applications?.length > 0 ? (
         <>
-          <div className="ml-[19.5%] mt-6 mr-6">
+          <div className="md:ml-[19.5%] sm:ml-[27%]  mt-6 mr-6">
             <CustomTableTwo
               tableHead={TABLE_HEAD}
               tableRows={TABLE_ROWS}
@@ -211,13 +211,13 @@ const ApplicationView = () => {
             />
           </div>
           <div className="mt-16 mb-10 ml-20">
-            <Pagination
-              currentPage={currentPage}
-              hasNextPage={currentPage * perPage < totalUsersCount}
-              hasPreviousPage={currentPage > 1}
-              onPageChange={handlePageChange}
-              totalPagesCount={totalPagesCount}
-            />
+          <Pagination
+                currentPage={currentPage}
+                hasNextPage={currentPage * perPage < totalUsersCount}
+                hasPreviousPage={currentPage > 1}
+                onPageChange={handlePageChange}
+                totalPagesCount={totalPagesCount}
+              />
           </div>
         </>
       ) : (

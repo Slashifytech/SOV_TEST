@@ -32,7 +32,7 @@ const StudentProfile = () => {
       label: "Profile",
       component: studentEdit,
       props: {
-        data: studentData,
+        data: studentData?.studentInformation,
         profileView: profileView,
         updateData: handleProfileUpdate,
       },
@@ -45,6 +45,8 @@ const StudentProfile = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+
   return (
     <>
       {profileView === "/admin/approvals" ||
@@ -73,8 +75,8 @@ const StudentProfile = () => {
             ) : (
               <div className="pt-20 ml-[17.5%] bg-white">
                 <StatusComp
-                  statusOne={studentData?.pageCount === 3 ? "done" : "pending"}
-                  statusTwo={studentData?.flag ? "done" : "pending"}
+                  statusOne={studentData?.studentInformation?.pageCount === 3 ? "done" : "pending"}
+                  statusTwo={studentData.flag ? "done" : "pending"}
 
                 />
               </div>
@@ -92,7 +94,7 @@ const StudentProfile = () => {
                 <div className="flex items-center gap-4 mt-1 ">
                   <img
                     src={
-                      studentData?.personalInformation?.profilePicture ||
+                      studentData?.studentInformation?.personalInformation?.profilePicture ||
                       profileSkeleton
                     }
                     alt="Profile"
@@ -106,18 +108,18 @@ const StudentProfile = () => {
                       Applications
                     </span> */}
                     <span className="text-sidebar text-[18px] font-medium ">
-                      {studentData?.personalInformation?.firstName +
+                      {studentData?.studentInformation?.personalInformation?.firstName +
                         " " +
-                        studentData?.personalInformation?.lastName || "NA"}
+                        studentData?.studentInformation?.personalInformation?.lastName || "NA"}
                     </span>
                     <span className="text-[14px] pt-[1px] text-body font-normal">
-                      {studentData?.personalInformation?.email || "NA"}
+                      {studentData?.studentInformation?.personalInformation?.email || "NA"}
                     </span>
                     <span className="text-[14px] text-body font-normal">
-                      {studentData?.personalInformation?.phone?.phone || "NA"}
+                      {studentData?.studentInformation?.personalInformation?.phone?.phone || "NA"}
                     </span>
                     <span className="text-[14px] text-body font-normal">
-                      ID: {studentData?.stId || "NA"}
+                      ID: {studentData?.studentInformation?.stId || "NA"}
                     </span>
                   </span>
                 </div>

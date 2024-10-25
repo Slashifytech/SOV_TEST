@@ -112,9 +112,9 @@ export const router = createBrowserRouter([
   {
     path: "/offerLetter-apply",
     element: (
-      // <ProtectedStudent>
+      <StudentAgentProtected>
       <ApplyOfferLater></ApplyOfferLater>
-      // </ProtectedStudent>
+      </StudentAgentProtected>
     ),
   },
 
@@ -129,27 +129,27 @@ export const router = createBrowserRouter([
   {
     path: "/agent/student-lists",
     element: (
-      // <ProtectedAgent>
+      <ProtectedAgent>
         <StudentsList></StudentsList>
-      // </ProtectedAgent>
+       </ProtectedAgent>
     ),
     
   },
   {
     path: "/agent/student-profile",
     element: (
-      // <ProtectedAgent>
+      <StudentAgentProtected>
         <StudentProfile></StudentProfile>
-      // </ProtectedAgent>
+     </StudentAgentProtected>
     ),
     
   },
   {
     path: "/student-profile",
     element: (
-      // <ProtectedAgent>
+       <StudentAgentProtected>
         <StudentProfile></StudentProfile>
-      // </ProtectedAgent>
+      </StudentAgentProtected>
     ),
     
   },
@@ -158,25 +158,25 @@ export const router = createBrowserRouter([
     element: (
       // <ProtectedAgent>
         <ProfileEdit></ProfileEdit>
-      // </ProtectedAgent>
+    //  </ProtectedAgent>
     ),
     
   },
   {
     path: "/application-view",
     element: (
-      // <ProtectedAgent>
+       <StudentAgentProtected>
         <OfferLetterEdit></OfferLetterEdit>
-      // </ProtectedAgent>
+      </StudentAgentProtected>
     ),
     
   },
   {
     path: "/agent/applications",
     element: (
-      // <ProtectedAgent>
+      <ProtectedAgent>
         <Applications></Applications>
-      // </ProtectedAgent>
+      </ProtectedAgent>
     ),
     
   },
@@ -228,18 +228,18 @@ export const router = createBrowserRouter([
   {
     path: "/admin/approvals",
     element: (
-      // <ProtectedAgent>
+       <ProtectedAdmin>
         <Approval></Approval>
-      // </ProtectedAgent>
+      </ProtectedAdmin>
     ),
     
   },
   {
     path: "/admin/applications-review",
     element: (
-      // <ProtectedAgent>
+       <ProtectedAdmin>
         <ApplicationReview></ApplicationReview>
-      // </ProtectedAgent>
+       </ProtectedAdmin>
     ),
     
   },
@@ -248,9 +248,9 @@ export const router = createBrowserRouter([
   {
     path: "/admin/role/auth/login",
     element: (
-      // <ProtectedAgent>
+      <ProtectedAdmin>
         <AdminLogin></AdminLogin>
-      // </ProtectedAgent>
+      </ProtectedAdmin>
     ),
     
   },

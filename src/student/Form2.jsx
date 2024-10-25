@@ -25,8 +25,8 @@ const Form2 = ({
   const studentInfoData = useSelector((state) => state.student.studentInfoData);
   const studentData = useSelector((state) => state.student.studentInformation);
   const studentInformation = hide ? studentInfoData : studentData;
-  const residenceAddress = studentInformation?.data?.residenceAddress;
-  const mailingAddress = studentInformation?.data?.mailingAddress;
+  const residenceAddress = studentInformation?.data?.studentInformation?.residenceAddress;
+  const mailingAddress = studentInformation?.data?.studentInformation?.mailingAddress;
   const studentId = localStorage.getItem("form");
   const dispatch = useDispatch();
   console.log(studentId);

@@ -30,7 +30,7 @@ const Form3 = ({
   const studentInformation = hide ? studentInfoData : studentData;
   const dispatch = useDispatch();
   const formId = studentInformation?.data?._id;
-  const preference = studentInformation?.data?.preferences;
+  const preference = studentInformation?.data?.studentInformation?.preferences;
   const studentId = localStorage.getItem("form");
   const [isPopUp, setIsPopUp] = useState(false);
   const editForm = hide === true ? "edit" : null;

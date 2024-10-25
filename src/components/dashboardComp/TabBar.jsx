@@ -10,7 +10,7 @@ const TabBar = ({ tabs }) => {
     <div>
       {/* Tab Bar */}
 
-      <div className="flex bg-white pl-[19.5%]">
+      <div className="flex  pl-[19.5%]">
         {tabs.map((tab) =>
           tab?.props?.profileView === "/admin/approvals" ||
           tab?.props?.profileView === "/admin/applications-review" ? null : (

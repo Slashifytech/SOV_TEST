@@ -22,9 +22,9 @@ const Approval = () => {
   const [perPage, setPerPage] = useState(10);
   const [isTypeFilter, setIsFilterType] = useState("");
   const [page, setPage] = useState(1);
-  const totalUsersCount = approvals?.totalRecords || 0;
+  const totalUsersCount = approvals?.totalStudents + approvals?.totalCompanies || 0;
   const currentPage = approvals?.currentPage;
-  const totalPagesCount = approvals?.totalPages;
+  const totalPagesCount = approvals?.totalPages + approvals?.totalStudentPages;
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
@@ -69,6 +69,8 @@ const Approval = () => {
   ];
 
   useEffect(() => {
+if(tabType === "notapproved" || tabType === "completed" || tabType === "rejected"){
+
 
       dispatch(
         agentStudentApprovals({
@@ -80,8 +82,10 @@ const Approval = () => {
           updateState,
         })
       );
-    
+          }
   }, [dispatch, tabType, search, page, perPage, isTypeFilter, updateState]);
+
+  
 
   return (
     <>
@@ -119,7 +123,7 @@ const Approval = () => {
           ))}
         </select>
         <span className="px-3 text-body">entries</span>
-        <select
+        {/* <select
           className="ml-3 border px-2 py-1 w-40 h-11 rounded outline-none"
           onChange={handleTypeFilter}
           value={isTypeFilter}
@@ -129,12 +133,12 @@ const Approval = () => {
           </option>
           <option value="student">Student</option>
           <option value="company">Agent</option>
-        </select>
+        </select> */}
         <span className="flex flex-row items-center ml-9 ">
           <CustomInput
             className="h-11 md:w-80 sm:w-48 rounded-md text-body  placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
             type="text"
-            placeHodler="Search by user Name & user Id"
+            placeHodler="Search by User Name & User Id"
             name="search"
             value={search}
             onChange={handleSearchChange}

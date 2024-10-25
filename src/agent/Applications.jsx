@@ -90,9 +90,9 @@ const Applications = () => {
         </span>
       </div>
       <div className="bg-white">
-        <span className="flex items-center pt-20 ml-[16.5%] ">
+        <span className="flex items-center pt-20 md:ml-[16.5%] sm:ml-[23%] ">
           <span>
-            <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
+            <p className="md:text-[28px] text-[22px] font-bold text-sidebar mt-6 ml-9">
               Application Overview ({totalUsersCount})
             </p>
             <p className="mt-1 font-light text-body pr-[20%] ml-9">
@@ -102,7 +102,7 @@ const Applications = () => {
           </span>
         </span>
       </div>
-      <span className="flex flex-row items-center justify-start ml-[19.5%] mt-6">
+      <span className="flex flex-row items-center justify-start md:ml-[19.5%] sm:ml-[28%] mt-6">
         <span className="text-body">Show</span>
         <select
           className="ml-3 border px-2 py-1 w-10 rounded outline-none"
@@ -137,7 +137,7 @@ const Applications = () => {
       ) : applicationOverviewData?.studentOverview &&
         applicationOverviewData?.studentOverview?.length > 0 ? (
         <>
-          <div className="ml-[19.5%] mt-6">
+          <div className="md:ml-[19.5%] sm:ml-[28%] mt-6">
             <CustomTable
               tableHead={TABLE_HEAD}
               tableRows={TABLE_ROWS}
@@ -150,13 +150,13 @@ const Applications = () => {
             />
           </div>
           <div className="mt-16 mb-10">
-            <Pagination
-              currentPage={currentPage}
-              hasNextPage={currentPage * perPage < totalUsersCount}
-              hasPreviousPage={currentPage > 1}
-              onPageChange={handlePageChange}
-              totalPagesCount={totalPagesCount}
-            />
+          <Pagination
+                currentPage={currentPage}
+                hasNextPage={currentPage * perPage < totalUsersCount}
+                hasPreviousPage={currentPage > 1}
+                onPageChange={handlePageChange}
+                totalPagesCount={totalPagesCount}
+              />
           </div>
         </>
       ) : (

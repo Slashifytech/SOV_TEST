@@ -45,7 +45,9 @@ const ApplicationReview = () => {
     perPageOptions.push(i);
   }
   useEffect(() => {
+    if(tabType === "underreview" || tabType === "approved" || tabType === "rejected"){
     dispatch(applicationForApproval({tabType, page, perPage, search, isTypeFilter}));
+    }
   }, [page, perPage, updateState, tabType, search, isTypeFilter]);
 
   const tabs = [
@@ -104,7 +106,7 @@ const ApplicationReview = () => {
           ))}
         </select>
         <span className="px-3 text-body">entries</span>
-        <select
+        {/* <select
           className="ml-3 border px-2 py-1 w-40 h-11 rounded outline-none"
            onChange={handleTypeFilter}
            value ={isTypeFilter}
@@ -114,12 +116,12 @@ const ApplicationReview = () => {
           </option>
           <option value="student">Student</option>
           <option value="company">Agent</option>
-        </select>
+        </select> */}
         <span className="flex flex-row items-center ml-9">
           <CustomInput
             className="h-11 md:w-80 sm:w-48 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
             type="text"
-            placeHodler="Search by user Name & user Id"
+            placeHodler="Search by User Name & Application Id "
             name="search"
             value={search}
             onChange={handleSearchChange}

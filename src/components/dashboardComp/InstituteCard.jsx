@@ -50,7 +50,7 @@ const InstituteCard = ({
             }}
             className="bg-white border border-[#464255]   gap-2 w-1/2 justify-center py-1.5 text-[14px] cursor-pointer flex items-center"
           >
-            <span className="text-[19px] ">
+            <span className="md:text-[19px] sm:text-[14px] ">
               {status === "added" ? (
                 <span className="text-[#464255]">
                   <FaStar />
@@ -74,10 +74,10 @@ const InstituteCard = ({
   );
 };
 
-const StatusComp = ({ statusOne, studentTwo }) => {
+const StatusComp = ({ statusOne, statusTwo }) => {
   const statusList = [
     statusOne,
-    studentTwo,
+    statusTwo,
     "current",
     "current",
     "current",

@@ -59,7 +59,7 @@ const OfferLetterEdit = () => {
         {profileView === "/admin/applications-review" ? (
           ""
         ) : (
-          <span className="flex items-center justify-between pr-7 pt-20 ml-[16.5%] ">
+          <span className="flex items-center justify-between pr-7 md:pt-20 sm:pt-28 md:ml-[16.5%] sm:ml-[20%] ">
             <span>
               <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
                 Offer Letter Edit

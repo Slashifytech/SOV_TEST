@@ -121,18 +121,18 @@ const Institution = () => {
         </span>
       </div>
       <div>
-        <span className="flex items-center mt-20 ml-[16.5%]">
+        <span className="flex md:flex-row sm:flex-col items-center mt-20 md:ml-[16.5%] sm:ml-[22%]">
           <span>
             <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
               Explore: Colleges & Universities
             </p>
-            <p className="mt-1 font-light text-body pr-[14%] ml-9">
+            <p className="mt-1 font-light text-body md:pr-[14%] sm:pr-[20%] ml-9">
               Discover colleges worldwide tailored to your study abroad dreams.
               Filter and Search by country and institutions to find the perfect
               match for your educational journey.
             </p>
           </span>
-          <span className="flex flex-row items-center ml-20 ">
+          <span className="flex flex-row items-center md:ml-20 sm:mt-6 ">
             <CustomInput
               className="h-11 w-80 rounded-md placeholder:px-3  pl-9 border border-[#E8E8E8] outline-none"
               type="text"
@@ -146,7 +146,7 @@ const Institution = () => {
             </span>
           </span>
         </span>
-        <span className="grid grid-cols-2 gap-8 mr-[40%] ml-[19%]">
+        <span className="grid grid-cols-2 gap-8 md:mr-[40%] md:ml-[19%] sm:ml-[27%] sm:mr-[20%]">
           <CountrySelect
             notImp={true}
             name="country"
@@ -193,14 +193,14 @@ const Institution = () => {
         </p>
       ) : (
         <>
-          <p className="mt-1 font-medium text-body pr-[20%] ml-[19%]">
+          <p className="mt-1 font-medium text-body pr-[20%] md:ml-[19%] sm:ml-[27%]">
             Showing {filteredInstitutes.length} of {instituteOption.length}{" "}
             universities
           </p>
-          <p className="text-[24px] font-semibold text-sidebar ml-[19%]">
+          <p className="text-[24px] font-semibold text-sidebar md:ml-[19%] sm:ml-[27%]">
             All universities and colleges
           </p>
-          <div className="ml-[19%] mt-6 grid grid-cols-3 mx-6 gap-6">
+          <div className="md:ml-[19%] sm:ml-[27%] mt-6 grid md:grid-cols-3 sm:grid-cols-2 mx-6 md:gap-6 sm:gap-4">
             {filteredInstitutes.map((data) => (
               <InstituteCard
                 key={data._id}

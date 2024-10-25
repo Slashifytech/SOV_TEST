@@ -77,7 +77,7 @@ const ProfileEdit = () => {
           profileView === "/admin/approvals" ||
           profileView === "/admin/applications-review"
             ? " mx-44 px-6 mt-10 pt-6"
-            : " pl-[18.5%] pt-20"
+            : " md:pl-[18.5%] sm:pl-[27%] pt-20"
         }`}
       >
    
@@ -119,7 +119,7 @@ const ProfileEdit = () => {
           profileView === "/admin/approvals" ||
           profileView === "/admin/applications-review"
             ? " mx-44"
-            : " mr-6 mt-6 ml-[18.5%]"
+            : " mr-6 mt-6 md:ml-[18.5%] sm:ml-[27%]"
         }`}
       >
         {!loading && (

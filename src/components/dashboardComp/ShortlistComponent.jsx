@@ -8,13 +8,13 @@ const ShortlistComponent = ({ bodyText, headingText, cardData, shortlistInstitut
 
   return (
     <>
-      <div className="ml-[17%] pt-16 bg-white border-b-2 border-[#E8E8E8]">
+      <div className="md:ml-[17%] sm:ml-[27%] sm:mr-6 pt-16 bg-white border-b-2 border-[#E8E8E8]">
         <span className="flex items-center">
           <span>
-            <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
+            <p className="md:text-[28px] sm:text-[22px] font-bold text-sidebar md:mt-6 sm:mt-9 ml-9">
               {headingText}
             </p>
-            <p className="mt-1 mb-6 font-light text-body pr-[20%] ml-9">
+            <p className="mt-1 mb-6 font-light text-body md:pr-[20%] pr-[9%] ml-9">
               {bodyText}
             </p>
           </span>
@@ -26,7 +26,7 @@ const ShortlistComponent = ({ bodyText, headingText, cardData, shortlistInstitut
           Loading...
         </p>
       ) : data && data.length > 0 ? (
-        <div className="ml-[19%] mt-6 grid grid-cols-3 mx-6 gap-6">
+        <div className="md:ml-[19%] sm:ml-[27%] mt-6 grid md:grid-cols-3 sm:grid-cols-2 mx-6 md:gap-6 sm:gap-4">
           {data.map((institute) => (
             <InstituteCard
               key={institute.instituteId._id}
