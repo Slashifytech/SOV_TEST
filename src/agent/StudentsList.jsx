@@ -8,7 +8,7 @@ import Pagination from "../components/dashboardComp/Pagination";
 import { CustomInput } from "../components/reusable/Input";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
-import { noInstitute } from "../assets";
+import { dnf, noInstitute } from "../assets";
 import Dnf from "../components/Dnf";
 import Loader from "../components/Loader";
 import { deleteStudentById } from "../features/agentApi";
@@ -107,7 +107,7 @@ const StudentsList = () => {
               ))}
             </select>
             <span className="px-3 text-body">entries</span>
-            <span className="flex flex-row items-center relative ml-9">
+            <span className="flex flex-row items-center ml-9">
               <CustomInput
                 className="h-11 w-96 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
                 type="text"
@@ -134,19 +134,19 @@ const StudentsList = () => {
           </div>
         ) : !studentData?.students ? (
           <p className="mt-8 font-medium text-body ml-[25%] mr-[15%]">
-            <Dnf
-              dnfImg={noInstitute}
-              headingText="Start Your Journey!"
-              bodyText="Apply a filter by country, institution, or search to view universities."
-            />
+          <Dnf
+            dnfImg={dnf}
+            headingText="Start Your Journey!"
+            bodyText="No Student Available to show"
+          />
           </p>
         ) : studentData?.students.length === 0 ? (
           <p className="mt-8 font-medium text-body ml-[25%] mr-[15%]">
-            <Dnf
-              dnfImg={noInstitute}
-              headingText="No results found"
-              bodyText="Try adjusting your filters to find universities."
-            />
+          <Dnf
+            dnfImg={dnf}
+            headingText="Start Your Journey!"
+            bodyText="No Student Available to show"
+          />
           </p>
         ) : (
           <>

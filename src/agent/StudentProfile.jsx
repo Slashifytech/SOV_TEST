@@ -18,7 +18,6 @@ const StudentProfile = () => {
   const profileView = location.state?.isprofileView;
   const [isLoading, setIsLoading] = useState(true);
   const [profileUpdated, setProfileUpdated] = useState(false);
-
   useEffect(() => {
     dispatch(studentById(studentId));
   }, [dispatch, profileUpdated]);
@@ -62,7 +61,7 @@ const StudentProfile = () => {
         </>
       )}
       {isLoading ? (
-        <div className="w-1 ml-[53%] mt-52">
+        <div className="w-1 ml-[50%] mt-52">
           <Loader />
         </div>
       ) : (
@@ -75,6 +74,8 @@ const StudentProfile = () => {
               <div className="pt-20 ml-[17.5%] bg-white">
                 <StatusComp
                   statusOne={studentData?.pageCount === 3 ? "done" : "pending"}
+                  statusTwo={studentData?.flag ? "done" : "pending"}
+
                 />
               </div>
             )}

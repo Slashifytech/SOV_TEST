@@ -5,7 +5,7 @@ import { CustomTable, CustomTableTwo } from "../components/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { studentApplications } from "../features/agentSlice";
-import { profileSkeleton } from "../assets";
+import { dnf, profileSkeleton } from "../assets";
 import { FaRegEye } from "react-icons/fa";
 import { studentById } from "./../features/generalSlice";
 import { CustomInput, SelectComponent } from "../components/reusable/Input";
@@ -13,17 +13,17 @@ import { IoSearchOutline } from "react-icons/io5";
 import { applicationTypeOption } from "../constant/data";
 import Pagination from "../components/dashboardComp/Pagination";
 import Loader from "../components/Loader";
+import Dnf from "../components/Dnf";
 
 const ApplicationView = () => {
   const location = useLocation();
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1); // Keep track of the current page
-const [isType, setIsType] = useState("")
+  const [page, setPage] = useState(1);
+  const [isType, setIsType] = useState("");
   const { studentApplicationData } = useSelector((state) => state.agent);
   const { studentData } = useSelector((state) => state.general);
-  const applicationId = location.state?.applicationId;
-  const studentId = location.state?.studentId;
-  const [isLoading, setIsLoading] = useState(true); 
+  const studentId = location.state;
+  const [isLoading, setIsLoading] = useState(true);
   const [perPage, setPerPage] = useState(10);
   const totalUsersCount = studentApplicationData?.total || 0;
   const currentPage = studentApplicationData?.page || 1;
@@ -42,15 +42,14 @@ const [isType, setIsType] = useState("")
     setSearch(e.target.value);
     setPage(1);
   };
-
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };
 
   useEffect(() => {
-    dispatch(studentById(studentId)); 
-    dispatch(studentApplications({ search,isType, studentId, page, perPage })); 
-  }, [dispatch, search, studentId, page, perPage]); 
+    dispatch(studentById(studentId));
+    dispatch(studentApplications({ search, isType, studentId, page, perPage }));
+  }, [dispatch, search, studentId, page, perPage]);
 
   // Generate options for per page dropdown
   const perPageOptions = [];
@@ -78,16 +77,16 @@ const [isType, setIsType] = useState("")
       country: data?.offerLetter?.preferences?.country || "NA",
       type: data?.offerLetter?.type || "NA",
       status: data?.offerLetter?.status || "NA",
-      appId: data?._id
+      appId: data?._id,
     })
   );
   useEffect(() => {
     if (studentApplicationData?.applications) {
-      const ids = studentApplicationData.applications.map(data => data._id);
-      setApplicationIds(ids); // Store application IDs in state
+      const ids = studentApplicationData.applications.map((data) => data._id);
+      setApplicationIds(ids);
     }
   }, [studentApplicationData]);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -98,11 +97,11 @@ const [isType, setIsType] = useState("")
   return (
     <>
       <Header customLink="/agent/shortlist" />
-   
-        <span className="fixed overflow-y-scroll scrollbar-hide  bg-white">
-          <AgentSidebar />
-        </span>
-   
+
+      <span className="fixed overflow-y-scroll scrollbar-hide  bg-white">
+        <AgentSidebar />
+      </span>
+
       <div>
         <span className="flex items-center pt-20 pb-6 pl-[18.5%] bg-white">
           <span>
@@ -119,8 +118,7 @@ const [isType, setIsType] = useState("")
               />
               <span className="flex flex-col">
                 <span className="text-primary font-medium text-[13px]">
-                  {totalUsersCount || "NA"}{" "}
-                  Applications
+                  {totalUsersCount || "NA"} Applications
                 </span>
                 <span className="text-sidebar text-[18px] font-medium ">
                   {studentData?.personalInformation?.firstName +
@@ -170,7 +168,7 @@ const [isType, setIsType] = useState("")
                     </option>
                   ))}
                 </select>
-                <span className="flex flex-row items-center relative ml-9">
+                <span className="flex flex-row items-center  ml-9">
                   <CustomInput
                     className="h-11 w-80 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
                     type="text"
@@ -193,38 +191,44 @@ const [isType, setIsType] = useState("")
               </Link>
             </span>
           </span>
-          </div>
-          </div>
-          {isLoading ? (
-        <div className="w-1 ml-[53%] mt-12">
-         <Loader/>
         </div>
-      ) :(
-        <>
-        <div className="ml-[19.5%] mt-6 mr-6">
-          <CustomTableTwo
-            tableHead={TABLE_HEAD}
-            tableRows={TABLE_ROWS}
-            SecondLink="/offerLetter-apply"
-            action={"Edit/View"}
-            icon={<FaRegEye />}
-            link="/offerLetter/edit"
-            customLinkState={TABLE_ROWS?.map((data)=>(data?.appId))}
-          />
-     
-    </div>
-      <div className="mt-16 mb-10 ml-20">
-        <Pagination
-          currentPage={currentPage}
-          hasNextPage={currentPage * perPage < totalUsersCount}
-          hasPreviousPage={currentPage > 1}
-          onPageChange={handlePageChange}
-          totalPagesCount={totalPagesCount}
-        />
       </div>
-      
-      </>
-          )}
+      {isLoading ? (
+        <div className="w-1 ml-[53%] mt-12">
+          <Loader />
+        </div>
+      ) :  studentApplicationData?.applications && studentApplicationData?.applications?.length > 0 ? (
+        <>
+          <div className="ml-[19.5%] mt-6 mr-6">
+            <CustomTableTwo
+              tableHead={TABLE_HEAD}
+              tableRows={TABLE_ROWS}
+              SecondLink="/offerLetter-apply"
+              action={"Edit/View"}
+              icon={<FaRegEye />}
+              link="/offerLetter/edit"
+              customLinkState={TABLE_ROWS?.map((data) => data?.appId)}
+            />
+          </div>
+          <div className="mt-16 mb-10 ml-20">
+            <Pagination
+              currentPage={currentPage}
+              hasNextPage={currentPage * perPage < totalUsersCount}
+              hasPreviousPage={currentPage > 1}
+              onPageChange={handlePageChange}
+              totalPagesCount={totalPagesCount}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="mt-8 font-medium text-body ml-[25%] mr-[15%]">
+          <Dnf
+            dnfImg={dnf}
+            headingText="Start Your Journey!"
+            bodyText="No Application Data Available for this Student"
+          />
+        </div>
+      )}
     </>
   );
 };

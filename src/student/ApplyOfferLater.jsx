@@ -472,6 +472,14 @@ const ApplyOfferLater = () => {
       }));
     }
   }, [studentData]);
+
+  const educationLevelLabels = {
+    diploma: "Diploma",
+    underGraduate: "Under Graduate",
+    postGraduate: "Post Graduate",
+    diplomaPG: "Diploma (PG)",
+    certificationCourse: "Certification Course",
+  };
   return (
     <>
       <Header
@@ -584,7 +592,7 @@ const ApplyOfferLater = () => {
                   key={level}
                   className="flex items-center gap-4 border border-[#CFCFD7] rounded-md py-3 w-52 justify-evenly"
                 >
-                  {level.replace(/([A-Z])/g, " $1")}{" "}
+                        {educationLevelLabels[level] || level.replace(/([A-Z])/g, " $1")}{" "}
                   {/* Convert camelCase to readable format */}
                   <CustomInput
                     type="radio"

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import AdminCard from "./adminCard";
+import AdminCard from "./AdminCard";
 import { toast } from "react-toastify";
 import {
   changeApprovalStatus,
@@ -8,6 +8,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTabType } from "../../features/adminSlice";
+import { DataNotFound } from "../Dnf";
 
 const Rejected = ({ data }) => {
   const location = useLocation();
@@ -26,7 +27,6 @@ const Rejected = ({ data }) => {
           applications.map((application, index) => (
             <div key={index}>
               <AdminCard
-                userType={application?.userType}
                 apId={application?.applicationId}
                 isApproval={false}
                 newStatus="approved"
@@ -36,11 +36,23 @@ const Rejected = ({ data }) => {
                 description={`${application?.fullName}`}
                 currentStatus="rejected"
                 rejectionMessage={application?.message}
+                linkTwo="/application-view"
+                id={application?.institutionId}
+                userType={
+                  application?.customUserId?.startsWith("AG-")
+                    ? "Agent"
+                    : "Student"
+                }
               />
             </div>
           ))
         ) : (
-          <div>No applications found.</div>
+          <DataNotFound
+            className="flex flex-col items-center  mt-16 "
+            message="No Data Available"
+            linkText="Back to Dashboard"
+            linkDestination="/admin/dashboard"
+          />
         )
       ) : data?.length > 0 ? (
         data.map((item, index) => (
@@ -68,7 +80,12 @@ const Rejected = ({ data }) => {
           </div>
         ))
       ) : (
-        <div>No applications or combined data found.</div>
+        <DataNotFound
+          className="flex flex-col items-center  mt-16 "
+          message="No Data Available"
+          linkText="Back to Dashboard"
+          linkDestination="/admin/dashboard"
+        />
       )}
     </div>
   );

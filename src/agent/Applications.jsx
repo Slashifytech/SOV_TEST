@@ -9,15 +9,19 @@ import { CustomInput } from "../components/reusable/Input";
 import { IoSearchOutline } from "react-icons/io5";
 import Pagination from "../components/dashboardComp/Pagination";
 import Loader from "../components/Loader";
+import { Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+import Dnf from "../components/Dnf";
+import { dnf } from "../assets";
 
 const Applications = () => {
   const { applicationOverviewData } = useSelector((state) => state.agent);
   const dispatch = useDispatch();
-  
+
   const [search, setSearch] = useState("");
   const [perPage, setPerPage] = useState(10);
   const [page, setPage] = useState(1); // Track the current page
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   const totalUsersCount = applicationOverviewData?.total || 0;
   const currentPage = applicationOverviewData?.page;
@@ -31,6 +35,7 @@ const Applications = () => {
       total: data?.totalCount || 0,
       underReview: data?.underReviewCount || 0,
       approved: data?.approvedCount || 0,
+      customLinkState: data?.studentInformationId,
     })
   );
 
@@ -40,7 +45,7 @@ const Applications = () => {
 
   const handlePerPageChange = (e) => {
     setPerPage(parseInt(e.target.value));
-    setPage(1); 
+    setPage(1);
   };
 
   // Handle search input change
@@ -53,10 +58,10 @@ const Applications = () => {
   for (let i = 10; i <= Math.min(totalUsersCount, 100); i += 10) {
     perPageOptions.push(i);
   }
-console.log(search)
+  console.log(search);
   useEffect(() => {
     dispatch(applictionOverview({ search, perPage, page }));
-  }, [dispatch, search, perPage, page]); 
+  }, [dispatch, search, perPage, page]);
 
   const TABLE_HEAD = [
     "S.No.",
@@ -75,6 +80,7 @@ console.log(search)
 
     return () => clearTimeout(timer);
   }, []);
+
   return (
     <>
       <Header customLink="/agent/shortlist" />
@@ -110,7 +116,7 @@ console.log(search)
           ))}
         </select>
         <span className="px-3 text-body">entries</span>
-        <span className="flex flex-row items-center relative ml-9">
+        <span className="flex flex-row items-center  ml-9">
           <CustomInput
             className="h-11 w-80 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
             type="text"
@@ -126,39 +132,70 @@ console.log(search)
       </span>
       {isLoading ? (
         <div className="w-1 ml-[53%] mt-12">
-         <Loader/>
+          <Loader />
         </div>
-      ) :(
+      ) : applicationOverviewData?.studentOverview &&
+        applicationOverviewData?.studentOverview?.length > 0 ? (
         <>
-      <div className="ml-[19.5%] mt-6">
-        {applicationOverviewData?.studentOverview?.map((data, index) => (
-          <CustomTable
-            tableHead={TABLE_HEAD}
-            tableRows={TABLE_ROWS}
-            SecondAction="Apply Application"
-            customClass="border border-primary  px-2 rounded-xl text-primary font-normal text-[12px] py-1"
-            SecondLink="/offerLetter-apply"
-            action={"View List"}
-            link={"/agent/application/lists"}
-            icon={<FaRegEye />}
-            customLinkState={{ studentId: data?.studentInformationId, applicationId: data?.institutionId }}
-            secondCustomState={data?.studentInformationId}
+          <div className="ml-[19.5%] mt-6">
+            <CustomTable
+              tableHead={TABLE_HEAD}
+              tableRows={TABLE_ROWS}
+              SecondAction="Apply Application"
+              customClass="border border-primary  px-2 rounded-xl text-primary font-normal text-[12px] py-1"
+              SecondLink="/offerLetter-apply"
+              action={"View List"}
+              link={"/agent/application/lists"}
+              icon={<FaRegEye />}
+            />
+          </div>
+          <div className="mt-16 mb-10">
+            <Pagination
+              currentPage={currentPage}
+              hasNextPage={currentPage * perPage < totalUsersCount}
+              hasPreviousPage={currentPage > 1}
+              onPageChange={handlePageChange}
+              totalPagesCount={totalPagesCount}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="mt-8 font-medium text-body ml-[25%] mr-[15%]">
+          <Dnf
+            dnfImg={dnf}
+            headingText="Start Your Journey!"
+            bodyText="No Applications Available to Show"
           />
-        ))}
-      </div>
-      <div className="mt-16 mb-10">
-        <Pagination
-          currentPage={currentPage}
-          hasNextPage={currentPage * perPage < totalUsersCount}
-          hasPreviousPage={currentPage > 1}
-          onPageChange={handlePageChange}
-          totalPagesCount={totalPagesCount}
-        />
-      </div>
-      </>
+        </div>
       )}
     </>
   );
 };
 
 export default Applications;
+
+export const ExtraField = () => {
+  return (
+    <td className="p-4">
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-medium"
+      >
+        <Link
+          to="/agent/application/lists"
+          // state={customLinkState}
+          className="flex flex-row items-center gap-2"
+        >
+          {" "}
+          <span className="text-primary">
+            <FaRegEye />
+          </span>{" "}
+          <span className="font-body">View List</span>
+        </Link>
+      </Typography>
+    </td>
+  );
+};

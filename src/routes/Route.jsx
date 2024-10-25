@@ -163,6 +163,15 @@ export const router = createBrowserRouter([
     
   },
   {
+    path: "/application-view",
+    element: (
+      // <ProtectedAgent>
+        <OfferLetterEdit></OfferLetterEdit>
+      // </ProtectedAgent>
+    ),
+    
+  },
+  {
     path: "/agent/applications",
     element: (
       // <ProtectedAgent>

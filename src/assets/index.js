@@ -22,6 +22,7 @@ import notFound from "./notFound.png";
 import profileSkeleton from "./profileSkeleton.webp"
 import noInstitute from "./noInstitute.png"
 import greenTick from "./greenTick.png"
+import dnf from "./dnf.png";
 
 export {
   logo,
@@ -48,4 +49,5 @@ export {
   AgentSignup1,
   AgentSignup2,
   AgentSignup3,
+  dnf
 };

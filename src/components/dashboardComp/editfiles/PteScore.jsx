@@ -89,7 +89,7 @@ const pteScore = () => {
   };
   return (
     <>
-        <div className="bg-white rounded-md px-6 py-4 font-poppins">
+      <div className="bg-white rounded-md px-6 py-4 font-poppins">
         <div className="flex flex-row text-sidebar items-center justify-between border-b border-greyish">
           <span className="flex flex-row gap-4 items-center pb-3">
             <span className="text-[24px]">
@@ -99,15 +99,17 @@ const pteScore = () => {
               Personal Information
             </span>
           </span>
-          {!isOne && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleOneToggle}
-              style={{ opacity: isOne ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+          {profileViewPath === "/admin/applications-review"
+            ? ""
+            : !isOne && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handleOneToggle}
+                  style={{ opacity: isOne ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
         <div className="flex flex-row w-full justify-between mt-6">
           <span className="w-1/2 flex flex-col text-[15px]">
@@ -115,27 +117,23 @@ const pteScore = () => {
             <span className="font-medium">
               {applications?.companyDetails?.businessName || "NA"}
             </span>
-            
-        
           </span>
           <span className="w-1/2 flex flex-col text-[15px]">
             <span className="font-light mt-4">10th Marksheet</span>
             <span className="font-medium">
               {applications?.companyDetails?.address || "NA"}
             </span>
-           
-           
           </span>
         </div>
-        
+
         <ScoreInputForm
-            namePrefix="PTE"
-            handleInput={handleInput}
-            scoreType="PTE Score"
-            scoreData={offerLater.PTE}
-            errors={errors.PTE}
-          />
-        </div>
+          namePrefix="PTE"
+          handleInput={handleInput}
+          scoreType="PTE Score"
+          scoreData={offerLater.PTE}
+          errors={errors.PTE}
+        />
+      </div>
     </>
   );
 };

@@ -57,7 +57,7 @@ const AgentSidebar = () => {
 
   return (
     <>
-      <div className="bg-white  w-[35vh] h-[100vh]   overflow-y-auto scrollbar-hide border-r-2 border-[#E8E8E8]">
+      <div className="bg-white md:w-[17.5vw] sm:w-[24vw] h-[100vh]  overflow-y-auto scrollbar-hide border-r-2 border-[#E8E8E8]">
       <span>
           <ImageComponent src={logo} alt="logo" className="w-44 h-24 ml-2 " />
         </span>

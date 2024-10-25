@@ -9,6 +9,7 @@ import { agentInformation } from "../../features/agentSlice";
 const Header = ({ icon, customLink }) => {
   const dispatch = useDispatch();
   const role = localStorage.getItem("role");
+  
   const { agentData } = useSelector((state) => state.agent);
   useEffect(() => {
     if (role === "2") {
@@ -17,10 +18,10 @@ const Header = ({ icon, customLink }) => {
   }, [dispatch]);
   return (
     <>
-      <div className="flex flex-row items-center w-[82vw] py-2.5 z-10 bg-primary font-poppins pr-6 fixed ml-[17.5vw] ">
+      <div className={`flex flex-row items-center w-[82.5vw]  py-2.5 z-10 bg-primary font-poppins pr-6 fixed md:ml-[17.5vw] sm:ml-[23.5vw] ${role === "0" && "h-16"  } `}>
     
-
-        <span className="w-[85vw]">
+{role !== "0" &&  
+        <span className="md:w-[85vw] sm:w-[60vw]">
           <span className="flex justify-end flex-row gap-6">
             <Link
               to={customLink}
@@ -70,6 +71,7 @@ const Header = ({ icon, customLink }) => {
             </span>
           </span>
         </span>
+}
       </div>
     </>
   );

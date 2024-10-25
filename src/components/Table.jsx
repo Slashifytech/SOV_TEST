@@ -9,9 +9,7 @@ export function CustomTable({
   link,
   customClass,
   SecondLink,
-  secondCustomState,
   SecondAction,
-  customLinkState,
 }) {
   return (
     <Card className="h-full w-full overflow-scroll scrollbar-hide font-poppins">
@@ -37,17 +35,15 @@ export function CustomTable({
         <tbody>
           {tableRows.map((row, index) => (
             <tr key={index} className="even:bg-blue-gray-50/50">
-              {Object.values(row).map((value, idx) => (
-                <td key={idx} className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {value}
-                  </Typography>
-                </td>
-              ))}
+            {Object.entries(row).map(([key, value], idx) =>
+                key !== "customLinkState" ? ( // Exclude customLinkState from visible cells
+                  <td key={idx} className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {value}
+                    </Typography>
+                  </td>
+                ) : null
+              )}
               <td className="p-4">
                 <Typography
                   as="a"
@@ -58,7 +54,7 @@ export function CustomTable({
                 >
                   <Link
                     to={link}
-                    state={customLinkState}
+                    state={row.customLinkState}
                     className="flex flex-row items-center gap-2"
                   >
                     {" "}
@@ -77,7 +73,7 @@ export function CustomTable({
                 >
                   <Link
                     to={SecondLink}
-                    state={secondCustomState}
+                    state={row.customLinkState}
                     className={`${customClass}`}
                   >
                     {" "}

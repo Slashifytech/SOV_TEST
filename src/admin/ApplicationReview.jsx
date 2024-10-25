@@ -1,24 +1,53 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/dashboardComp/Header";
 import AdminSidebar from "../components/dashboardComp/AdminSidebar";
 import TabBar from "../components/dashboardComp/TabBar";
 import Pending from "../components/adminComps/Pending";
 import { useDispatch, useSelector } from "react-redux";
-import { applicationForApproval } from "../features/adminSlice";
 import { CustomInput } from "../components/reusable/Input";
 import { IoSearchOutline } from "react-icons/io5";
 import Approved from "../components/adminComps/Approved";
 import Rejected from "../components/adminComps/Rejected";
+import Pagination from "../components/dashboardComp/Pagination";
+import { applicationForApproval } from "../features/adminSlice";
 
 const ApplicationReview = () => {
-    const {applications} = useSelector((state)=>state.admin);
-    const typeData = useSelector((state)=>state.admin.tabType)
-      const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { applications } = useSelector((state) => state.admin);
+  const { updateState, tabType } = useSelector((state) => state.admin);
+  const [search, setSearch] = useState("");
+  const [perPage, setPerPage] = useState(10);
+  const [isTypeFilter, setIsFilterType] = useState("")
+  const [page, setPage] = useState(1);
+  const totalUsersCount = applications?.totalRecords || 0;
+  const currentPage = applications?.currentPage;
+  const totalPagesCount = applications?.totalPages;
 
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
-    useEffect(()=>{
-       dispatch(applicationForApproval(typeData));
-    },[dispatch, typeData])
+  const handlePerPageChange = (e) => {
+    setPerPage(parseInt(e.target.value));
+    setPage(1);
+  };
+  const handleTypeFilter = (e) =>{
+    setIsFilterType(e.target.value)
+    setPage(1);
+  }
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const perPageOptions = [];
+  for (let i = 10; i <= Math.min(totalUsersCount, 100); i += 10) {
+    perPageOptions.push(i);
+  }
+  useEffect(() => {
+    dispatch(applicationForApproval({tabType, page, perPage, search, isTypeFilter}));
+  }, [page, perPage, updateState, tabType, search, isTypeFilter]);
+
   const tabs = [
     {
       name: "pending",
@@ -43,12 +72,12 @@ const ApplicationReview = () => {
     <>
       <Header customLink="/agent/shortlist" />
       <div>
-        <span className="fixed overflow-y-scroll scrollbar-hide pt-6 bg-white">
+        <span className="fixed overflow-y-scroll scrollbar-hide  bg-white">
           <AdminSidebar />
         </span>
       </div>
       <div className=" bg-white">
-        <span className="flex items-center pt-16 ml-[16.5%]  ">
+        <span className="flex items-center pt-16 md:ml-[16.5%] sm:ml-[22%]  ">
           <span>
             <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
               Application Review
@@ -60,46 +89,58 @@ const ApplicationReview = () => {
           </span>
         </span>
       </div>
-      <span className="flex flex-row items-center mb-3 ml-[19.5%] mt-6">
+      <span className="flex flex-row items-center mb-3 m-6 mt-6 sm:ml-[27%] md:ml-[19%] ">
         {" "}
         <span className="text-body">Show</span>
         <select
-          className="ml-3 border px-2 py-1 w-10 h-11 rounded outline-none"></select>
-        {/* //   value={perPage}
-        //   onChange={handlePerPageChange}
-        // >
-        //   {perPageOptions.map((option) => (
-        //     <option key={option} value={option}>
-        //       {option}
-        //     </option>
-        //   ))}
-        </select> */}
+          className="ml-3 border px-2 py-1 w-10 h-11 rounded outline-none"
+          value={perPage}
+          onChange={handlePerPageChange}
+        >
+          {perPageOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
         <span className="px-3 text-body">entries</span>
         <select
           className="ml-3 border px-2 py-1 w-40 h-11 rounded outline-none"
-        //   value={perPage}
-        //   onChange={handlePerPageChange}
+           onChange={handleTypeFilter}
+           value ={isTypeFilter}
         >
-          <option value="">Application Type</option>
-          <option value="">Student</option>
-          <option>Agent</option>
+          <option value="" className="text-body">
+            User Type
+          </option>
+          <option value="student">Student</option>
+          <option value="company">Agent</option>
         </select>
-        <span className="flex flex-row items-center relative ml-9">
+        <span className="flex flex-row items-center ml-9">
           <CustomInput
-            className="h-11 w-80 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
+            className="h-11 md:w-80 sm:w-48 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
             type="text"
-            placeholder="Search Student, Phone Number, & Email"
-            // name="search"
-            // value={search}
-            // onChange={handleSearchChange}
+            placeHodler="Search by user Name & user Id"
+            name="search"
+            value={search}
+            onChange={handleSearchChange}
           />
           <span className="absolute pl-2 text-[20px] text-body">
             <IoSearchOutline />
           </span>
         </span>
       </span>
-      <div className=" ">
+      <div className="sm:ml-14 md:ml-0">
         <TabBar tabs={tabs} />
+      </div>
+
+      <div className="mt-12 mb-10">
+        <Pagination
+          currentPage={currentPage}
+          hasNextPage={currentPage * perPage < totalUsersCount}
+          hasPreviousPage={currentPage > 1}
+          onPageChange={handlePageChange}
+          totalPagesCount={totalPagesCount}
+        />
       </div>
     </>
   );

@@ -282,7 +282,7 @@ const AgentForm2 = ({hide, handleCancel, updateData}) => {
           emailUsername: contactDetails.primaryContact?.emailUsername || "",
           country: contactDetails.primaryContact?.country || "",
           phoneNumber: contactDetails.primaryContact?.phoneNumber || "",
-          profilePicture: Array.isArray(contactDetails.primaryContact?.profilePicture)
+          profilePicture: contactDetails.primaryContact?.profilePicture
        
           ? [contactDetails.primaryContact.profilePicture]  
           : []
@@ -345,7 +345,11 @@ console.log(contactDetails.primaryContact?.profilePicture || [])
         <p className="text-heading font-semibold text-[25px] pt-7">
           Primary Contact Information
         </p></>}
-        <div className="bg-white rounded-xl px-8 py-4 pb-12 mt-6">
+        <div
+          className={`bg-white rounded-xl ${
+            hide === true ? "" : "px-8"
+          } py-4 pb-12 mt-6`}
+        >
           <div className="flex items-baseline justify-between gap-6 w-full">
             <span className="w-[20%] ">
               <SelectComponent
@@ -432,6 +436,8 @@ console.log(contactDetails.primaryContact?.profilePicture || [])
               </div>
             </span>
           </div>
+
+          {console.log(contactData.primaryContact.profilePicture)}
           <FileUpload
             label="Upload Profile Picture"
             acceptedFormats={{
@@ -476,7 +482,11 @@ console.log(contactDetails.primaryContact?.profilePicture || [])
         <p className="text-heading font-semibold text-[25px] pt-7">
           Commission Contact Information
         </p>
-        <div className="bg-white rounded-xl px-8 py-4 pb-12 mt-6">
+        <div
+          className={`bg-white rounded-xl ${
+            hide === true ? "" : "px-8"
+          } py-4 pb-12 mt-6`}
+        >
           <div className="flex items-center justify-between gap-6 w-full">
             <span className="w-[50%]">
               <Register
@@ -536,10 +546,12 @@ console.log(contactDetails.primaryContact?.profilePicture || [])
         </p>
         {contactData.admissionsContacts.map((admission, index) => (
           <>
-            <div
-              key={index}
-              className="bg-white rounded-xl px-8 py-4 pb-12 mt-6"
-            >
+          <div
+          key={index}
+          className={`bg-white rounded-xl ${
+            hide === true ? "" : "px-8"
+          } py-4 pb-12 mt-6`}
+        >
               {/* Inputs for admission contact */}
               <div className="flex items-baseline justify-between gap-6 w-full">
                 <span className="w-[50%]">
@@ -642,7 +654,7 @@ console.log(contactDetails.primaryContact?.profilePicture || [])
         <div className="flex justify-end mt-9 gap-4 ">
             <button
               className="border border-greyish text-black px-4 py-2 rounded"
-              onClick={handleCancel}
+              onClick={() => handleCancel("isTwo")}
             >
               Cancel
             </button>
@@ -650,7 +662,7 @@ console.log(contactDetails.primaryContact?.profilePicture || [])
               className="bg-primary text-white px-6 py-2 rounded"
               onClick={() => {
                 handleSubmit();
-                handleCancel();
+                handleCancel("isTwo");
               }}
             >
               Save

@@ -6,13 +6,13 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { OfferLetterToeflScore } from "../../../features/generalApi";
 const initialTOEFL = {
-    reading: "",
-    speaking: "",
-    writing: "",
-    listening: "",
-    overallBand: "",
-  };
-const TOEFLScore = ({ appId, updatedData}) => {
+  reading: "",
+  speaking: "",
+  writing: "",
+  listening: "",
+  overallBand: "",
+};
+const TOEFLScore = ({ appId, updatedData, profileViewPath }) => {
   const { applicationDataById } = useSelector((state) => state.agent);
   const [isOne, setIsOne] = useState(false);
   const [offerLater, setOfferLater] = useState({
@@ -63,12 +63,12 @@ const TOEFLScore = ({ appId, updatedData}) => {
   };
   const validateFields = () => {
     const errors = {};
-    
+
     if (!offerLater.TOEFL) {
       errors.TOEFL = "TOEFL data is missing.";
       return errors;
     }
-  
+
     if (!offerLater.TOEFL.reading) {
       errors.TOEFL = {
         ...errors.TOEFL,
@@ -99,7 +99,7 @@ const TOEFLScore = ({ appId, updatedData}) => {
         overallBand: "TOEFL Overall Bands score is required.",
       };
     }
-    
+
     return errors;
   };
   useEffect(() => {
@@ -119,10 +119,10 @@ const TOEFLScore = ({ appId, updatedData}) => {
       });
     }
   }, [applicationDataById]);
-  
+
   const handleSubmit = async () => {
     const validationErrors = validateFields();
-  
+
     if (Object.keys(validationErrors).length === 0) {
       console.log("Form is valid");
     } else {
@@ -131,7 +131,7 @@ const TOEFLScore = ({ appId, updatedData}) => {
       console.log("Form has errors", validationErrors);
       return; // Exit the function early if validation fails
     }
-  
+
     try {
       const convertToNumber = (scoreData) => {
         return {
@@ -142,15 +142,21 @@ const TOEFLScore = ({ appId, updatedData}) => {
           overallBand: Number(scoreData.overallBand),
         };
       };
-  
+
       const updatedOfferLater = {
         ...offerLater,
-        toefl: offerLater.TOEFL ? convertToNumber(offerLater.TOEFL) : { ...initialTOEFL },
+        toefl: offerLater.TOEFL
+          ? convertToNumber(offerLater.TOEFL)
+          : { ...initialTOEFL },
       };
       delete updatedOfferLater.TOEFL;
-  
+
       const section = "offerLetter";
-      const res = await OfferLetterToeflScore(appId, updatedOfferLater, section);
+      const res = await OfferLetterToeflScore(
+        appId,
+        updatedOfferLater,
+        section
+      );
       toast.success(res.message || "Data added successfully");
       updatedData();
       handleCancelOne();
@@ -159,7 +165,7 @@ const TOEFLScore = ({ appId, updatedData}) => {
       console.error("Error during submission:", error);
     }
   };
-  
+
   return (
     <>
       <div className="bg-white rounded-md px-6 py-4 font-poppins">
@@ -170,15 +176,17 @@ const TOEFLScore = ({ appId, updatedData}) => {
             </span>
             <span className="font-semibold text-[22px]">TOEFL Score</span>
           </span>
-          {!isOne && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleOneToggle}
-              style={{ opacity: isOne ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+          {profileViewPath === "/admin/applications-review"
+            ? ""
+            : !isOne && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handleOneToggle}
+                  style={{ opacity: isOne ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="flex flex-row w-full justify-between mt-6">
@@ -217,13 +225,13 @@ const TOEFLScore = ({ appId, updatedData}) => {
         >
           {isOne && (
             <>
-            <ScoreInputForm
-            namePrefix="TOEFL"
-            handleInput={handleInput}
-            scoreType="TOEFL Score"
-            scoreData={offerLater.TOEFL}
-            errors={errors.TOEFL}
-          />
+              <ScoreInputForm
+                namePrefix="TOEFL"
+                handleInput={handleInput}
+                scoreType="TOEFL Score"
+                scoreData={offerLater.TOEFL}
+                errors={errors.TOEFL}
+              />
 
               <div className="flex justify-end gap-4">
                 <button

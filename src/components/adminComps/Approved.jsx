@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import AdminCard from "./adminCard";
+import AdminCard from "./AdminCard";
 import { toast } from "react-toastify";
 import {
   changeApprovalStatus,
@@ -8,6 +8,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTabType } from "../../features/adminSlice";
+import { DataNotFound } from "../Dnf";
 
 const Approved = ({ data }) => {
   const location = useLocation();
@@ -29,7 +30,11 @@ useEffect(()=>{
           applications.map((application, index) => (
             <div key={index}>
               <AdminCard
-                userType={application?.userType}
+                   userType={
+                  application?.customUserId?.startsWith("AG-")
+                    ? "Agent"
+                    : "Student"
+                }
                 apId={application?.applicationId}
                 isApproval={false}
               
@@ -39,12 +44,19 @@ useEffect(()=>{
                 applicationType={application?.type}
                 description={`${application?.fullName}`}
                 currentStatus="approved"
+                linkTwo="/application-view"
+                id={application?.institutionId}
 
               />
             </div>
           ))
         ) : (
-          <div>No applications found.</div>
+            <DataNotFound
+            className="flex flex-col items-center mt-16"
+            message="No Data Available"
+            linkText="Back to Dashboard"
+            linkDestination="/admin/dashboard"
+          />
         )
       ) : data?.length > 0 ? (
         data.map((item, index) => (
@@ -73,7 +85,12 @@ useEffect(()=>{
           </div>
         ))
       ) : (
-        <div>No applications or combined data found.</div>
+        <DataNotFound
+            className="flex flex-col items-center mt-16"
+            message="No Data Available"
+            linkText="Back to Dashboard"
+            linkDestination="/admin/dashboard"
+          />
       )}
     </div>
   );

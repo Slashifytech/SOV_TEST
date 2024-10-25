@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AdminCard from "./adminCard";
+import AdminCard from "./AdminCard";
 import { toast } from "react-toastify";
 import {
   changeApprovalStatus,
@@ -8,13 +8,13 @@ import {
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTabType } from "../../features/adminSlice";
+import { DataNotFound } from "../Dnf";
 
 const Pending = ({ data }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [approvalUpdated, setApprovalUpdated] = useState(false);
   const [applicationUpdated, setApplicationUpdated] = useState(false);
-
   const fetchStatus =
     location.pathname === "/admin/applications-review"
       ? "underreview"
@@ -25,6 +25,7 @@ const Pending = ({ data }) => {
   const handleApplicationUpdate = () => {
     setApplicationUpdated((prev) => !prev);
   };
+
   useEffect(() => {
     dispatch(setTabType(fetchStatus));
   }, [dispatch, applicationUpdated, approvalUpdated, location.pathname]);
@@ -62,6 +63,7 @@ const Pending = ({ data }) => {
                 isApproval={false}
                 updateStatus={applicationStatus}
                 newStatus="approved"
+                linkTwo="/application-view"
                 name={application.fullName}
                 userId={application?.customUserId}
                 applicationType={application?.type}
@@ -78,15 +80,17 @@ const Pending = ({ data }) => {
                     : "Student"
                 }
                 id={application?.institutionId}
-                section={
-                  application?.type
-              
-                }
+                sectionData={application?.type}
               />
             </div>
           ))
         ) : (
-          <div>No applications found.</div>
+          <DataNotFound
+            className="flex flex-col items-center mt-16"
+            message="No Data Available"
+            linkText="Back to Dashboard"
+            linkDestination="/admin/dashboard"
+          />
         )
       ) : data?.length > 0 ? (
         data.map((item, index) => (
@@ -109,12 +113,17 @@ const Pending = ({ data }) => {
                   item?.type === "agent" ? "agent" : "student"
                 } on SOV portal` || "Unknown User"
               }
-              section={item?.type}
+              sectionData={item?.type === "agent" ? "company" : "student"}
             />
           </div>
         ))
       ) : (
-        <div>No applications or combined data found.</div>
+        <DataNotFound
+          className="flex flex-col items-center mt-16"
+          message="No Data Available"
+          linkText="Back to Dashboard"
+          linkDestination="/admin/dashboard"
+        />
       )}
     </div>
   );

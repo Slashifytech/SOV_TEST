@@ -31,7 +31,8 @@ const StudentCards = ({
   
   return (
     <>
-      <div className="bg-white border border-[#E8E8E8] py-4 px-4 rounded-md font-poppins relative w-full">
+      <div className="bg-white border border-[#E8E8E8] py-4 px-4 rounded-md font-poppins  w-full">
+      
         <div className="flex items-center gap-4 mt-1">
           <img
             src={profile || profileSkeleton}
@@ -50,8 +51,25 @@ const StudentCards = ({
             <span className="text-[13px] pt-[1px] text-body font-normal">
               {email || "NA"}
             </span>
+            <span className="flex flex-row justify-between gap-4 items-center w-full">
             <span className="text-[13px] text-body font-normal">
               {mobile || "NA"}
+            </span>
+            <span>
+            {stId ? (
+              <span className="text-[13px] underline text-green-500 font-normal  px-1">
+                Completed
+              </span>
+            ) : (
+              <Link
+                to={`/student-form/${page}`}
+                state={{ passPage: "passPage", id:defaultId }}
+                className="text-[13px] underline text-yellow-500 font-normal  px-1 cursor-pointer"
+              >
+                Pending
+              </Link>
+            )}
+            </span>
             </span>
             <span className="text-[13px] text-body font-normal">
               ID: {stId || "NA"}
@@ -62,19 +80,7 @@ const StudentCards = ({
             >
               <RiDeleteBin6Line />
             </span>
-            {stId ? (
-              <span className="text-[13px] underline text-green-500 font-normal absolute right-4 bottom-[71px] px-1">
-                Completed
-              </span>
-            ) : (
-              <Link
-                to={`/student-form/${page}`}
-                state={{ passPage: "passPage", id:defaultId }}
-                className="text-[13px] underline text-yellow-500 font-normal absolute right-4 bottom-[71px] px-1 cursor-pointer"
-              >
-                Pending
-              </Link>
-            )}
+      
           </span>
         </div>
         {stId ? (

@@ -1,7 +1,7 @@
 import React from "react";
 import InstituteCard from "./InstituteCard";
 import Dnf from "../Dnf";
-import { noInstitute } from "../../assets";
+import { dnf, noInstitute } from "../../assets";
 
 const ShortlistComponent = ({ bodyText, headingText, cardData, shortlistInstitute, isLoading }) => {
   const data = cardData?.institutes;
@@ -41,9 +41,9 @@ const ShortlistComponent = ({ bodyText, headingText, cardData, shortlistInstitut
       ) : (
         <div className="mt-8 font-medium text-body ml-[25%] mr-[15%]">
           <Dnf
-            dnfImg={noInstitute}
+            dnfImg={dnf}
             headingText="Start Your Journey!"
-            bodyText="Start by searching for colleges and courses, then use filters to refine by country, course, and more for tailored results."
+            bodyText="No Shortlisted Data Available to Show"
           />
         </div>
       )}

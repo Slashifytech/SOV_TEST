@@ -56,11 +56,11 @@ export const maritalOption = [
 ];
 
 export const educationLevelOption = [
-  { id: 0, option: "10th", label: "10th/Metric" },
-  { id: 1, option: "12th", label: "12th/Secondary Education" },
-  { id: 2, option: "diploma", label: "Diploma" },
-  { id: 3, option: "ug", label: "UG (Under Graduate)" },
-  { id: 3, option: "pg", label: "PG (Post Graduate)" },
+  { id: 0, option: "10th/Metric", label: "10th/Metric" },
+  { id: 1, option: "12th/Secondary Education", label: "12th/Secondary Education" },
+  { id: 2, option: "Diploma", label: "Diploma" },
+  { id: 3, option: "UG (Under Graduate)" , label: "UG (Under Graduate)" },
+  { id: 3, option: "PG (Post Graduate)" , label: "PG (Post Graduate)" },
 ];
 
 export const genderOption = [

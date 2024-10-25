@@ -12,57 +12,30 @@ import { HiBuildingOffice2 } from "react-icons/hi2";
 import AgentForm5 from "./../../../agent/AgentForm5";
 import { FaBuildingFlag } from "react-icons/fa6";
 import AgentForm6 from "./../../../agent/AgentForm6";
-import { useDispatch } from "react-redux";
-import { agentInformation } from "../../../features/agentSlice";
 
 const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
   const profileView = locationPath?.state?.isprofileView;
-  const [isOne, setIsOne] = useState(false);
-  const [isTwo, setIsTwo] = useState(false);
-  const [isThree, setIsThree] = useState(false);
-  const [isFour, setIsFour] = useState(false);
-  const [isFive, setIsFive] = useState(false);
-  const [isSix, setIsSix] = useState(false);
+  const [toggleStates, setToggleStates] = useState({
+    isOne: false,
+    isTwo: false,
+    isThree: false,
+    isFour: false,
+    isFive: false,
+    isSix: false,
+  });
 
-  // useEffect(() => {
-  //   dispatch(agentInformation());
-  // }, [dispatch, profileView]);
-  const handleOneToggle = () => {
-    setIsOne((prev) => !prev);
-  };
-  const handleTwoToggle = () => {
-    setIsTwo((prev) => !prev);
-  };
-  const handleThreeToggle = () => {
-    setIsThree((prev) => !prev);
-  };
-  const handleFourToggle = () => {
-    setIsFour((prev) => !prev);
-  };
-  const handleFiveToggle = () => {
-    setIsFive((prev) => !prev);
-  };
-  const handleSixToggle = () => {
-    setIsSix((prev) => !prev);
+  const handleToggle = (key) => {
+    setToggleStates((prevStates) => ({
+      ...prevStates,
+      [key]: !prevStates[key],
+    }));
   };
 
-  const handleCancelOne = () => {
-    setIsOne(false);
-  };
-  const handleCancelTwo = () => {
-    setIsTwo(false);
-  };
-  const handleCancelThree = () => {
-    setIsThree(false);
-  };
-  const handleCancelFour = () => {
-    setIsFour(false);
-  };
-  const handleCancelFive = () => {
-    setIsFive(false);
-  };
-  const handleCancelSix = () => {
-    setIsSix(false);
+  const handleCancel = (key) => {
+    setToggleStates((prevStates) => ({
+      ...prevStates,
+      [key]: false,
+    }));
   };
   return (
     <>
@@ -77,11 +50,11 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
           {profileView === "/admin/approvals" ||
           profileView === "/admin/applications-review"
             ? ""
-            : !isOne && (
+            : !toggleStates.isOne && (
                 <span
                   className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-                  onClick={handleOneToggle}
-                  style={{ opacity: isOne ? 0 : 1 }}
+                  onClick={() => handleToggle("isOne")}
+                  style={{ opacity: toggleStates.isOne ? 0 : 1 }}
                 >
                   <TbPencilMinus />
                 </span>
@@ -107,8 +80,22 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
               {agentData?.companyDetails?.phoneNumber || "NA"}
             </span>
             <span className="font-light mt-4">Company LinkedIn</span>
-            <span className="font-medium">
-              {agentData?.companyDetails?.linkedin || "NA"}
+            <span className="font-medium ">
+              {agentData?.companyDetails?.linkedin ? (
+                <a
+                  className="flex items-center gap-3 text-primary font-medium"
+                  href={agentData?.companyDetails?.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Linkedin link
+                  <span>
+                    <FaRegEye />
+                  </span>
+                </a>
+              ) : (
+                "NA"
+              )}
             </span>
           </span>
           <span className="w-1/2 flex flex-col text-[15px]">
@@ -126,7 +113,21 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
             </span>
             <span className="font-light mt-4">Website</span>
             <span className="font-medium">
-              {agentData?.companyDetails?.website || "NA"}
+              {agentData?.companyDetails?.website ? (
+                <a
+                  className="flex items-center gap-3 text-primary font-medium"
+                  href={agentData?.companyDetails?.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Website link
+                  <span>
+                    <FaRegEye />
+                  </span>
+                </a>
+              ) : (
+                "NA"
+              )}
             </span>
             <span className="font-light mt-4">Whatsapp Number</span>
             <span className="font-medium">
@@ -138,16 +139,16 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
         {/* Smooth slide transition for editable section */}
         <div
           className={`transition-all duration-500 ease-in-out transform ${
-            isOne
+            toggleStates.isOne
               ? "min-h-[100vh] translate-y-0 opacity-100"
               : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
           }`}
         >
-         {isOne && (
+          {toggleStates.isOne && (
             <div className="mt-4">
               <AgentForm1
                 hide={true}
-                handleCancel={handleCancelOne}
+                handleCancel={handleCancel}
                 updateData={updateData}
               />
             </div>
@@ -168,15 +169,15 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
           {profileView === "/admin/approvals" ||
           profileView === "/admin/applications-review"
             ? ""
-            : !isTwo && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleTwoToggle}
-              style={{ opacity: isTwo ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+            : !toggleStates.isTwo && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={() => handleToggle("isTwo")}
+                  style={{ opacity: toggleStates.isTwo ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="flex flex-row w-full justify-between mt-6">
@@ -210,17 +211,21 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
               {agentData?.primaryContact?.country || "NA"}
             </span>
             <span className="font-light mt-4">Profile Picture</span>
-            <a
-              className="flex items-center gap-3 text-primary font-medium"
-              href={agentData?.primaryContact?.profilePicture}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Uploaded
-              <span>
-                <FaRegEye />
-              </span>
-            </a>
+            {agentData?.primaryContact?.profilePicture ? (
+              <a
+                className="flex items-center gap-3 text-primary font-medium"
+                href={agentData?.primaryContact?.profilePicture}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Uploaded
+                <span>
+                  <FaRegEye />
+                </span>
+              </a>
+            ) : (
+              "NA"
+            )}
           </span>
         </div>
         {/* comission */}
@@ -296,14 +301,18 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
         {/* Smooth slide transition for editable section */}
         <div
           className={`transition-all duration-500 ease-in-out transform ${
-            isTwo
+            toggleStates.isTwo
               ? "min-h-[100vh] translate-y-0 opacity-100"
               : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
           }`}
         >
-          {isTwo && (
+          {toggleStates.isTwo && (
             <div className="mt-4">
-              <AgentForm2 hide={true} handleCancel={handleCancelTwo}  updateData={updateData}/>
+              <AgentForm2
+                hide={true}
+                handleCancel={handleCancel}
+                updateData={updateData}
+              />
             </div>
           )}
         </div>
@@ -317,17 +326,17 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
               <span className="font-semibold text-[22px]">Bank Details</span>
             </span>
             {profileView === "/admin/approvals" ||
-          profileView === "/admin/applications-review"
-            ? ""
-            : !isThree && (
-              <span
-                className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-                onClick={handleThreeToggle}
-                style={{ opacity: isThree ? 0 : 1 }}
-              >
-                <TbPencilMinus />
-              </span>
-            )}
+            profileView === "/admin/applications-review"
+              ? ""
+              : !toggleStates.isThree && (
+                  <span
+                    className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                    onClick={() => handleToggle("isThree")}
+                    style={{ opacity: toggleStates.isThree ? 0 : 1 }}
+                  >
+                    <TbPencilMinus />
+                  </span>
+                )}
           </div>
 
           <div className="flex flex-row w-full justify-between mt-6">
@@ -388,14 +397,18 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
           {/* Smooth slide transition for editable section */}
           <div
             className={`transition-all duration-500 ease-in-out transform ${
-              isThree
+              toggleStates.isThree
                 ? "min-h-[100vh] translate-y-0 opacity-100"
                 : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
             }`}
           >
-            {isThree && (
+            {toggleStates.isThree && (
               <div className="mt-4">
-                <AgentForm3 hide={true} handleCancel={handleCancelThree}  updateData={updateData}/>
+                <AgentForm3
+                  hide={true}
+                  handleCancel={handleCancel}
+                  updateData={updateData}
+                />
               </div>
             )}
           </div>
@@ -413,15 +426,15 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
           {profileView === "/admin/approvals" ||
           profileView === "/admin/applications-review"
             ? ""
-            : !isFour && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleFourToggle}
-              style={{ opacity: isFour ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+            : !toggleStates.isFour && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={() => handleToggle("isFour")}
+                  style={{ opacity: toggleStates.isFour ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="  w-full  mt-6">
@@ -475,17 +488,23 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
               <span className="font-light mt-4">
                 Business Registration Document
               </span>
-              <a
-                className="flex items-center gap-3 text-primary font-medium"
-                href={agentData?.companyOverview?.businessRegistrationDocument}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Uploaded
-                <span>
-                  <FaRegEye />
-                </span>
-              </a>
+              {agentData?.companyOverview?.businessRegistrationDocument ? (
+                <a
+                  className="flex items-center gap-3 text-primary font-medium"
+                  href={
+                    agentData?.companyOverview?.businessRegistrationDocument
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Uploaded
+                  <span>
+                    <FaRegEye />
+                  </span>
+                </a>
+              ) : (
+                "NA"
+              )}
             </span>
             <span className="flex flex-col items-start w-1/2">
               <span className="font-light mt-4">
@@ -495,17 +514,21 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
                 {agentData?.companyOverview?.businessRegistrationType || "NA"}
               </span>
               <span className="font-light mt-4">Company/Business Profile </span>
-              <a
-                className="flex items-center gap-3 text-primary font-medium"
-                href={agentData?.companyOverview?.businessProfileDocument}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Uploaded
-                <span>
-                  <FaRegEye />
-                </span>
-              </a>
+              {agentData?.companyOverview?.businessProfileDocument ? (
+                <a
+                  className="flex items-center gap-3 text-primary font-medium"
+                  href={agentData?.companyOverview?.businessProfileDocument}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Uploaded
+                  <span>
+                    <FaRegEye />
+                  </span>
+                </a>
+              ) : (
+                "NA"
+              )}
             </span>
           </span>
 
@@ -548,14 +571,18 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
         {/* Smooth slide transition for editable section */}
         <div
           className={`transition-all duration-500 ease-in-out transform ${
-            isFour
+            toggleStates.isFour
               ? "min-h-[100vh] translate-y-0 opacity-100"
               : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
           }`}
         >
-          {isFour && (
+          {toggleStates.isFour && (
             <div className="mt-4">
-              <AgentForm4 hide={true} handleCancel={handleCancelFour}  updateData={updateData}/>
+              <AgentForm4
+                hide={true}
+                handleCancel={handleCancel}
+                updateData={updateData}
+              />
             </div>
           )}
         </div>
@@ -574,15 +601,15 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
           {profileView === "/admin/approvals" ||
           profileView === "/admin/applications-review"
             ? ""
-            : !isFive && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleFiveToggle}
-              style={{ opacity: isFive ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+            : !toggleStates.isFive && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={() => handleToggle("isFive")}
+                  style={{ opacity: toggleStates.isFive ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="w-full justify-between mt-6">
@@ -626,16 +653,16 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
         {/* Smooth slide transition for editable section */}
         <div
           className={`transition-all duration-500 ease-in-out transform ${
-            isFive
+            toggleStates.isFive
               ? "min-h-[100vh] translate-y-0 opacity-100"
               : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
           }`}
         >
-          {isFive && (
+          {toggleStates.isFive && (
             <div className="mt-4">
               <AgentForm5
                 hide={true}
-                handleCancel={handleCancelFive}
+                handleCancel={handleCancel}
                 updateData={updateData}
               />
             </div>
@@ -654,15 +681,15 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
           {profileView === "/admin/approvals" ||
           profileView === "/admin/applications-review"
             ? ""
-            : !isSix && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleSixToggle}
-              style={{ opacity: isSix ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+            : !toggleStates.isSix && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={() => handleToggle("isSix")}
+                  style={{ opacity: toggleStates.isSix ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
         {agentData?.references?.map((data, index) => (
           <div className="w-full mt-6" key={index}>
@@ -708,17 +735,17 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
         {/* Smooth slide transition for editable section */}
         <div
           className={`transition-all duration-500 ease-in-out transform ${
-            isSix
+            toggleStates.isSix
               ? "min-h-[100vh] translate-y-0 opacity-100"
               : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
           }`}
         >
-          {isSix && (
+          {toggleStates.isSix && (
             <div className="mt-4">
               <AgentForm6
                 hide={true}
-                handleCancel={handleCancelSix}
-               updateData={updateData}
+                handleCancel={handleCancel}
+                updateData={updateData}
               />
             </div>
           )}

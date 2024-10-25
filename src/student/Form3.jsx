@@ -15,7 +15,13 @@ import { getStudentData, studentInfo } from "../features/studentSlice";
 import PopUp from "../components/reusable/PopUp";
 import { check } from "../assets";
 
-const Form3 = ({customClass, hide, handleCancel, studentFormId, updateData}) => {
+const Form3 = ({
+  customClass,
+  hide,
+  handleCancel,
+  studentFormId,
+  updateData,
+}) => {
   const { prefCountryOption } = useSelector((state) => state.general);
   const { courses } = useSelector((state) => state.general);
   const { instituteOption } = useSelector((state) => state.general);
@@ -27,8 +33,9 @@ const Form3 = ({customClass, hide, handleCancel, studentFormId, updateData}) => 
   const preference = studentInformation?.data?.preferences;
   const studentId = localStorage.getItem("form");
   const [isPopUp, setIsPopUp] = useState(false);
-  const editForm = hide === true ? "edit":null;
-  const submitId = hide ? formId : studentId
+  const editForm = hide === true ? "edit" : null;
+  const submitId = hide ? formId : studentId;
+  const role = localStorage.getItem('role');
   const [preferenceData, setPreferenceData] = useState({
     preferredCountry: "",
     preferredState: "",
@@ -111,9 +118,10 @@ const Form3 = ({customClass, hide, handleCancel, studentFormId, updateData}) => 
         toast.success(
           res?.message || "Personal Information Submitted successfully"
         );
-        
-        {hide === true ?   updateData() :
-        PopUpOpen()}
+
+        {
+          hide === true ? updateData() : PopUpOpen();
+        }
         localStorage.removeItem("form");
 
         console.log(res);
@@ -128,17 +136,25 @@ const Form3 = ({customClass, hide, handleCancel, studentFormId, updateData}) => 
 
   return (
     <div className="min-h-screen ">
-          <div className={`${customClass}`}>
-{hide === true ? "": <>
-        <p className="text-heading font-semibold text-[30px] pt-7">
-          Preferences
-        </p>
-        <p className="text-secondary font-normal text-[14px] ">
-          Specify preferred study destinations, fields of study, and colleges of
-          interest.
-        </p>
-        </>}
-        <div className={`bg-white rounded-xl ${hide === true ? "-mt-3" :" px-8 py-6 pb-12 mt-6" }`}>
+      <div className={`${customClass}`}>
+        {hide === true ? (
+          ""
+        ) : (
+          <>
+            <p className="text-heading font-semibold text-[30px] pt-7">
+              Preferences
+            </p>
+            <p className="text-secondary font-normal text-[14px] ">
+              Specify preferred study destinations, fields of study, and
+              colleges of interest.
+            </p>
+          </>
+        )}
+        <div
+          className={`bg-white rounded-xl ${
+            hide === true ? "-mt-3" : " px-8 py-6 pb-12 mt-6"
+          }`}
+        >
           <CountrySelect
             name="preferredCountry"
             label="Preferred Country"
@@ -203,7 +219,8 @@ const Form3 = ({customClass, hide, handleCancel, studentFormId, updateData}) => 
             </p>
           )}
         </div>
-        {hide === true ?  <div className="flex justify-end mt-9 gap-4 ">
+        {hide === true ? (
+          <div className="flex justify-end mt-9 gap-4 ">
             <button
               className="border border-greyish text-black px-4 py-2 rounded"
               onClick={handleCancel}
@@ -219,24 +236,30 @@ const Form3 = ({customClass, hide, handleCancel, studentFormId, updateData}) => 
             >
               Save
             </button>
-          </div>: 
-        <FormNavigationButtons
-          backLink="/student-form/2"
-          backText="Back"
-          buttonText="Submit and Continue"
-          handleButtonClick={handleSubmit}
-        />}
+          </div>
+        ) : (
+          <FormNavigationButtons
+            backLink="/student-form/2"
+            backText="Back"
+            buttonText="Submit and Continue"
+            handleButtonClick={handleSubmit}
+          />
+        )}
       </div>
       <PopUp
         src={check}
         PopUpClose={PopUpClose}
         isPopUp={isPopUp}
-        heading="Your Student Registration is Complete!"
-        text1="Thank You for applying to become an official SOV Portal Partner Student."
-        text3="All good things take time."
-        text4="Thanks for your patience!"
-        text="You may start exploring SOV Portal. However, for a proper quality review and writing process, allow us up to 24 to 48 hours to confirm that your application has been successful."
-      />
+        heading={role === "2" ? "Successfully Registered" : "Your Student Registration is Complete!"}
+        text1={
+          role === "2"
+            ? "Student successfully registered! You can now manage their profile and take further actions directly from your portal. Continue to streamline their study journey with ease."
+            : "Thank You for applying to become an official SOV Portal Partner Student."
+        }
+        text3={role !=="2" &&"All good things take time."}
+        text4={role !=="2" &&"Thanks for your patience!"}
+        text={role !=="2" && "You may start exploring SOV Portal. However, for a proper quality review and writing process, allow us up to 24 to 48 hours to confirm that your application has been successful."
+        }/>
     </div>
   );
 };

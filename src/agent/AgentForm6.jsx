@@ -24,7 +24,7 @@ const referenceTemplate = {
   country: "",
 };
 
-const AgentForm6 = ({hide, handleCancel, updatedData}) => {
+const AgentForm6 = ({hide, handleCancel, updateData}) => {
   const { countryOption } = useSelector((state) => state.general);
   const { agentData } = useSelector((state) => state.agent);
   const getData = agentData?.references || [];
@@ -237,7 +237,7 @@ const AgentForm6 = ({hide, handleCancel, updatedData}) => {
         <div className="flex justify-end mt-9 gap-4 ">
             <button
               className="border border-greyish text-black px-4 py-2 rounded"
-              onClick={handleCancel}
+              onClick={() => handleCancel("isSix")}
             >
               Cancel
             </button>
@@ -245,7 +245,7 @@ const AgentForm6 = ({hide, handleCancel, updatedData}) => {
               className="bg-primary text-white px-6 py-2 rounded"
               onClick={() => {
                 handleSubmit();
-                handleCancel();
+                handleCancel("isSix");
               }}
             >
               Save

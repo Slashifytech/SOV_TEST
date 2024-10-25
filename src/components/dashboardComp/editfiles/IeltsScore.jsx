@@ -13,7 +13,7 @@ const initialIELTS = {
   listening: "",
   overallBand: "",
 };
-const IeltsScore = ({ appId, updatedData}) => {
+const IeltsScore = ({ appId, updatedData, profileViewPath}) => {
   const { applicationDataById } = useSelector((state) => state.agent);
   const [isOne, setIsOne] = useState(false);
   const [offerLater, setOfferLater] = useState({
@@ -145,7 +145,7 @@ const IeltsScore = ({ appId, updatedData}) => {
       // API call
       const res = await OfferLetterIeltsInfo(appId, updatedOfferLater, section);
       toast.success(res.message || "Data added successfully");
-      updatedData()
+      updatedData();
       handleCancelOne();
     } catch (error) {
       // Improved error handling
@@ -163,15 +163,17 @@ const IeltsScore = ({ appId, updatedData}) => {
             </span>
             <span className="font-semibold text-[22px]">IELTS Score</span>
           </span>
-          {!isOne && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleOneToggle}
-              style={{ opacity: isOne ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+          {profileViewPath === "/admin/applications-review"
+            ? ""
+            : !isOne && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handleOneToggle}
+                  style={{ opacity: isOne ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="flex flex-row w-full justify-between mt-6">

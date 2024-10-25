@@ -461,7 +461,7 @@ const initialEducationDetails = {
   markSheetPostGraduate: "",
 };
 
-const OfferLetterEducationDetails = ({ appId, updatedData }) => {
+const OfferLetterEducationDetails = ({ appId, updatedData, profileViewPath }) => {
   const [offerLater, setOfferLater] = useState({
     educationDetails: { ...initialEducationDetails },
   });
@@ -597,7 +597,7 @@ const OfferLetterEducationDetails = ({ appId, updatedData }) => {
         updatedOfferLater,
         section
       );
-      updatedData()
+      updatedData();
       toast.success(res.message || "Data added successfully.");
       handleCancelOne();
     } catch (error) {
@@ -625,7 +625,13 @@ const OfferLetterEducationDetails = ({ appId, updatedData }) => {
       );
     }
   }, [applicationDataById]);
-
+  const educationLevelLabels = {
+    diploma: "Diploma",
+    underGraduate: "Under Graduate",
+    postGraduate: "Post Graduate",
+    diplomaPG: "Diploma (PG)",
+    certificationCourse: "Certification Course",
+  };
   return (
     <>
       <div className="bg-white rounded-md px-6 py-4 font-poppins ">
@@ -636,97 +642,119 @@ const OfferLetterEducationDetails = ({ appId, updatedData }) => {
             </span>
             <span className="font-semibold text-[22px]">Education Details</span>
           </span>
-          {!isOne && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleOneToggle}
-              style={{ opacity: isOne ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+          {profileViewPath === "/admin/applications-review"
+            ? ""
+            : !isOne && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handleOneToggle}
+                  style={{ opacity: isOne ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="flex flex-row w-full justify-between mt-6">
-          <span className="w-1/2 flex flex-col text-[15px]">
-            <span className="font-light">Level of Education</span>
-            <span className="font-medium">
-              {applicationDataById?.educationDetails?.educationLevel || "NA"}
+          <span className="w-full flex flex-row  text-[15px] justify-between">
+            <span className="w-1/2 ">
+              <span className="flex flex-col ">
+                {" "}
+                <span className="font-light">Level of Education</span>
+                <span className="font-medium ">
+                  {educationLevelLabels[
+                    applicationDataById?.educationDetails?.educationLevel
+                  ] || "NA"}
+                </span>
+              </span>
+
+              <span className="flex flex-col ">
+                <span className="font-light mt-4">10th Marksheet</span>
+
+                <a
+                  className="flex items-center gap-3 text-primary font-medium"
+                  href={
+                    applicationDataById?.educationDetails?.markSheet10 || "#"
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {applicationDataById?.educationDetails?.markSheet10
+                    ? "Uploaded"
+                    : "NA"}
+                  <span>
+                    <FaRegEye />
+                  </span>
+                </a>
+              </span>
+
+              {applicationDataById?.educationDetails?.markSheet12 && (
+                <>
+                  <span className="font-light mt-4">12th Marksheet</span>
+                  <a
+                    className="flex items-center gap-3 text-primary font-medium"
+                    href={applicationDataById?.educationDetails?.markSheet12}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {applicationDataById?.educationDetails?.markSheet12
+                      ? "Uploaded"
+                      : "NA"}
+                    <span>
+                      <FaRegEye />
+                    </span>
+                  </a>
+                </>
+              )}
             </span>
-            <span className="font-light mt-4">10th Marksheet</span>
+            <span className="w-1/2">
+              {applicationDataById?.educationDetails
+                ?.markSheetUnderGraduate && (
+                <>
+                  <span className="font-light mt-4">Under Graduate</span>
+                  <a
+                    className="flex items-center gap-3 text-primary font-medium"
+                    href={
+                      applicationDataById?.educationDetails
+                        ?.markSheetUnderGraduate
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {applicationDataById?.educationDetails
+                      ?.markSheetUnderGraduate
+                      ? "Uploaded"
+                      : "NA"}
+                    <span>
+                      <FaRegEye />
+                    </span>
+                  </a>
+                </>
+              )}
 
-            <a
-              className="flex items-center gap-3 text-primary font-medium"
-              href={applicationDataById?.educationDetails?.markSheet10}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {applicationDataById?.educationDetails?.markSheet12
-                ? "Uploaded"
-                : "NA"}
-
-              <span>
-                <FaRegEye />
-              </span>
-            </a>
-            <span className="font-light mt-4">12th Marksheet</span>
-
-            <a
-              className="flex items-center gap-3 text-primary font-medium"
-              href={applicationDataById?.educationDetails?.markSheet12}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {applicationDataById?.educationDetails?.markSheet12
-                ? "Uploaded"
-                : "NA"}
-
-              <span>
-                {applicationDataById?.educationDetails?.markSheet12 ? (
-                  <FaRegEye />
-                ) : (
-                  "NA"
-                )}
-              </span>
-            </a>
-          </span>
-          <span className="w-1/2 flex flex-col text-[15px]">
-            <span className="font-light mt-4">Under Graduate</span>
-
-            <a
-              className="flex items-center gap-3 text-primary font-medium"
-              href={
-                applicationDataById?.educationDetails?.markSheetUnderGraduate
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {applicationDataById?.educationDetails?.markSheetUnderGraduate
-                ? "Uploaded"
-                : "NA"}
-
-              <span>
-                <FaRegEye />
-              </span>
-            </a>
-            <span className="font-light mt-4">Post Graduate</span>
-
-            <a
-              className="flex items-center gap-3 text-primary font-medium"
-              href={
-                applicationDataById?.educationDetails?.markSheetPostGraduate
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {applicationDataById?.educationDetails?.markSheetPostGraduate
-                ? "Uploaded"
-                : "NA"}
-
-              <span>
-                <FaRegEye />
-              </span>
-            </a>
+              {applicationDataById?.educationDetails?.markSheetPostGraduate && (
+                <>
+                  <span className="font-light mt-4">Post Graduate</span>
+                  <a
+                    className="flex items-center gap-3 text-primary font-medium"
+                    href={
+                      applicationDataById?.educationDetails
+                        ?.markSheetPostGraduate
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {applicationDataById?.educationDetails
+                      ?.markSheetPostGraduate
+                      ? "Uploaded"
+                      : "NA"}
+                    <span>
+                      <FaRegEye />
+                    </span>
+                  </a>
+                </>
+              )}
+            </span>
           </span>
         </div>
 
@@ -746,7 +774,8 @@ const OfferLetterEducationDetails = ({ appId, updatedData }) => {
                     key={level}
                     className="flex items-center gap-4 border border-[#CFCFD7] rounded-md py-3 w-64 justify-evenly"
                   >
-                    {level.replace(/([A-Z])/g, " $1")}{" "}
+                    {educationLevelLabels[level] ||
+                      level.replace(/([A-Z])/g, " $1")}{" "}
                     {/* Convert camelCase to readable format */}
                     <CustomInput
                       type="radio"

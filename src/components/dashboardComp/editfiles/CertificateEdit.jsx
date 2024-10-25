@@ -10,16 +10,14 @@ import { toast } from "react-toastify";
 import OfferLetterPop from "../OfferLetterPop";
 import { FiUpload } from "react-icons/fi";
 import { TbPencilMinus } from "react-icons/tb";
-import { FaFileUpload } from "react-icons/fa";
+import { FaFileUpload, FaRegEye } from "react-icons/fa";
 import { OfferLetterCertificate } from "../../../features/generalApi";
 import { useSelector } from "react-redux";
 import { RiDeleteBin6Line } from "react-icons/ri";
-const initialdocumentDetails = {
-  url: [],
-};
-const CertificateEdit = ({ appId, updatedData }) => {
+
+const CertificateEdit = ({ appId, updatedData, profileViewPath }) => {
   const [offerLater, setOfferLater] = useState({
-    certificate: { ...initialdocumentDetails },
+    certificate: { url: [] },
   });
   const [isPopUp, setIsPopUp] = useState(false);
   const [isFileType, seFileType] = useState();
@@ -70,9 +68,9 @@ const CertificateEdit = ({ appId, updatedData }) => {
         ...prevData,
         certificate: {
           url: [
-            ...(prevData.certificate.url || []), // Spread existing URLs, handle empty initial state
+            ...(prevData.certificate.url || []), // Spread existing URLs
             ...uploadedUrls, // Append the newly uploaded URLs
-          ],
+          ].filter((url) => url !== null), // Filter out null values
         },
       }));
     }
@@ -90,8 +88,7 @@ const CertificateEdit = ({ appId, updatedData }) => {
         setOfferLater((prevData) => ({
           ...prevData,
           certificate: {
-            ...prevData.certificate,
-            url: "",
+            url: [...(prevData.certificate.url || []), ...uploadedUrls],
           },
         }));
         setResetUpload(true);
@@ -124,8 +121,12 @@ const CertificateEdit = ({ appId, updatedData }) => {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
+        const payload = {
+          certificates: offerLater.certificate.url, // Use the URLs directly
+        };
         const section = "offerLetter";
-        const res = await OfferLetterCertificate(appId, offerLater, section);
+        
+        const res = await OfferLetterCertificate(appId, payload, section);
         toast.success(res?.message || "Data added successfully");
         updatedData();
         handleCancelOne();
@@ -137,6 +138,8 @@ const CertificateEdit = ({ appId, updatedData }) => {
       toast.error("Please resolve the errors before submitting.");
     }
   };
+  console.log("Submitting offerLater:", offerLater);
+
   return (
     <>
       <div className="bg-white rounded-md px-6 py-4 font-poppins mb-20 ">
@@ -145,31 +148,40 @@ const CertificateEdit = ({ appId, updatedData }) => {
             <span className="text-[24px]">
               <FaFileUpload />
             </span>
-            <span className="font-semibold text-[22px]">Certificate Details</span>
-          </span>
-          {!isOne && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleOneToggle}
-              style={{ opacity: isOne ? 0 : 1 }}
-            >
-              <TbPencilMinus />
+            <span className="font-semibold text-[22px]">
+              Certificate Details
             </span>
-          )}
+          </span>
+          {profileViewPath === "/admin/applications-review"
+            ? ""
+            : !isOne && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handleOneToggle}
+                  style={{ opacity: isOne ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
         <div className="flex flex-row w-full justify-between mt-6">
           <span className="w-1/2 flex flex-col text-[15px]">
             <span className="font-light">IELTS/PTE/TOEFL/Certificate*</span>
-            <span className="font-medium">
+            <span className="font-medium mt-2">
               {applicationDataById?.certificate?.url?.map((url, index) => (
+                
                 <a
-                  key={index}
-                  href={url}
+                  className="flex items-center gap-3 text-primary font-medium"
+                  href={
+                  url
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary underline"
                 >
-                  Uploaded Document {index + 1 || "NA"}
+                      Uploaded Document {index + 1 || "NA"}
+                  <span>
+                    <FaRegEye />
+                  </span>
                 </a>
               ))}
             </span>
@@ -182,7 +194,7 @@ const CertificateEdit = ({ appId, updatedData }) => {
               : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
           }`}
         >
-          <div className="bg-white rounded-xl px-8 py-4 pb-12 mt-6">
+          <div className="bg-white rounded-xl  py-4 pb-12 mt-6">
             <div className="flex flex-col justify-center items-center border-2 border-dashed border-body rounded-md py-9 mt-9 mb-4">
               <button
                 className="text-black flex items-center"

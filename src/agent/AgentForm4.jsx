@@ -264,7 +264,11 @@ const AgentForm4 = ({hide, handleCancel, updateData}) => {
         <p className="text-heading font-semibold text-[25px] pt-7">
           Company Overview
         </p></>}
-        <div className="bg-white rounded-xl px-8 py-4 pb-12 mt-6">
+        <div
+          className={`bg-white rounded-xl ${
+            hide === true ? "" : "px-8"
+          } py-4 pb-12 mt-6`}
+        >
           <div className="flex items-start justify-between gap-6 w-full">
             <span className="w-[50%]">
               <SelectComponent
@@ -467,7 +471,7 @@ const AgentForm4 = ({hide, handleCancel, updateData}) => {
         <div className="flex justify-end mt-9 gap-4 ">
             <button
               className="border border-greyish text-black px-4 py-2 rounded"
-              onClick={handleCancel}
+              onClick={() => handleCancel("isFour")}
             >
               Cancel
             </button>
@@ -475,7 +479,7 @@ const AgentForm4 = ({hide, handleCancel, updateData}) => {
               className="bg-primary text-white px-6 py-2 rounded"
               onClick={() => {
                 handleSubmit();
-                handleCancel();
+                handleCancel("isFour");
               }}
             >
               Save

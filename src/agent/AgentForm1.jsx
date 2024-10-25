@@ -315,7 +315,7 @@ const AgentForm1 = ({ hide, handleCancel, updateData }) => {
           <div className="flex justify-end mt-9 gap-4 ">
             <button
               className="border border-greyish text-black px-4 py-2 rounded"
-              onClick={handleCancel}
+              onClick={() => handleCancel("isOne")}
             >
               Cancel
             </button>
@@ -323,7 +323,7 @@ const AgentForm1 = ({ hide, handleCancel, updateData }) => {
               className="bg-primary text-white px-6 py-2 rounded"
               onClick={() => {
                 handleSubmit();
-                handleCancel();
+                handleCancel("isOne");
               }}
             >
               Save

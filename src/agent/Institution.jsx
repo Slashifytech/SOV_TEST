@@ -55,9 +55,9 @@ const Institution = () => {
       const filteredInstitutesByCountry = instituteOption.filter(
         (institute) => institute.country === filterData.country
       );
-      setFilteredInstituteOptions(filteredInstitutesByCountry); 
+      setFilteredInstituteOptions(filteredInstitutesByCountry);
     } else {
-      setFilteredInstituteOptions([]); 
+      setFilteredInstituteOptions([]);
     }
   }, [filterData.country, instituteOption]);
 
@@ -127,12 +127,14 @@ const Institution = () => {
               Explore: Colleges & Universities
             </p>
             <p className="mt-1 font-light text-body pr-[14%] ml-9">
-              You can find your prefered institute or college on the basis of prefered country.
+              Discover colleges worldwide tailored to your study abroad dreams.
+              Filter and Search by country and institutions to find the perfect
+              match for your educational journey.
             </p>
           </span>
-          <span className="flex flex-row items-center relative ml-9">
+          <span className="flex flex-row items-center ml-20 ">
             <CustomInput
-              className="h-11 w-80 rounded-md placeholder:px-3 pl-9 border border-[#E8E8E8] outline-none"
+              className="h-11 w-80 rounded-md placeholder:px-3  pl-9 border border-[#E8E8E8] outline-none"
               type="text"
               placeHodler="Search by Country & Universities"
               name="search"
@@ -171,7 +173,7 @@ const Institution = () => {
       {/* Loading and data handling */}
       {isLoading ? (
         <div className="w-1 ml-[53%]">
-         <Loader/>
+          <Loader />
         </div>
       ) : !isFilterApplied ? (
         <p className="mt-8 font-medium text-body ml-[25%] mr-[15%]">
@@ -208,7 +210,10 @@ const Institution = () => {
                 status={data.status}
                 shortlistInstitute={shortlistInstitute}
                 link="/agent/student-lists"
-                customState={{country: data.country, institute:data.instituteName}}
+                customState={{
+                  country: data.country,
+                  institute: data.instituteName,
+                }}
               />
             ))}
           </div>

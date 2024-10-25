@@ -22,7 +22,7 @@ const initialPersonalInfo = {
   },
 };
 
-const OffLetterPersonalInfo = ({appId, updatedData}) => {
+const OffLetterPersonalInfo = ({appId, updatedData, profileViewPath}) => {
   const {applicationDataById}  = useSelector((state)=> state.agent)
   const [isOne, setIsOne] = useState(false);
   const [offerLater, setOfferLater] = useState({
@@ -171,7 +171,8 @@ const OffLetterPersonalInfo = ({appId, updatedData}) => {
             </span>
           </span>
           {/* Pencil icon visible only when the form is hidden */}
-          {!isOne && (
+             {profileViewPath === "/admin/applications-review" ? "" :
+            !isOne && (
             <span
               className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
               onClick={handleOneToggle}

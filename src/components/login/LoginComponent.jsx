@@ -116,7 +116,7 @@ const LoginComponent = () => {
               navigate("/student-form/1", { state: "passPage" });
               return;
             }
-          );
+          );  
 
           let redirectPath = "";
           if (!studentInfo.data || Object.keys(studentInfo.data).length === 0) {

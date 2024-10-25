@@ -6,13 +6,13 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { OfferLetterPteScore } from "../../../features/generalApi";
 const initialPTES = {
-    reading: "",
-    speaking: "",
-    writing: "",
-    listening: "",
-    overallBand: "",
-  };
-const PteScoreEdit = ({ appId, updatedData }) => {
+  reading: "",
+  speaking: "",
+  writing: "",
+  listening: "",
+  overallBand: "",
+};
+const PteScoreEdit = ({ appId, updatedData, profileViewPath}) => {
   const { applicationDataById } = useSelector((state) => state.agent);
   const [isOne, setIsOne] = useState(false);
   const [offerLater, setOfferLater] = useState({
@@ -63,12 +63,12 @@ const PteScoreEdit = ({ appId, updatedData }) => {
   };
   const validateFields = () => {
     const errors = {};
-    
+
     if (!offerLater.PTE) {
       errors.PTE = "PTE data is missing.";
       return errors;
     }
-  
+
     if (!offerLater.PTE.reading) {
       errors.PTE = {
         ...errors.PTE,
@@ -99,7 +99,7 @@ const PteScoreEdit = ({ appId, updatedData }) => {
         overallBand: "PTE Overall Bands score is required.",
       };
     }
-    
+
     return errors;
   };
   useEffect(() => {
@@ -119,10 +119,10 @@ const PteScoreEdit = ({ appId, updatedData }) => {
       });
     }
   }, [applicationDataById]);
-  
+
   const handleSubmit = async () => {
     const validationErrors = validateFields();
-  
+
     if (Object.keys(validationErrors).length === 0) {
       console.log("Form is valid");
     } else {
@@ -131,7 +131,7 @@ const PteScoreEdit = ({ appId, updatedData }) => {
       console.log("Form has errors", validationErrors);
       return;
     }
-  
+
     try {
       const convertToNumber = (scoreData) => {
         return {
@@ -142,13 +142,15 @@ const PteScoreEdit = ({ appId, updatedData }) => {
           overallBand: Number(scoreData.overallBand),
         };
       };
-  
+
       const updatedOfferLater = {
         ...offerLater,
-        ptes: offerLater.PTE ? convertToNumber(offerLater.PTE) : { ...initialPTES },
+        ptes: offerLater.PTE
+          ? convertToNumber(offerLater.PTE)
+          : { ...initialPTES },
       };
       delete updatedOfferLater.PTE;
-  
+
       const section = "offerLetter";
       const res = await OfferLetterPteScore(appId, updatedOfferLater, section);
       updatedData();
@@ -159,7 +161,7 @@ const PteScoreEdit = ({ appId, updatedData }) => {
       console.error("Error during submission:", error);
     }
   };
-  
+
   return (
     <>
       <div className="bg-white rounded-md px-6 py-4 font-poppins">
@@ -170,15 +172,17 @@ const PteScoreEdit = ({ appId, updatedData }) => {
             </span>
             <span className="font-semibold text-[22px]">PTE Score</span>
           </span>
-          {!isOne && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleOneToggle}
-              style={{ opacity: isOne ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+          {profileViewPath === "/admin/applications-review"
+            ? ""
+            : !isOne && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handleOneToggle}
+                  style={{ opacity: isOne ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="flex flex-row w-full justify-between mt-6">
@@ -217,13 +221,13 @@ const PteScoreEdit = ({ appId, updatedData }) => {
         >
           {isOne && (
             <>
-            <ScoreInputForm
-            namePrefix="PTE"
-            handleInput={handleInput}
-            scoreType="PTE Score"
-            scoreData={offerLater.PTE}
-            errors={errors.PTE}
-          />
+              <ScoreInputForm
+                namePrefix="PTE"
+                handleInput={handleInput}
+                scoreType="PTE Score"
+                scoreData={offerLater.PTE}
+                errors={errors.PTE}
+              />
 
               <div className="flex justify-end gap-4">
                 <button

@@ -48,7 +48,7 @@ const Sidebar = () => {
 
   return (
     <>
-    <div className="bg-white w-[35vh] h-[100vh] pt-8 pb-6 overflow-y-auto scrollbar-hide border-r-2 border-[#E8E8E8]">
+    <div className="bg-white md:w-[17.5vw] sm:w-[24vw] h-[100vh]  pt-8 pb-6 overflow-y-auto scrollbar-hide border-r-2 border-[#E8E8E8]">
       {sidebarList.map((item, index) => (
         <div
           key={index}

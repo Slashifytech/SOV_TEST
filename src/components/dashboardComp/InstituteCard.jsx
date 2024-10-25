@@ -74,10 +74,10 @@ const InstituteCard = ({
   );
 };
 
-const StatusComp = ({ statusOne }) => {
+const StatusComp = ({ statusOne, studentTwo }) => {
   const statusList = [
     statusOne,
-    "current",
+    studentTwo,
     "current",
     "current",
     "current",

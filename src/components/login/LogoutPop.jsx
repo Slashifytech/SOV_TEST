@@ -6,10 +6,14 @@ import { logout } from "../../features/authSlice";
 const LogoutPop = ({ isLogoutOpen, closeLogout }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
   const handleLogout = () => {
     dispatch(logout());
-    localStorage.removeItem("student")
-    navigate("/login");
+    localStorage.removeItem("student");
+    localStorage.removeItem("userAuthToken");
+    {
+      role === "0" ? navigate("/admin/role/auth/login") : navigate("/login");
+    }
   };
   return (
     <>

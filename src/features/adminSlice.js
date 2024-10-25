@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllApplicationforApproval, getAllApproval } from "./adminApi";
+import { getAgentDataByAdmin, getAllApplicationforApproval, getAllApproval } from "./adminApi";
 
 // Async thunk to fetch agent data
 export const applicationForApproval = createAsyncThunk(
   "agents/applicationForApproval",
-  async (typeData, { rejectWithValue }) => {
+  async ({tabType, page, perPage, search, isTypeFilter}, { rejectWithValue }) => {
     try {
-      const response = await getAllApplicationforApproval(typeData);
+      const response = await getAllApplicationforApproval(tabType, page, perPage, search, isTypeFilter);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -17,9 +17,22 @@ export const applicationForApproval = createAsyncThunk(
 );
 export const agentStudentApprovals = createAsyncThunk(
   "agents/agentStudentApprovals",
-  async (typeData, { rejectWithValue }) => {
+  async ({ tabType, search,  page, perPage, isTypeFilter }, { rejectWithValue }) => {
     try {
-      const response = await getAllApproval(typeData);
+      const response = await getAllApproval(tabType, search,  page, perPage, isTypeFilter);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data : "Failed to fetch agent data"
+      );
+    }
+  }
+);
+export const agentDataProfile = createAsyncThunk(
+  "admin/agentDataProfile",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await getAgentDataByAdmin(id);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -32,19 +45,19 @@ export const agentStudentApprovals = createAsyncThunk(
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
-    approvals: null,
-    applications: null,
+    approvals: [],
+    applications: [],
     tabType: "",
     status: "idle",
     error: null,
-    updateState: false
+    updateState: false,
+    agentProfile:"",
   },
   reducers: {
-    setTabType: (state, action)=>{
-      state.updateState = !state.updateState
-      state.tabType = action.payload
-    }
-
+    setTabType: (state, action) => {
+      state.updateState = !state.updateState;
+      state.tabType = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -64,13 +77,26 @@ const adminSlice = createSlice({
       })
       .addCase(agentStudentApprovals.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.approvals = action.payload;
+        console.log("Payload received:", action.payload);
+
+        state.approvals = action.payload
       })
       .addCase(agentStudentApprovals.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })  .addCase(agentDataProfile.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(agentDataProfile.fulfilled, (state, action) => {
+        state.status = "succeeded";
+
+        state.agentProfile = action.payload
+      })
+      .addCase(agentDataProfile.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || action.error.message;
       });
   },
 });
-export const {setTabType} = adminSlice.actions
+export const { setTabType } = adminSlice.actions;
 export default adminSlice.reducer;

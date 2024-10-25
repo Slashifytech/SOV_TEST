@@ -15,12 +15,11 @@ const AgentShortlist = () => {
 
   // Fetch shortlisted universities on component mount
   useEffect(() => {
-    setIsLoading(true)
-    dispatch(shortlistedData()).finally(()=>{
-      setIsLoading(false)
-    })
+    setIsLoading(true);
+    dispatch(shortlistedData()).finally(() => {
+      setIsLoading(false);
+    });
   }, [dispatch]);
-
 
   // Function to handle shortlisting an institute
   const shortlistInstitute = async (instituteId) => {
@@ -28,7 +27,7 @@ const AgentShortlist = () => {
       const res = await shortlistAdd(instituteId);
       console.log(res);
       toast.success(res.message || "University shortlisted");
-      
+
       // Refetch the updated list after successful shortlist
       dispatch(shortlistedData());
     } catch (error) {
@@ -46,13 +45,12 @@ const AgentShortlist = () => {
         </span>
       </div>
 
-      
       <ShortlistComponent
         cardData={shortlisteduniversity}
         shortlistInstitute={shortlistInstitute}
         isLoading={isLoading}
         headingText="Your Shortlisted Universities & Colleges"
-        bodyText="All you need to know about university fees, courses, deadlines, scholarships and more."
+        bodyText="Easily explore your shortlisted colleges tailored to your preferred countries, all in one place. Simplify your study abroad journey with a personalized selection on our study visa portal."
       />
     </>
   );
