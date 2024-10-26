@@ -249,9 +249,7 @@ export const router = createBrowserRouter([
   {
     path: "/admin/role/auth/login",
     element: (
-      <ProtectedAdmin>
         <AdminLogin></AdminLogin>
-      </ProtectedAdmin>
     ),
     
   },
