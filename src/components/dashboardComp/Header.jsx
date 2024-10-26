@@ -33,12 +33,12 @@ const Header = ({ icon, customLink }) => {
                 <CiStar />
               )}
             </Link>
-            <span className="bg-white rounded-full px-[11px] py-2 text-[27px] cursor-pointer relative">
+            {/* <span className="bg-white rounded-full px-[11px] py-2 text-[27px] cursor-pointer relative">
               <CiBellOn />
               <span className="absolute rounded-full w-5 h-5 text-[13px] -top-1 -right-2 bg-[#FBD5D5] text-primary text-center">
                 2
               </span>
-            </span>
+            </span> */}
             <span className="bg-white rounded-full flex items-center gap-3 px-2 pr-6 py-[4px] cursor-pointer">
               <img
                 src={

@@ -76,7 +76,7 @@ const StudentProfile = () => {
               <div className="pt-20 ml-[17.5%] bg-white">
                 <StatusComp
                   statusOne={studentData?.studentInformation?.pageCount === 3 ? "done" : "pending"}
-                  statusTwo={studentData.flag ? "done" : "pending"}
+                  statusTwo={studentData.flag === true ? "done" : flag === false ?  "pending" : "current" }
 
                 />
               </div>
