@@ -108,7 +108,7 @@ const ApplicationView = () => {
             <div className="flex items-center gap-4 mt-1 ">
               <img
                 src={
-                  studentData?.personalInformation?.profilePicture ||
+                  studentData?.studentInformation?.personalInformation?.profilePicture ||
                   profileSkeleton
                 }
                 alt="Profile"
