@@ -30,6 +30,7 @@ import OfferLetterEdit from "../agent/OfferLetterEdit";
 import Approval from "../admin/Approval";
 import ApplicationReview from "../admin/ApplicationReview";
 import AdminLogin from "../admin/AdminLogin";
+import ProtectedAdmin from "./ProtectedAdmin";
 
 export const router = createBrowserRouter([
   {
