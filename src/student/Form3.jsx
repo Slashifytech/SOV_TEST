@@ -29,13 +29,13 @@ const Form3 = ({
   const studentData = useSelector((state) => state.student.studentInformation);
   const studentInformation = hide ? studentInfoData : studentData;
   const dispatch = useDispatch();
-  const formId = studentInformation?.data?._id;
+  const formId = studentInformation?.data?.studentInformation?._id;
   const preference = studentInformation?.data?.studentInformation?.preferences;
-  const studentId = localStorage.getItem("form");
+  const studentId = localStorage.getItem("form") || studentFormId
   const [isPopUp, setIsPopUp] = useState(false);
   const editForm = hide === true ? "edit" : null;
   const submitId = hide ? formId : studentId;
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem('role')
   const [preferenceData, setPreferenceData] = useState({
     preferredCountry: "",
     preferredState: "",
@@ -51,6 +51,7 @@ const Form3 = ({
     preferredLevelOfEducation: "",
     preferredInstitution: "",
   });
+  const [loading, setLoading] = useState(false);
   const PopUpOpen = () => {
     setIsPopUp(true);
   };
@@ -113,8 +114,9 @@ const Form3 = ({
   }, [preference]);
   const handleSubmit = async () => {
     if (validateFields()) {
+      setLoading(true);
       try {
-        const res = await studentPreference(preferenceData, submitId, editForm);
+        const res = await studentPreference(preferenceData, studentId, editForm);
         toast.success(
           res?.message || "Personal Information Submitted successfully"
         );
@@ -126,8 +128,10 @@ const Form3 = ({
 
         console.log(res);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         toast.error(error.message || error);
+      } finally {
+        setLoading(false);
       }
     } else {
       toast.error("Please fill in all required fields correctly.");
@@ -241,7 +245,7 @@ const Form3 = ({
           <FormNavigationButtons
             backLink="/student-form/2"
             backText="Back"
-            buttonText="Submit and Continue"
+            buttonText={loading ? "Submitting..." : "Submit and Continue"}
             handleButtonClick={handleSubmit}
           />
         )}

@@ -13,6 +13,7 @@ import Loader from "../components/Loader";
 const StudentProfile = () => {
   const studentData = useSelector((state) => state.general.studentData);
   const location = useLocation();
+  console.log(location)
   const dispatch = useDispatch();
   const studentId = location?.state?.id;
   const profileView = location.state?.isprofileView;
@@ -35,6 +36,7 @@ const StudentProfile = () => {
         data: studentData?.studentInformation,
         profileView: profileView,
         updateData: handleProfileUpdate,
+        studentId: studentId
       },
     },
   ];
@@ -76,7 +78,7 @@ const StudentProfile = () => {
               <div className="pt-20 ml-[17.5%] bg-white">
                 <StatusComp
                   statusOne={studentData?.studentInformation?.pageCount === 3 ? "done" : "pending"}
-                  statusTwo={studentData?.flag === true ? "done" : studentData?.flag === false ?  "pending" : "current" }
+                  statusTwo={studentData?.flag ? "done" : "current"}
 
                 />
               </div>

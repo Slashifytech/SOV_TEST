@@ -1,24 +1,37 @@
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getCountryOption, getCourses, getPrefCountryOption } from "./features/generalSlice";
+import {
+  getCountryOption,
+  getCourses,
+  getPrefCountryOption,
+} from "./features/generalSlice";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { router } from "./routes/Route";
 import { agentInformation } from "./features/agentSlice";
 
 function App() {
   const role = localStorage.getItem("role");
   const dispatch = useDispatch();
+  const { prefCountryOption, courses, countryOption } = useSelector(
+    (state) => state.general
+  );
+
   useEffect(() => {
-    // dispatch(user)
-    dispatch(getCountryOption());
-    dispatch(getPrefCountryOption());
-    dispatch(getCourses());
-    if (role === "2"){
-      dispatch(agentInformation())
+    if (!countryOption || countryOption.length === 0) {
+      dispatch(getCountryOption());
     }
-  }, []);
+    if (!prefCountryOption || prefCountryOption.length === 0) {
+      dispatch(getPrefCountryOption());
+    }
+    if (!courses || courses.length === 0) {
+      dispatch(getCourses());
+    }
+    if (role === "2") {
+      dispatch(agentInformation());
+    }
+  }, [dispatch, countryOption, prefCountryOption, courses ]);
 
   return (
     <>

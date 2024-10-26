@@ -84,7 +84,11 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
               {agentData?.companyDetails?.linkedin ? (
                 <a
                   className="flex items-center gap-3 text-primary font-medium"
-                  href={agentData?.companyDetails?.linkedin}
+                  href={
+                    agentData?.companyDetails?.linkedin?.startsWith("http")
+                      ? agentData.companyDetails.linkedin
+                      : `https://${agentData?.companyDetails?.linkedin}`
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -116,7 +120,11 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
               {agentData?.companyDetails?.website ? (
                 <a
                   className="flex items-center gap-3 text-primary font-medium"
-                  href={agentData?.companyDetails?.website}
+                  href={
+                    agentData?.companyDetails?.website?.startsWith("http")
+                      ? agentData.companyDetails.website
+                      : `https://${agentData?.companyDetails?.website}`
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -316,102 +324,102 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
             </div>
           )}
         </div>
+      </div>
 
-        <div className="bg-white rounded-md py-4 mt-9 font-poppins">
-          <div className="flex flex-row text-sidebar items-center justify-between border-b border-greyish">
-            <span className="flex flex-row gap-4 items-center pb-3">
-              <span className="text-[24px]">
-                <RiBankLine />
-              </span>
-              <span className="font-semibold text-[22px]">Bank Details</span>
+      <div className="bg-white rounded-md py-4 px-6  mt-10 font-poppins">
+        <div className="flex flex-row text-sidebar items-center justify-between border-b border-greyish">
+          <span className="flex flex-row gap-4 items-center pb-3">
+            <span className="text-[24px]">
+              <RiBankLine />
             </span>
-            {profileView === "/admin/approvals" ||
-            profileView === "/admin/applications-review"
-              ? ""
-              : !toggleStates.isThree && (
-                  <span
-                    className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-                    onClick={() => handleToggle("isThree")}
-                    style={{ opacity: toggleStates.isThree ? 0 : 1 }}
-                  >
-                    <TbPencilMinus />
-                  </span>
-                )}
-          </div>
+            <span className="font-semibold text-[22px]">Bank Details</span>
+          </span>
+          {profileView === "/admin/approvals" ||
+          profileView === "/admin/applications-review"
+            ? ""
+            : !toggleStates.isThree && (
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={() => handleToggle("isThree")}
+                  style={{ opacity: toggleStates.isThree ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
+        </div>
 
-          <div className="flex flex-row w-full justify-between mt-6">
-            <span className="w-1/2 flex flex-col text-[15px]">
-              <span className="font-light">Bank Name </span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.bankName || "NA"}
-              </span>
-              <span className="font-light mt-4">Country</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.country || "NA"}
-              </span>
-              <span className="font-light mt-4">Address</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.address || "NA"}
-              </span>
-              <span className="font-light mt-4">Postal/Zip Code</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.postalCode || "NA"}
-              </span>
-              <span className="font-light mt-4">Sort Code/BSB Number</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.sortCode || "NA"}
-              </span>
-              <span className="font-light mt-4">Bank Account Number</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.bankAccountNumber || "NA"}
-              </span>
-              <span className="font-light mt-4">Intermediary Swift Code </span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.intermediarySwiftCode || "NA"}
-              </span>
+        <div className="flex flex-row w-full justify-between mt-8">
+          <span className="w-1/2 flex flex-col text-[15px]">
+            <span className="font-light">Bank Name </span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.bankName || "NA"}
             </span>
-            <span className="w-1/2 flex flex-col text-[15px]">
-              <span className="font-light mt-4">Branch Name</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.address || "NA"}
-              </span>
-              <span className="font-light mt-4">Province/State</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.provinceState || "NA"}
-              </span>
-              <span className="font-light mt-4">Swift/BIC Code</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.swiftBicCode || "NA"}
-              </span>
-              <span className="font-light mt-4">Bank Account Name</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.bankAccountName || "NA"}
-              </span>
-              <span className="font-light mt-4">IBAN</span>
-              <span className="font-medium">
-                {agentData?.bankDetails?.iban || "NA"}
-              </span>
+            <span className="font-light mt-4">Country</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.country || "NA"}
             </span>
-          </div>
+            <span className="font-light mt-4">Address</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.address || "NA"}
+            </span>
+            <span className="font-light mt-4">Postal/Zip Code</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.postalCode || "NA"}
+            </span>
+            <span className="font-light mt-4">Sort Code/BSB Number</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.sortCode || "NA"}
+            </span>
+            <span className="font-light mt-4">Bank Account Number</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.bankAccountNumber || "NA"}
+            </span>
+            <span className="font-light mt-4">Intermediary Swift Code </span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.intermediarySwiftCode || "NA"}
+            </span>
+          </span>
+          <span className="w-1/2 flex flex-col text-[15px]">
+            <span className="font-light mt-4">Branch Name</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.address || "NA"}
+            </span>
+            <span className="font-light mt-4">Province/State</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.provinceState || "NA"}
+            </span>
+            <span className="font-light mt-4">Swift/BIC Code</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.swiftBicCode || "NA"}
+            </span>
+            <span className="font-light mt-4">Bank Account Name</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.bankAccountName || "NA"}
+            </span>
+            <span className="font-light mt-4">IBAN</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.iban || "NA"}
+            </span>
+          </span>
+        </div>
 
-          {/* Smooth slide transition for editable section */}
-          <div
-            className={`transition-all duration-500 ease-in-out transform ${
-              toggleStates.isThree
-                ? "min-h-[100vh] translate-y-0 opacity-100"
-                : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
-            }`}
-          >
-            {toggleStates.isThree && (
-              <div className="mt-4">
-                <AgentForm3
-                  hide={true}
-                  handleCancel={handleCancel}
-                  updateData={updateData}
-                />
-              </div>
-            )}
-          </div>
+        {/* Smooth slide transition for editable section */}
+        <div
+          className={`transition-all duration-500 ease-in-out transform ${
+            toggleStates.isThree
+              ? "min-h-[100vh] translate-y-0 opacity-100"
+              : "max-h-0 -translate-y-10 opacity-0 overflow-hidden"
+          }`}
+        >
+          {toggleStates.isThree && (
+            <div className="mt-4">
+              <AgentForm3
+                hide={true}
+                handleCancel={handleCancel}
+                updateData={updateData}
+              />
+            </div>
+          )}
         </div>
       </div>
 

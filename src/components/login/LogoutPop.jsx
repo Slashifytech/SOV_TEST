@@ -19,7 +19,7 @@ const LogoutPop = ({ isLogoutOpen, closeLogout }) => {
     <>
       {isLogoutOpen && (
         <div
-          className={`fixed inset-0 flex items-center justify-center bg-black  bg-opacity-50 z-60  sm:px-52  px-6 ${
+          className={`fixed inset-0 flex items-center justify-center  popup-backdrop sm:px-52  px-6 ${
             isLogoutOpen ? "block" : "hidden"
           }`}
         >

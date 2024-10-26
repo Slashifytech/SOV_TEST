@@ -23,9 +23,9 @@ const Applications = () => {
   const [page, setPage] = useState(1); // Track the current page
   const [isLoading, setIsLoading] = useState(true);
 
-  const totalUsersCount = applicationOverviewData?.total || 0;
-  const currentPage = applicationOverviewData?.page;
-  const totalPagesCount = applicationOverviewData?.total;
+  const totalUsersCount = applicationOverviewData?.pagination?.totalResults || 0;
+  const currentPage = applicationOverviewData?.pagination?.currentPage;
+  const totalPagesCount = applicationOverviewData?.pagination?.totalPages;
 
   const TABLE_ROWS = applicationOverviewData?.studentOverview?.map(
     (data, index) => ({

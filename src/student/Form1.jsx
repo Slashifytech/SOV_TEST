@@ -10,7 +10,10 @@ import PhoneInputComponent from "../components/reusable/PhoneInputComponent";
 import { BsFillPassportFill } from "react-icons/bs";
 import FormSection from "../components/reusable/FormSection";
 import FileUpload from "../components/reusable/DragAndDrop";
-import { StudentPersnalInfo } from "../features/studentApi";
+import {
+  StudentPersnalInfo,
+  StudentPersnalInfoEdit,
+} from "../features/studentApi";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,23 +30,30 @@ import ImageComponent from "./../components/reusable/Input";
 import { ImBin } from "react-icons/im";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-const Form1 = ({ customClass, hide, handleCancel, studentFormId, updateData }) => {
+const Form1 = ({
+  customClass,
+  hide,
+  handleCancel,
+  studentFormId,
+  updateData,
+}) => {
   const { countryOption } = useSelector((state) => state.general);
   const location = useLocation();
   const studentInfoData = useSelector((state) => state.student.studentInfoData);
   const studentData = useSelector((state) => state.student.studentInformation);
-  const IdToAddStudent = location?.state?.id?.id  // for comppleting pending student profile to get data if exists
+  const IdToAddStudent = location?.state?.id?.id; // for comppleting pending student profile to get data if exists
   const studentInformation = hide ? studentInfoData : studentData;
-  console.log(studentInformation,IdToAddStudent )
+  console.log(studentInformation, IdToAddStudent);
   const navigate = useNavigate();
   const [resetProfilePic, setResetProfilePic] = useState(false);
   const [resetPassportUpload, setResetPassportUpload] = useState(false);
-  const studentId = IdToAddStudent || localStorage.getItem("form");
-  const personalInfo = studentInformation?.data?.studentInformation?.personalInformation;
-  console.log(personalInfo)
+  const studentId = IdToAddStudent ||  studentFormId ||  localStorage.getItem("form") || studentInformation?.data?.studentInformation?._id;
+  const personalInfo =
+    studentInformation?.data?.studentInformation?.personalInformation;
 
   const dispatch = useDispatch();
-  const passportInfo = studentInformation?.data?.studentInformation?.passportDetails;
+  const passportInfo =
+    studentInformation?.data?.studentInformation?.passportDetails;
   const editForm = hide === true ? "edit" : null;
 
   const [personalData, setPersonalData] = useState({
@@ -296,15 +306,15 @@ const Form1 = ({ customClass, hide, handleCancel, studentFormId, updateData }) =
       };
 
       try {
-        const res = await StudentPersnalInfo(payload, editForm);
-
-      
+        const res = (hide || location?.state?.hide === true || studentInformation?.data?.studentInformation?.pageStatus?.status === "rejected") 
+          ? await StudentPersnalInfoEdit(payload, studentId)
+          : await StudentPersnalInfo(payload);
 
         if (res?.statusCode === 201 || res?.statusCode === 200) {
           toast.success("Personal Information Submitted successfully");
           {
             hide === true
-              ?   updateData()
+              ? updateData()
               : navigate(`/student-form/2`, { state: "passPage" });
           }
           window.scrollTo(0, 0);
@@ -541,7 +551,7 @@ const Form1 = ({ customClass, hide, handleCancel, studentFormId, updateData }) =
                           onClick={() => deleteFile(url, "passportUpload")}
                           className="ml-4 text-red-500 test-[21px]"
                         >
-                       <RiDeleteBin6Line />
+                          <RiDeleteBin6Line />
                         </button>
                       </li>
                     ))}

@@ -6,7 +6,7 @@ import { CountrySelect } from "../../reusable/Input";
 import Register from "../../reusable/Register";
 import PhoneInputComponent from "../../reusable/PhoneInputComponent";
 import { allApplication } from "../../../features/agentSlice";
-import { OfferLetterPersonalInfoEdit } from "../../../features/generalApi";
+import { countryOptions, OfferLetterPersonalInfoEdit } from "../../../features/generalApi";
 import { toast } from "react-toastify";
 
 const initialPersonalInfo = {
@@ -31,7 +31,9 @@ const OffLetterPersonalInfo = ({appId, updatedData, profileViewPath}) => {
 
   const [errors, setErrors] = useState({}); 
   const dispatch = useDispatch();
-  const { prefCountryOption } = useSelector((state) => state.general);
+  const { countryOption} = useSelector(
+    (state) => state.general
+  );
   useEffect(() => {
     dispatch(allApplication());
   }, [dispatch]);
@@ -310,7 +312,7 @@ const OffLetterPersonalInfo = ({appId, updatedData, profileViewPath}) => {
                 name="personalInformation.address.country"
                 label="Country"
                 customClass="bg-input"
-                options={prefCountryOption}
+                options={countryOption}
                 value={offerLater.personalInformation.address.country}
                 handleChange={handleInput}
               />

@@ -5,7 +5,7 @@ const VerifyPopUp = ({ isVerifyOpen, OtpResend, handleVerify, email }) => {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
   const [timer, setTimer] = useState(60); 
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     if (isVerifyOpen) {
       setIsResendDisabled(true);
@@ -39,6 +39,7 @@ const VerifyPopUp = ({ isVerifyOpen, OtpResend, handleVerify, email }) => {
 
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const otpValue = otp.join("");
     try {
       const res = await handleVerify(otpValue);
@@ -46,9 +47,10 @@ const VerifyPopUp = ({ isVerifyOpen, OtpResend, handleVerify, email }) => {
     } catch (error) {
       toast.error(error?.message || "Something went wrong");
       console.log(error);
+    } finally {
+      setIsSubmitting(false); 
     }
   };
-
   
 
   const formatTimer = (seconds) => {
@@ -100,7 +102,7 @@ const VerifyPopUp = ({ isVerifyOpen, OtpResend, handleVerify, email }) => {
                 onClick={handleOtpSubmit}
                 className="px-8 py-2 cursor-pointer rounded-lg text-white bg-primary w-full text-center"
               >
-                Submit
+              {isSubmitting ? "Submitting..." : "Submit"}
               </span>
             </div>
           </div>

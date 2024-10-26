@@ -41,7 +41,6 @@ export const getInstituteOption = createAsyncThunk(
   async (country, { rejectWithValue }) => {
     try {
       const res = await countryInstituteOptions(country);
-      console.log(res);
       return res.data;
     } catch (error) {
       return rejectWithValue(
@@ -96,9 +95,10 @@ const generalSlice = createSlice({
     // Add a reducer to remove a university optimistically (immediate UI update)
     removeShortlistedUniversity: (state, action) => {
       state.instituteOption = state.instituteOption.filter(
-        (institute) => institute.id !== action.payload
+        (institute) => institute.id !== action.pay
       );
     },
+
   },
 
   extraReducers: (builder) => {
@@ -125,6 +125,7 @@ const generalSlice = createSlice({
       })
       .addCase(getInstituteOption.rejected, (state, action) => {
         state.status = "failed";
+        state.instituteOption = []
         state.error = action.payload || action.error.message;
       })
       .addCase(getPrefCountryOption.pending, (state) => {
@@ -164,5 +165,5 @@ const generalSlice = createSlice({
       });
   },
 });
-
+export const { clearInstituteOption } = generalSlice.actions;
 export default generalSlice.reducer;

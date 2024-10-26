@@ -184,7 +184,7 @@ const ApplicationView = () => {
               </span>
               <Link
                 to="/offerletter-apply"
-                state={studentData?._id}
+                state={studentData?.studentInformation?._id}
                 className="bg-primary text-white px-4  rounded-md py-2"
               >
                 + Add Application

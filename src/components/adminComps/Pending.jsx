@@ -34,6 +34,7 @@ const Pending = ({ data }) => {
     try {
       const res = await changeApprovalStatus(id, status, type, message);
       handleApprovalUpdate();
+      
       toast.success(res.message || "Approval Status Updated");
     } catch (error) {
       toast.error(error.message || "Something went wrong");

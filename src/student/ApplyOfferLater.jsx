@@ -21,7 +21,11 @@ import {
 import { storage } from "../utils/fireBase";
 import OfferLetterPop from "../components/dashboardComp/OfferLetterPop";
 import { FiUpload } from "react-icons/fi";
-import { getInstituteOption, studentById } from "../features/generalSlice";
+import {
+  clearInstituteOption,
+  getInstituteOption,
+  studentById,
+} from "../features/generalSlice";
 import FormSection, {
   ScoreInputForm,
 } from "../components/reusable/FormSection";
@@ -106,7 +110,7 @@ const ApplyOfferLater = () => {
   const location = useLocation();
   const studentId = location?.state?.id || location?.state;
   const { courses } = useSelector((state) => state.general);
-  const { countryOption, studentData, prefCountryOption} = useSelector(
+  const { countryOption, studentData, prefCountryOption } = useSelector(
     (state) => state.general
   );
   const prefCountry = location?.state?.prefCountry;
@@ -137,7 +141,12 @@ const ApplyOfferLater = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getInstituteOption(offerLater?.preferences?.country));
+      if (offerLater?.preferences?.country) {
+     dispatch(
+          getInstituteOption(offerLater.preferences.country)
+        )
+      } 
+  
   }, [dispatch, offerLater?.preferences?.country]);
   const PopUpOpen = () => {
     setResetDoc(false);
@@ -387,7 +396,7 @@ const ApplyOfferLater = () => {
       };
 
       const certificateUrls = Array.isArray(offerLater.certificate.urls)
-        ? offerLater.certificate.urls 
+        ? offerLater.certificate.urls
         : offerLater.certificate.urls
         ? [offerLater.certificate.urls]
         : [];
@@ -455,18 +464,27 @@ const ApplyOfferLater = () => {
         personalInformation: {
           ...prevState.personalInformation, // Spread previous personalInformation state to retain other fields
           fullName:
-            (studentData?.studentInformation?.personalInformation?.firstName || "") +
+            (studentData?.studentInformation?.personalInformation?.firstName ||
+              "") +
             " " +
-            (studentData?.studentInformation?.personalInformation?.lastName || ""),
-          email: studentData?.studentInformation?.personalInformation?.email || "",
-          phoneNumber: studentData?.studentInformation?.personalInformation?.phone?.phone || "",
+            (studentData?.studentInformation?.personalInformation?.lastName ||
+              ""),
+          email:
+            studentData?.studentInformation?.personalInformation?.email || "",
+          phoneNumber:
+            studentData?.studentInformation?.personalInformation?.phone
+              ?.phone || "",
           address: {
             ...prevState.personalInformation?.address, // Spread previous address state
-            street: studentData?.studentInformation?.residenceAddress?.address || "",
+            street:
+              studentData?.studentInformation?.residenceAddress?.address || "",
             city: studentData?.studentInformation?.residenceAddress?.city || "",
-            state: studentData?.studentInformation?.residenceAddress?.state || "",
-            postalCode: studentData?.studentInformation?.residenceAddress?.zipcode || "",
-            country: studentData?.studentInformation?.residenceAddress?.country || "",
+            state:
+              studentData?.studentInformation?.residenceAddress?.state || "",
+            postalCode:
+              studentData?.studentInformation?.residenceAddress?.zipcode || "",
+            country:
+              studentData?.studentInformation?.residenceAddress?.country || "",
           },
         },
       }));
@@ -592,7 +610,8 @@ const ApplyOfferLater = () => {
                   key={level}
                   className="flex items-center gap-4 border border-[#CFCFD7] rounded-md py-3 w-52 justify-evenly"
                 >
-                        {educationLevelLabels[level] || level.replace(/([A-Z])/g, " $1")}{" "}
+                  {educationLevelLabels[level] ||
+                    level.replace(/([A-Z])/g, " $1")}{" "}
                   {/* Convert camelCase to readable format */}
                   <CustomInput
                     type="radio"

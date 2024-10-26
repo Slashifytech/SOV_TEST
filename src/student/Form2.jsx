@@ -27,11 +27,11 @@ const Form2 = ({
   const studentInformation = hide ? studentInfoData : studentData;
   const residenceAddress = studentInformation?.data?.studentInformation?.residenceAddress;
   const mailingAddress = studentInformation?.data?.studentInformation?.mailingAddress;
-  const studentId = localStorage.getItem("form");
+  const studentId = studentFormId || localStorage.getItem("form");
   const dispatch = useDispatch();
-  console.log(studentId);
+  console.log(studentFormId);
 
-  const formId = studentInformation?.data?._id;
+  const formId = studentInformation?.data?.studentInformation?._id;
   const submitId = hide ? formId : studentId;
   const [residenceData, setResidenceData] = useState({
     address: "",
@@ -145,7 +145,7 @@ const Form2 = ({
     };
 
     try {
-      const res = await studentAddress(payload, submitId, editForm);
+      const res = await studentAddress(payload, studentId, editForm);
       if (res?.statusCode === 200) {
         {
           hide === true

@@ -91,11 +91,16 @@ const LoginComponent = () => {
           ) {
             redirectPath = `/agent/dashboard`;
           } else if (
-            agentInfo.pageCount === 6 &&
-            agentInfo.pageStatus?.status === "notapproved"
+            (agentInfo.pageCount === 6 &&
+            agentInfo.pageStatus.status === "notapproved") ||  (agentInfo.pageStatus.status === "notapproved")
           ) {
             redirectPath = `/waiting`;
-          } else if (
+          }else if (
+            (agentInfo.pageCount === 6 &&
+            agentInfo.pageStatus.status === "rejected") ||  (agentInfo.pageStatus.status === "rejected")
+          ) {
+            redirectPath = "/agent-form/1";
+          }  else if (
             agentInfo.pageCount !== 6 &&
             agentInfo.pageStatus?.status === "registering"
           ) {
@@ -117,6 +122,7 @@ const LoginComponent = () => {
               return;
             }
           );  
+          console.log(studentInfo)
 
           let redirectPath = "";
           if (!studentInfo.data || Object.keys(studentInfo.data).length === 0) {

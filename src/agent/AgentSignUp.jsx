@@ -463,7 +463,7 @@ const AgentSignUp = () => {
                 >
                   {isVerifyingLoading ? "Sending Otp..." : "Verify"}
                 </div>
-                <p className="text-greyish text-sm pt-3">
+                <p className="text-body text-sm pt-3">
                   Already have an account?{" "}
                   <Link to="/login">
                     <span className="text-primary font-medium">Log in </span>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {BsPieChartFill } from "react-icons/bs";
 import { BiSolidInstitution } from "react-icons/bi";
 
@@ -17,7 +17,9 @@ import { logo } from "../../assets";
 const AgentSidebar = () => {
   const location = useLocation();
   const path = location.pathname;
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(
+    JSON.parse(localStorage.getItem("isOpen")) ?? true 
+  );
   const [isLogoutOpen, setisLogoutOpen] = useState(false);
 
   const openLogoutPopup = () => {
@@ -42,7 +44,11 @@ const AgentSidebar = () => {
       pathPage: "/agent/student-lists",
       icon:<FaUsers />,
       label: "Students",
-      otherPath: "/agent/student-profile"
+      otherPath: "/agent/student-profile",
+      otherPathTwo: "/student-form/1",
+      otherPathThree:"/student-form/2",
+      otherPathFour:"/student-form/3",
+
     },
     {
       pathPage: "/agent/applications",
@@ -54,7 +60,9 @@ const AgentSidebar = () => {
     },
   
   ];
-
+  useEffect(() => {
+    localStorage.setItem("isOpen", JSON.stringify(isOpen));
+  }, [isOpen]);
   return (
     <>
       <div className="bg-white md:w-[17.5vw] sm:w-[24vw] h-[100vh]  overflow-y-auto scrollbar-hide border-r-2 border-[#E8E8E8]">
@@ -65,7 +73,7 @@ const AgentSidebar = () => {
           <div
             key={index}
             className={`cursor-pointer py-4 hover:bg-[#f5ebeb] hover:text-primary hover:border-l-4 hover:font-medium ${
-                path === item.pathPage || path === item?.otherPath || path === item?.otherPathTwo || path === item?.otherPathThree
+                path === item.pathPage || path === item?.otherPath || path === item?.otherPathTwo || path === item?.otherPathThree || path === item?.otherPathFour
                 ? "bg-[#FBD5D5] text-primary border-l-4 border-primary font-medium"
                 : "text-sidebar"
             }`}

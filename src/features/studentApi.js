@@ -26,6 +26,27 @@ export const StudentPersnalInfo = async (payload, edit) => {
       }
     }
   };
+  export const StudentPersnalInfoEdit = async (payload, id) => {
+    try {
+      const response = await apiurl.patch(
+        `/studentinformation/personal-information/${id}`,
+        payload
+      );
+    localStorage.setItem("form", response?.data?.data?._id);
+
+      return response.data;
+    } catch (error) {
+        if (error.response) {
+          throw new Error(
+            error.response.data.message || "Error while submitting the form"
+          );
+        } else if (error.request) {
+          throw new Error("No response from server. Please try again later.");
+        } else {
+          throw new Error("An unexpected error occurred");
+        }
+      }
+    };
 export const studentPreference = async (payload, formId, edit) => {
   try {
     const response = await apiurl.patch(

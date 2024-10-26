@@ -4,8 +4,7 @@ export const getAllApplicationforApproval = async (
   tabType,
   page,
   perPage,
-  search,
-  isTypeFilter
+  searchQuery,
 ) => {
   try {
     const response = await apiurl.get(`/admin/all/applications`, {
@@ -13,8 +12,7 @@ export const getAllApplicationforApproval = async (
         status: tabType,
         page: page,
         limit: perPage,
-        searchQuery: search,
-        type: isTypeFilter
+        searchQuery: searchQuery,
       },
     });
     return response.data;
@@ -36,14 +34,12 @@ export const getAllApproval = async (
   search,
   page,
   perPage,
-  isTypeFilter
 ) => {
   try {
     const response = await apiurl.get(`/admin/all/student-agent-data`, {
       params: {
         status: tabType || "notapproved",
         search: search,
-        type: isTypeFilter,
         page: page,
         limit: perPage,
       },
@@ -67,7 +63,7 @@ export const chngeApplicationStatus = async (id, status, section, message) => {
       `/admin/change-application-status/${id}`,
       { status, section, message }
     );
-    return response.data?.data;
+    return response.data;
   } catch (error) {
     if (error.response) {
       throw new Error(
@@ -87,7 +83,7 @@ export const changeApprovalStatus = async (id, status, type, message) => {
       type,
       message,
     });
-    return response.data?.data;
+    return response.data;
   } catch (error) {
     if (error.response) {
       throw new Error(

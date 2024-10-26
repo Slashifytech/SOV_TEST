@@ -19,8 +19,10 @@ const StudentCards = ({
   defaultId,
   status,
   page,
+  edit
 }) => {
   const [isFuncOpen, setIsFuncOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const closeFunc = () => {
     setIsFuncOpen(false);
   };
@@ -28,12 +30,20 @@ const StudentCards = ({
     setIsFuncOpen(true);
   };
   const messagefunc = () => toast.info("Please complete the profile first");
-  
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <>
       <div className="bg-white border border-[#E8E8E8] py-4 px-4 rounded-md font-poppins  w-full">
       
-        <div className="flex items-center gap-4 mt-1">
+        <div className="flex items-center gap-4 mt-1 ">
+        
           <img
             src={profile || profileSkeleton}
             alt="Profile"
@@ -45,42 +55,52 @@ const StudentCards = ({
             <span className="text-primary font-medium text-[13px]">
               {application || 0} Applications
             </span>
+            <div
+              onClick={() => openFunc()}
+              className=" underline text-red-500 font-normal relative left-40 -top-7 px-1 text-[20px]  cursor-pointer"
+            >
+              <RiDeleteBin6Line />
+            </div>
             <span className="text-sidebar text-[14px] font-medium ">
               {name?.slice(0, 24) || "NA"}
             </span>
-            <span className="text-[13px] pt-[1px] text-body font-normal">
-              {email || "NA"}
+            
+            <span
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className="text-[13px]  pt-[1px] text-body font-normal"
+            >
+              {email.length > 20 ? `${email.slice(0, 20)}...` : email || "NA"}
             </span>
-            <span className="flex flex-row justify-between gap-4 items-center w-full">
-            <span className="text-[13px] text-body font-normal">
-              {mobile || "NA"}
-            </span>
-            <span>
-            {stId ? (
-              <span className="text-[13px] underline text-green-500 font-normal  px-1">
-                Completed
-              </span>
-            ) : (
-              <Link
-                to={`/student-form/${page}`}
-                state={{ passPage: "passPage", id:defaultId }}
-                className="text-[13px] underline text-yellow-500 font-normal  px-1 cursor-pointer"
-              >
-                Pending
-              </Link>
+            {isHovered && (
+              <div className="text-start absolute  text-[13px] w-80 p-1 bg-white border  rounded-lg">
+                <p> {email}</p>
+              </div>
             )}
-            </span>
+            <span className="flex flex-row justify-between gap-4 items-center w-full ">
+              <span className="text-[13px] text-body font-normal">
+                {mobile || "NA"}
+              </span>
+              <span>
+                {stId ? (
+                  <span className="text-[13px] underline text-green-500 font-normal  px-1">
+                    Completed
+                  </span>
+                ) : (
+                  <Link
+                    to={`/student-form/${page}`}
+                    state={{ passPage: "passPage", id: defaultId, hide:edit }}
+                    className="text-[13px] underline text-yellow-500 font-normal  px-1 cursor-pointer"
+                  >
+                    Pending
+                  </Link>
+                )}
+              </span>
             </span>
             <span className="text-[13px] text-body font-normal">
               ID: {stId || "NA"}
             </span>
-            <span
-              onClick={() => openFunc()}
-              className=" underline text-red-500 font-normal absolute  top-2 px-1 text-[20px] right-4 cursor-pointer"
-            >
-              <RiDeleteBin6Line />
-            </span>
-      
+       
           </span>
         </div>
         {stId ? (

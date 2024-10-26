@@ -7,11 +7,10 @@ import { IoHomeOutline } from "react-icons/io5";
 import { RxSlider } from "react-icons/rx";
 import Form3 from './../../../student/Form3';
 
-const StudentEdit = ({ data, profileView, updateData }) => {
+const StudentEdit = ({ data, profileView, updateData, studentId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isResidenceProfile, setIsResidenceProfile] = useState(false);
   const [isPrefenceProfile, setIsPreferenceProfile] = useState(false);
-
 
   const handleEditToggle = () => {
     setIsEditing((prev) => !prev);
@@ -65,7 +64,7 @@ const StudentEdit = ({ data, profileView, updateData }) => {
             <span className="font-light">Profile Picture</span>
             <a
               className="flex items-center gap-3 text-primary font-medium"
-              href={data?.personalInformation?.profilePicture}
+              href={`https://${data?.personalInformation?.profilePicture}`}
               target="_blank"
               rel="noopener noreferrer"
             >

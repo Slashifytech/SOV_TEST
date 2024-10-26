@@ -75,6 +75,8 @@ const StudentsList = () => {
   };
   const locatStorageDelete = ()=>{
     localStorage.removeItem("form");
+    localStorage.removeItem("student");
+
   }
   return (
     <>
@@ -172,6 +174,7 @@ const StudentsList = () => {
                   application={data?.applicationCount}
                   deleteStudentData={deleteStudent}
                   page={data?.pageCount}
+                  edit={true}
                 />
               ))}
             </div>
