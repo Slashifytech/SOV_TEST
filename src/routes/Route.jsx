@@ -139,18 +139,18 @@ export const router = createBrowserRouter([
   {
     path: "/agent/student-profile",
     element: (
-      <StudentAgentProtected>
+      // <StudentAgentProtected>
         <StudentProfile></StudentProfile>
-     </StudentAgentProtected>
+    //  </StudentAgentProtected>
     ),
     
   },
   {
     path: "/student-profile",
     element: (
-       <StudentAgentProtected>
+      //  <StudentAgentProtected>
         <StudentProfile></StudentProfile>
-      </StudentAgentProtected>
+      // </StudentAgentProtected>
     ),
     
   },
@@ -166,9 +166,9 @@ export const router = createBrowserRouter([
   {
     path: "/application-view",
     element: (
-       <StudentAgentProtected>
+      //  <StudentAgentProtected>
         <OfferLetterEdit></OfferLetterEdit>
-      </StudentAgentProtected>
+      // </StudentAgentProtected>
     ),
     
   },
