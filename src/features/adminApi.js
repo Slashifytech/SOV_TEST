@@ -134,3 +134,20 @@ export const getAgentDataByAdmin = async (id) => {
     }
   }
 };
+
+export const getStudentDataByAdmin = async (id) => {
+  try {
+    const response = await apiurl.get(`admin/student-information/${id}`);
+    return response.data?.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        error.response.data.message || "Error while submitting the form"
+      );
+    } else if (error.request) {
+      throw new Error("No response from server. Please try again later.");
+    } else {
+      throw new Error("An unexpected error occurred");
+    }
+  }
+};

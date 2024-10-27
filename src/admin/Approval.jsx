@@ -24,7 +24,7 @@ const Approval = () => {
   const [page, setPage] = useState(1);
   const totalUsersCount = approvals?.totalStudents + approvals?.totalCompanies || 0;
   const currentPage = approvals?.currentPage;
-  const totalPagesCount = approvals?.totalPages + approvals?.totalStudentPages;
+  const totalPagesCount = approvals?.totalPages;
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
@@ -42,10 +42,10 @@ const Approval = () => {
     setSearch(e.target.value);
     setPage(1);
   };
-  const handleTypeFilter = (e) => {
-    setIsFilterType(e.target.value);
-    setPage(1);
-  };
+  // const handleTypeFilter = (e) => {
+  //   setIsFilterType(e.target.value);
+  //   setPage(1);
+  // };
   const dispatch = useDispatch();
   const tabs = [
     {
@@ -101,7 +101,7 @@ if(tabType === "notapproved" || tabType === "completed" || tabType === "rejected
             <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
               Approvals
             </p>
-            <p className="mt-1 font-light text-body ml-9">
+            <p className="mt-1 font-normal text-body ml-9">
               Review and Approve Agent and Student Registrations.
             </p>
           </span>

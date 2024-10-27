@@ -5,7 +5,8 @@ import Form1 from "../../../student/Form1";
 import Form2 from "./../../../student/Form2";
 import { IoHomeOutline } from "react-icons/io5";
 import { RxSlider } from "react-icons/rx";
-import Form3 from './../../../student/Form3';
+import Form3 from "./../../../student/Form3";
+import { BsFillPassportFill } from "react-icons/bs";
 
 const StudentEdit = ({ data, profileView, updateData, studentId }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -31,7 +32,7 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
   const handleCancelPreference = () => {
     setIsPreferenceProfile(false);
   };
-// console.log(data)
+  // console.log(data)
 
   return (
     <>
@@ -49,14 +50,14 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
           profileView === "/admin/applications-review"
             ? ""
             : !isEditing && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleEditToggle}
-              style={{ opacity: isEditing ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handleEditToggle}
+                  style={{ opacity: isEditing ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="flex flex-row w-full justify-between mt-6">
@@ -108,6 +109,52 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
           </span>
         </div>
 
+        <div className="bg-white rounded-md  py-4 font-poppins">
+          <div className="flex flex-row text-sidebar items-center justify-between border-b border-greyish">
+            <span className="flex flex-row gap-4 items-center pb-3">
+              <span className="text-[24px]">
+                <BsFillPassportFill />
+              </span>
+              <span className="font-semibold text-[22px]">
+                Passport Details
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-row w-full justify-between mt-6">
+          <span className="w-1/2 flex flex-col text-[15px]">
+            <span className="font-light">upload Passport </span>
+            <a
+              className="flex items-center gap-3 text-primary font-medium"
+              href={data?.passportDetails?.passportUpload}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Uploaded
+              <span>
+                <FaRegEye />
+              </span>
+            </a>
+            <span className="font-light mt-4">Passport Number</span>
+            <span className="font-medium">
+              {data?.passportDetails?.passportNumber || "NA"}
+            </span>
+        
+          </span>
+          <span className="w-1/2 flex flex-col text-[15px]">
+            <span className="font-light mt-4">Country of Citizenship</span>
+            <span className="font-medium">
+              {data?.passportDetails?.countryOfCitizenship 
+               || "NA"}
+            </span>
+            <span className="font-light mt-4">Expiry Date</span>
+            <span className="font-medium">
+              {data?.passportDetails?.expireDate || "NA"}
+            </span>
+          
+          </span>
+        </div>
         {/* Smooth slide transition for editable section */}
         <div
           className={`transition-all duration-500 ease-in-out transform ${
@@ -118,7 +165,12 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
         >
           {isEditing && (
             <div className="mt-4">
-              <Form1 hide={true} handleCancel={handleCancelProfileInfo} studentFormId={data._id} updateData={updateData} />
+              <Form1
+                hide={true}
+                handleCancel={handleCancelProfileInfo}
+                studentFormId={data._id}
+                updateData={updateData}
+              />
             </div>
           )}
         </div>
@@ -137,14 +189,14 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
           profileView === "/admin/applications-review"
             ? ""
             : !isResidenceProfile && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handleResidenceToggle}
-              style={{ opacity: isResidenceProfile ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handleResidenceToggle}
+                  style={{ opacity: isResidenceProfile ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="flex flex-row w-full justify-between mt-6">
@@ -183,20 +235,23 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
         >
           {isResidenceProfile && (
             <div className="mt-4">
-              <Form2 hide={true} handleCancel={handleCancelResidence} studentFormId={data._id} updateData={updateData}/>
+              <Form2
+                hide={true}
+                handleCancel={handleCancelResidence}
+                studentFormId={data._id}
+                updateData={updateData}
+              />
             </div>
           )}
         </div>
-
-        
       </div>
-         {/* Preferencess */}
+      {/* Preferencess */}
 
-         <div className="bg-white rounded-md px-6 py-4 font-poppins mt-6">
+      <div className="bg-white rounded-md px-6 py-4 font-poppins mt-6">
         <div className="flex flex-row text-sidebar items-center justify-between border-b border-greyish">
           <span className="flex flex-row gap-4 items-center pb-3">
             <span className="text-[24px]">
-            <RxSlider/>
+              <RxSlider />
             </span>
             <span className="font-semibold text-[22px]">Preferences</span>
           </span>
@@ -204,14 +259,14 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
           profileView === "/admin/applications-review"
             ? ""
             : !isPrefenceProfile && (
-            <span
-              className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
-              onClick={handlePreferenceToggle}
-              style={{ opacity: isPrefenceProfile ? 0 : 1 }}
-            >
-              <TbPencilMinus />
-            </span>
-          )}
+                <span
+                  className="text-[24px] cursor-pointer transition-opacity duration-300 ease-in-out"
+                  onClick={handlePreferenceToggle}
+                  style={{ opacity: isPrefenceProfile ? 0 : 1 }}
+                >
+                  <TbPencilMinus />
+                </span>
+              )}
         </div>
 
         <div className="flex flex-row w-full justify-between mt-6 mb-20">
@@ -229,14 +284,15 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
             <span className="font-medium">
               {data?.preferences?.preferredState || "NA"}
             </span>
-          
           </span>
           <span className="w-1/2 flex flex-col text-[15px]">
             <span className="font-light mt-4">Preffered Institution</span>
             <span className="font-medium">
               {data?.preferences?.preferredInstitution || "NA"}
             </span>
-            <span className="font-light mt-4">Preferred Level of Education</span>
+            <span className="font-light mt-4">
+              Preferred Level of Education
+            </span>
             <span className="font-medium">
               {data?.preferences?.preferredLevelOfEducation || "NA"}
             </span>
@@ -251,11 +307,16 @@ const StudentEdit = ({ data, profileView, updateData, studentId }) => {
         >
           {isPrefenceProfile && (
             <div className="">
-              <Form3 hide={true} handleCancel={handleCancelPreference} studentFormId={data._id} updateData={updateData}/>
+              <Form3
+                hide={true}
+                handleCancel={handleCancelPreference}
+                studentFormId={data._id}
+                updateData={updateData}
+              />
             </div>
           )}
         </div>
-        </div>
+      </div>
     </>
   );
 };

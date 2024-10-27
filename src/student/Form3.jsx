@@ -129,7 +129,7 @@ const Form3 = ({
         console.log(res);
       } catch (error) {
         console.error(error);
-        toast.error(error.message || error);
+        toast.error(error.message || "Something went wrong");
       } finally {
         setLoading(false);
       }
@@ -245,7 +245,7 @@ const Form3 = ({
           <FormNavigationButtons
             backLink="/student-form/2"
             backText="Back"
-            buttonText={loading ? "Submitting..." : "Submit and Continue"}
+            buttonText={loading ? "Submitting..." : "Submit "}
             handleButtonClick={handleSubmit}
           />
         )}

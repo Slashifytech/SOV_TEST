@@ -52,6 +52,8 @@ useEffect(()=>{
                     ? `${application?.fullName} has filled ${application?.type}`
                     : "Unknown type"
                 }
+              pageType="application"
+
               />
             </div>
           ))
@@ -85,6 +87,8 @@ useEffect(()=>{
                 } on SOV portal` || "Unknown User"
               }
               currentStatus="approved"
+              pageType="offerLetter"
+
 
             />
           </div>

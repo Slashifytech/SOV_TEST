@@ -384,6 +384,10 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
             <span className="font-medium">
               {agentData?.bankDetails?.address || "NA"}
             </span>
+            <span className="font-light mt-4">City</span>
+            <span className="font-medium">
+              {agentData?.bankDetails?.city || "NA"}
+            </span>
             <span className="font-light mt-4">Province/State</span>
             <span className="font-medium">
               {agentData?.bankDetails?.provinceState || "NA"}

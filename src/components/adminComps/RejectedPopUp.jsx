@@ -30,7 +30,7 @@ const RejectedPopUp = ({
 
               <textarea
                 name=""
-                placeholder="Enter the reason for ban..."
+                placeholder="Enter the reason for rejection..."
                 className="shadow mt-5 w-96 px-2  py-2 bg-input"
                 value={reviewText}
                 onChange={handleTextareaChange}

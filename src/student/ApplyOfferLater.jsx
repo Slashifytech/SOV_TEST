@@ -803,7 +803,7 @@ const ApplyOfferLater = () => {
                             href={url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-primary underline"
+                               className="text-primary rounded-sm px-6 py-2 border border-greyish"
                           >
                             Uploaded Document
                           </a>
@@ -811,7 +811,7 @@ const ApplyOfferLater = () => {
                             onClick={() => deleteFile(url, "certificate")}
                             className="ml-4 text-red-500"
                           >
-                            Delete
+                           <RiDeleteBin6Line />
                           </button>
                         </li>
                       ))}
@@ -819,7 +819,7 @@ const ApplyOfferLater = () => {
                 </div>
               )}
           </div>
-          <div className="flex justify-end mb-12">
+          <div className="flex justify-end mb-12 mt-12">
             <span
               onClick={handleSubmit}
               className="bg-primary text-white font-poppins rounded-md px-6 py-2 cursor-pointer"

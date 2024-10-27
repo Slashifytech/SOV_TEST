@@ -170,21 +170,21 @@ const AgentSidebar = () => {
             <span>Payment Details</span>
           </Link>
         </div> */}
-        {/* <div
+        <div
           className={`cursor-pointer py-4 hover:bg-[#f5ebeb] hover:text-primary hover:border-l-4 hover:font-medium ${
-            path === "/student/help"
+            path === "/help-support"
               ? "bg-[#FBD5D5] text-primary border-l-4 border-primary font-medium"
               : "text-sidebar"
           }`}
         >
-          <Link to="/student/help" className="flex items-center gap-3 px-6">
+          <Link to="/help-support" className="flex items-center gap-3 px-6">
             <span className="text-[20px]">
               {" "}
               <AiFillQuestionCircle />
             </span>{" "}
             <span>Help & Support</span>
           </Link>
-        </div> */}
+        </div>
         <div
           className={`cursor-pointer py-4 hover:bg-[#f5ebeb] hover:text-primary hover:border-l-4 hover:font-medium text-secondary`}
         >

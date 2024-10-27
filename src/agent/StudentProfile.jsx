@@ -9,17 +9,26 @@ import TabBar from "../components/dashboardComp/TabBar";
 import studentEdit from "../components/dashboardComp/editfiles/studentEdit";
 import { StatusComp } from "../components/dashboardComp/InstituteCard";
 import Loader from "../components/Loader";
+import { getStudentById } from "../features/adminSlice";
 
 const StudentProfile = () => {
-  const studentData = useSelector((state) => state.general.studentData);
+  const role = localStorage.getItem("role");
+  const studentData =
+    role === "0"
+      ? useSelector((state) => state.admin.getStudentDataById)
+      : useSelector((state) => state.general.studentData);
   const location = useLocation();
-  console.log(location)
+  console.log(location);
   const dispatch = useDispatch();
   const studentId = location?.state?.id;
   const profileView = location.state?.isprofileView;
   const [isLoading, setIsLoading] = useState(true);
   const [profileUpdated, setProfileUpdated] = useState(false);
   useEffect(() => {
+    if (role === "0") {
+      dispatch(getStudentById(studentId));
+    }
+
     dispatch(studentById(studentId));
   }, [dispatch, profileUpdated]);
 
@@ -36,7 +45,7 @@ const StudentProfile = () => {
         data: studentData?.studentInformation,
         profileView: profileView,
         updateData: handleProfileUpdate,
-        studentId: studentId
+        studentId: studentId,
       },
     },
   ];
@@ -47,7 +56,6 @@ const StudentProfile = () => {
 
     return () => clearTimeout(timer);
   }, []);
-
 
   return (
     <>
@@ -77,9 +85,12 @@ const StudentProfile = () => {
             ) : (
               <div className="pt-20 ml-[17.5%] bg-white">
                 <StatusComp
-                  statusOne={studentData?.studentInformation?.pageCount === 3 ? "done" : "pending"}
+                  statusOne={
+                    studentData?.studentInformation?.pageCount === 3
+                      ? "done"
+                      : "pending"
+                  }
                   statusTwo={studentData?.flag ? "done" : "current"}
-
                 />
               </div>
             )}
@@ -96,8 +107,8 @@ const StudentProfile = () => {
                 <div className="flex items-center gap-4 mt-1 ">
                   <img
                     src={
-                      studentData?.studentInformation?.personalInformation?.profilePicture ||
-                      profileSkeleton
+                      studentData?.studentInformation?.personalInformation
+                        ?.profilePicture || profileSkeleton
                     }
                     alt="Profile"
                     className="rounded-md w-28 h-28"
@@ -110,15 +121,19 @@ const StudentProfile = () => {
                       Applications
                     </span> */}
                     <span className="text-sidebar text-[18px] font-medium ">
-                      {studentData?.studentInformation?.personalInformation?.firstName +
+                      {studentData?.studentInformation?.personalInformation
+                        ?.firstName +
                         " " +
-                        studentData?.studentInformation?.personalInformation?.lastName || "NA"}
+                        studentData?.studentInformation?.personalInformation
+                          ?.lastName || "NA"}
                     </span>
                     <span className="text-[14px] pt-[1px] text-body font-normal">
-                      {studentData?.studentInformation?.personalInformation?.email || "NA"}
+                      {studentData?.studentInformation?.personalInformation
+                        ?.email || "NA"}
                     </span>
                     <span className="text-[14px] text-body font-normal">
-                      {studentData?.studentInformation?.personalInformation?.phone?.phone || "NA"}
+                      {studentData?.studentInformation?.personalInformation
+                        ?.phone?.phone || "NA"}
                     </span>
                     <span className="text-[14px] text-body font-normal">
                       ID: {studentData?.studentInformation?.stId || "NA"}

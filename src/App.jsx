@@ -31,7 +31,23 @@ function App() {
     if (role === "2") {
       dispatch(agentInformation());
     }
-  }, [dispatch, countryOption, prefCountryOption, courses ]);
+
+    // Interval to check every 3 seconds
+    const intervalId = setInterval(() => {
+      if (countryOption.length === 0) {
+        dispatch(getCountryOption());
+      }
+      if (prefCountryOption.length === 0) {
+        dispatch(getPrefCountryOption());
+      }
+      if (courses.length === 0) {
+        dispatch(getCourses());
+      }
+      
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, [dispatch, countryOption, prefCountryOption, courses]);
 
   return (
     <>

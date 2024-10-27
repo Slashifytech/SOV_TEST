@@ -23,9 +23,12 @@ import profileSkeleton from "./profileSkeleton.webp"
 import noInstitute from "./noInstitute.png"
 import greenTick from "./greenTick.png"
 import dnf from "./dnf.png";
+import mobile from "./mobile.png";
+
 
 export {
   logo,
+  mobile,
   noInstitute,
   greenTick,
   profileSkeleton,

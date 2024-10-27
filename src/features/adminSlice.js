@@ -1,12 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAgentDataByAdmin, getAllApplicationforApproval, getAllApproval } from "./adminApi";
+import {
+  getAgentDataByAdmin,
+  getAllApplicationforApproval,
+  getAllApproval,
+  getStudentDataByAdmin,
+} from "./adminApi";
 
 // Async thunk to fetch agent data
 export const applicationForApproval = createAsyncThunk(
   "agents/applicationForApproval",
-  async ({tabType, page, perPage, search, isTypeFilter}, { rejectWithValue }) => {
+  async (
+    { tabType, page, perPage, search, isTypeFilter },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await getAllApplicationforApproval(tabType, page, perPage, search, isTypeFilter);
+      const response = await getAllApplicationforApproval(
+        tabType,
+        page,
+        perPage,
+        search,
+        isTypeFilter
+      );
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -17,9 +31,18 @@ export const applicationForApproval = createAsyncThunk(
 );
 export const agentStudentApprovals = createAsyncThunk(
   "agents/agentStudentApprovals",
-  async ({ tabType, search,  page, perPage, isTypeFilter }, { rejectWithValue }) => {
+  async (
+    { tabType, search, page, perPage, isTypeFilter },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await getAllApproval(tabType, search,  page, perPage, isTypeFilter);
+      const response = await getAllApproval(
+        tabType,
+        search,
+        page,
+        perPage,
+        isTypeFilter
+      );
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -42,6 +65,20 @@ export const agentDataProfile = createAsyncThunk(
   }
 );
 
+export const getStudentById = createAsyncThunk(
+  "admin/getStudentById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await getStudentDataByAdmin(id);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data : "Failed to fetch agent data"
+      );
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -51,7 +88,8 @@ const adminSlice = createSlice({
     status: "idle",
     error: null,
     updateState: false,
-    agentProfile:"",
+    agentProfile: "",
+    getStudentDataById: null
   },
   reducers: {
     setTabType: (state, action) => {
@@ -79,20 +117,33 @@ const adminSlice = createSlice({
         state.status = "succeeded";
         console.log("Payload received:", action.payload);
 
-        state.approvals = action.payload
+        state.approvals = action.payload;
       })
       .addCase(agentStudentApprovals.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || action.error.message;
-      })  .addCase(agentDataProfile.pending, (state) => {
+      })
+      .addCase(agentDataProfile.pending, (state) => {
         state.status = "loading";
       })
       .addCase(agentDataProfile.fulfilled, (state, action) => {
         state.status = "succeeded";
 
-        state.agentProfile = action.payload
+        state.agentProfile = action.payload;
       })
       .addCase(agentDataProfile.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(getStudentById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getStudentById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+
+        state.getStudentDataById = action.payload;
+      })
+      .addCase(getStudentById.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || action.error.message;
       });

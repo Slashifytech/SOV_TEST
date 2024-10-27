@@ -84,7 +84,7 @@ const ApplicationReview = () => {
             <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
               Application Review
             </p>
-            <p className="mt-1 font-light text-body ml-9 pr-[30%]">
+            <p className="mt-1 font-normal text-body ml-9 pr-[30%]">
               Review your agents and students applications here. Stay updated on
               their status and view detailed forms for each submission.
             </p>

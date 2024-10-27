@@ -95,7 +95,7 @@ const Applications = () => {
             <p className="md:text-[28px] text-[22px] font-bold text-sidebar mt-6 ml-9">
               Application Overview ({totalUsersCount})
             </p>
-            <p className="mt-1 font-light text-body pr-[20%] ml-9">
+            <p className="mt-1 font-normal text-body pr-[20%] ml-9">
               Track your college applications here. Stay updated on their status
               and view detailed forms for each submission.
             </p>
@@ -137,7 +137,7 @@ const Applications = () => {
       ) : applicationOverviewData?.studentOverview &&
         applicationOverviewData?.studentOverview?.length > 0 ? (
         <>
-          <div className="md:ml-[19.5%] sm:ml-[28%] mt-6">
+          <div className="md:ml-[19.5%] sm:ml-[28%] mt-6 z-0 ">
             <CustomTable
               tableHead={TABLE_HEAD}
               tableRows={TABLE_ROWS}

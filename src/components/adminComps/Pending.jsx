@@ -82,6 +82,8 @@ const Pending = ({ data }) => {
                 }
                 id={application?.institutionId}
                 sectionData={application?.type}
+              pageType="application"
+
               />
             </div>
           ))
@@ -115,6 +117,7 @@ const Pending = ({ data }) => {
                 } on SOV portal` || "Unknown User"
               }
               sectionData={item?.type === "agent" ? "company" : "student"}
+              pageType="offerLetter"
             />
           </div>
         ))

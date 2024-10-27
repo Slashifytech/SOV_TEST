@@ -29,14 +29,13 @@ const AgentForm6 = ({hide, handleCancel, updateData}) => {
   const { agentData } = useSelector((state) => state.agent);
   const getData = agentData?.references || [];
   const [isPopUp, setIsPopUp] = useState(false);
-
   const [referenceData, setReferenceData] = useState(
     getData.length > 0
       ? getData
       : [{ ...referenceTemplate }, { ...referenceTemplate }]
   );
   const [errors, setErrors] = useState({});
-
+  const [loading, setLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const dispatch = useDispatch();
   const PopUpOpen = () => setIsPopUp(true);
@@ -124,6 +123,7 @@ const AgentForm6 = ({hide, handleCancel, updateData}) => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     if (validateForm()) {
       try {
         const res = await formSixSubmit(referenceData, editForm);
@@ -131,9 +131,13 @@ const AgentForm6 = ({hide, handleCancel, updateData}) => {
         toast.success(res?.message || "Data added successfully");
        {hide === true ?       updateData():  PopUpOpen()}
       } catch (error) {
-        console.log(error);
-        toast.error(error?.message || "Something went wrong");
+        console.error(error);
+        toast.error(error.message || "Something went wrong");
+      } finally {
+        setLoading(false);
       }
+    } else {
+      toast.error("Please fill in all required fields correctly.");
     }
   };
 
@@ -254,7 +258,8 @@ const AgentForm6 = ({hide, handleCancel, updateData}) => {
         <FormNavigationButtons
           backLink="/agent-form/5"
           backText="Back"
-          buttonText="Submit and Continue"
+          buttonText={loading ? "Submitting..." : "Submit "}
+
           handleButtonClick={handleSubmit}
         />}
       </div>

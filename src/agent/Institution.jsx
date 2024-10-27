@@ -126,7 +126,7 @@ const Institution = () => {
             <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
               Explore: Colleges & Universities
             </p>
-            <p className="mt-1 font-light text-body md:pr-[14%] sm:pr-[20%] ml-9">
+            <p className="mt-1 md:font-normal sm:font-light text-body md:pr-[12%] sm:pr-[20%] ml-9">
               Discover colleges worldwide tailored to your study abroad dreams.
               Filter and Search by country and institutions to find the perfect
               match for your educational journey.

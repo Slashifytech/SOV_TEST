@@ -31,6 +31,7 @@ import Approval from "../admin/Approval";
 import ApplicationReview from "../admin/ApplicationReview";
 import AdminLogin from "../admin/AdminLogin";
 import ProtectedAdmin from "./ProtectedAdmin";
+import HelpSupport from "../components/HelpSupport";
 
 export const router = createBrowserRouter([
   {
@@ -107,6 +108,14 @@ export const router = createBrowserRouter([
     element: (
       // <ProtectedStudent>
       <Shortlist></Shortlist>
+      // </ProtectedStudent>
+    ),
+  },
+  {
+    path: "/help-support",
+    element: (
+      // <ProtectedStudent>
+      <HelpSupport></HelpSupport>
       // </ProtectedStudent>
     ),
   },

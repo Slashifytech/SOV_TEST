@@ -49,6 +49,8 @@ const Rejected = ({ data }) => {
                     ? `${application?.fullName} has filled ${application?.type}`
                     : "Unknown type"
                 }
+              pageType="application"
+
               />
             </div>
           ))
@@ -82,6 +84,8 @@ const Rejected = ({ data }) => {
               }
               currentStatus="rejected"
               rejectionMessage={item?.message}
+              pageType="offerLetter"
+
             />
           </div>
         ))

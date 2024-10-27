@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import RejectedPopUp from "./RejectedPopUp";
+import { FaRegEye } from "react-icons/fa";
 
 const AdminCard = ({
   apId,
@@ -20,6 +21,8 @@ const AdminCard = ({
   currentStatus,
   rejectionMessage,
   sectionData,
+  pageType
+
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const closePopUp = () => setIsOpen(false);
@@ -45,6 +48,9 @@ const AdminCard = ({
           >
             {description}
           </span>
+          <span className="flex flex-row items-center gap-1 text-primary mt-2"> 
+          <FaRegEye/>
+
           <Link
             to={
               userType === ("Agent" || "offerLetter" || "gic" || "visa")
@@ -52,10 +58,11 @@ const AdminCard = ({
                 : linkOne
             }
             state={{ isprofileView: location.pathname, id: id }}
-            className="font-normal  text-primary  md:text-[14px] sm:text-[12px] underline cursor-pointer"
+            className="font-medium    md:text-[14px] sm:text-[12px]  cursor-pointer"
           >
-            See Details
+            {pageType === "offerLetter" ? "View Profile" : "View Application"}
           </Link>
+          </span>
         </span>
         <span className="flex flex-col items-start md:w-20 sm:w-24">
           <span className="font-normal text-sidebar sm:text-[13px] md:text-[15px]">
