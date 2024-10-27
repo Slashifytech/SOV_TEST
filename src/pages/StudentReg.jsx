@@ -79,7 +79,7 @@ const StudentReg = () => {
           {/* Stepper Navigation */}
           <div
             className={`flex flex-col items-center ${
-              role === "2" ? "bg-[#FBD5D5] pt-20 ml-36" : "bg-primary"
+              role === "2" ? "bg-[#FBD5D5] pt-20 md:ml-36 md:px-0 md:pl-0 sm:px-6 sm:pl-[27%] " : "bg-primary"
             }  w-full`}
           >
             <div className="flex justify-center items-center w-full">
@@ -136,7 +136,7 @@ const StudentReg = () => {
             {/* Page Names Below Stepper */}
             <div className="flex justify-center items-center w-full">
               {formNames.map((name, i) => (
-                <div key={i} className="w-[200px] text-center mx-8 mb-6">
+                <div key={i} className={` text-center  mb-6 md:mx-8 sm:mx-0 w-[200px]`}>
                   <p
                     className={`text-[14px] ${
                       i === parseInt(page) - 1
@@ -164,7 +164,7 @@ const StudentReg = () => {
                 hide={false}
                 customClass={`${
                   role === "2"
-                    ? "md:ml-[25%] md:mr-[8%] sm:mx-10"
+                    ? "md:ml-[25%] md:mr-[8%] sm:mx-6 sm:ml-[27%]"
                     : "md:mx-72 sm:mx-10"
                 }`}
               />
@@ -178,7 +178,7 @@ const StudentReg = () => {
                 page={page}
                 customClass={`${
                   role === "2"
-                    ? "md:ml-[25%] md:mr-[8%] sm:mx-10"
+                    ? "md:ml-[25%] md:mr-[8%]  sm:mx-6 sm:ml-[27%]"
                     : "md:mx-72 sm:mx-10"
                 }`}
               />
@@ -192,7 +192,7 @@ const StudentReg = () => {
                 hide={false}
                 customClass={`${
                   role === "2"
-                    ? "md:ml-[25%] md:mr-[8%] sm:mx-10 pb-20"
+                    ? "md:ml-[25%] md:mr-[8%] sm:mx-6 sm:ml-[27%] pb-20"
                     : "md:mx-72 sm:mx-10 pb-20"
                 }`}
               />

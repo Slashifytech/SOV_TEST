@@ -83,7 +83,7 @@ const StudentProfile = () => {
             profileView === "/admin/applications-review" ? (
               ""
             ) : (
-              <div className="pt-20 ml-[17.5%] bg-white">
+              <div className="pt-20 md:ml-[17.5%] sm:pl-[25%] bg-white">
                 <StatusComp
                   statusOne={
                     studentData?.studentInformation?.pageCount === 3
@@ -104,7 +104,7 @@ const StudentProfile = () => {
               }`}
             >
               <span>
-                <div className="flex items-center gap-4 mt-1 ">
+                <div className="flex items-center gap-4 mt-1 md:ml-0 sm:ml-[17%] ">
                   <img
                     src={
                       studentData?.studentInformation?.personalInformation
@@ -142,7 +142,7 @@ const StudentProfile = () => {
                 </div>
               </span>
             </span>
-            <div>
+            <div className ="ml-[9%]">
               <TabBar tabs={tabs} />
             </div>
           </div>

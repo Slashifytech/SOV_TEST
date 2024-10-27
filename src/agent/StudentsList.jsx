@@ -152,7 +152,7 @@ const StudentsList = () => {
           </p>
         ) : (
           <>
-            <div className="grid md:grid-cols-3 sm:grid-cols-1 md:ml-[18.5%] sm:ml-[27%] mt-6 mr-6 gap-3 ">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 md:ml-[18.5%] sm:ml-[27%] mt-6 mr-6 gap-3 ">
               {studentData?.students?.map((data, index) => (
                 <StudentCards
                   key={index}

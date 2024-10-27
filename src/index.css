@@ -101,3 +101,41 @@ input[type="radio"] {
 
   z-index: 3;
 }
+/* Apply Poppins font globally to the modal */
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Title styling */
+.swal-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Custom action button styling */
+.swal-actions {
+  display: flex;
+  justify-content: space-between; /* Align cancel and confirm buttons */
+  gap: 10px;
+}
+
+/* Cancel button styling */
+.swal-cancel {
+  font-size: 14px;
+  padding: 8px 36px;
+  color: #d33;
+  border: 1px solid #d33;
+  background-color: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Confirm button styling */
+.swal-confirm {
+  font-size: 14px;
+  padding: 8px 36px;
+  color: #fff;
+  background-color: #98090B;
+  border-radius: 5px;
+  cursor: pointer;
+}

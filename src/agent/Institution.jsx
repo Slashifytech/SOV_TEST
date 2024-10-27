@@ -126,13 +126,13 @@ const Institution = () => {
             <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
               Explore: Colleges & Universities
             </p>
-            <p className="mt-1 md:font-normal sm:font-light text-body md:pr-[12%] sm:pr-[20%] ml-9">
+            <p className="mt-1 md:font-normal sm:font-light text-body md:pr-[8%] sm:pr-[20%] ml-9">
               Discover colleges worldwide tailored to your study abroad dreams.
               Filter and Search by country and institutions to find the perfect
               match for your educational journey.
             </p>
           </span>
-          <span className="flex flex-row items-center md:ml-20 sm:mt-6 ">
+          <span className="flex flex-row items-center md:ml-20 sm:mt-6 md:mr-6 sm:mr-3 ">
             <CustomInput
               className="h-11 w-80 rounded-md placeholder:px-3  pl-9 border border-[#E8E8E8] outline-none"
               type="text"
@@ -200,7 +200,7 @@ const Institution = () => {
           <p className="text-[24px] font-semibold text-sidebar md:ml-[19%] sm:ml-[27%]">
             All universities and colleges
           </p>
-          <div className="md:ml-[19%] sm:ml-[27%] mt-6 grid md:grid-cols-3 sm:grid-cols-2 mx-6 md:gap-6 sm:gap-4">
+          <div className="md:ml-[19%] sm:ml-[27%] mt-6 grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 mx-6 md:gap-6 sm:gap-4">
             {filteredInstitutes.map((data) => (
               <InstituteCard
                 key={data._id}

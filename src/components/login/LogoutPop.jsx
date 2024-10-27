@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../features/authSlice";
@@ -7,48 +8,51 @@ const LogoutPop = ({ isLogoutOpen, closeLogout }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
+
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("student");
     localStorage.removeItem("userAuthToken");
-    {
-      role === "0" ? navigate("/admin/role/auth/login") : navigate("/login");
+    localStorage.removeItem("form");
+
+    if (role === "0") {
+      navigate("/admin/role/auth/login");
+    } else {
+      navigate("/login");
     }
+    closeLogout();
   };
-  return (
-    <>
-      {isLogoutOpen && (
-        <div
-          className={`fixed inset-0 flex items-center justify-center  popup-backdrop sm:px-52  px-6 ${
-            isLogoutOpen ? "block" : "hidden"
-          }`}
-        >
-          <div className="bg-white pb-9  rounded-lg md:w-[38%] w-full  relative p-9  ">
-            <p className="text-center font-DMsans text-black font-semibold text-[16px]">
-              Do you want to logout ?
-            </p>
-            <div className="flex justify-center items-center font-DMsans gap-5 mt-5">
-              <span
-                onClick={closeLogout}
-                className="px-8 py-2 cursor-pointer  rounded-lg text-primary border border-primary"
-              >
-                No
-              </span>
-              <span
-                onClick={() => {
-                  handleLogout();
-                  closeLogout();
-                }}
-                className="px-8 py-2 cursor-pointer rounded-lg text-white bg-primary"
-              >
-                Yes
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+
+  useEffect(() => {
+    if (isLogoutOpen) {
+      Swal.fire({
+        title: "Do you want to logout?",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: "#d33",
+        confirmButtonColor: "#98090B",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        backdrop: true,
+        customClass: {
+          popup: "font-poppins text-sm",
+          title: "swal-title",
+          confirmButton: "swal-confirm",
+          cancelButton: "swal-cancel",
+          actions: "swal-actions", // Add custom class for action buttons
+        },
+        buttonsStyling: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleLogout();
+        } else {
+          closeLogout();
+        }
+      });
+    }
+  }, [isLogoutOpen]);
+
+  return null;
 };
 
 export default LogoutPop;

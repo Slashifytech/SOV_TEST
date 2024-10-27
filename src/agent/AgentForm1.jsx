@@ -125,18 +125,14 @@ const AgentForm1 = ({ hide, handleCancel, updateData }) => {
         newErrors[key] = `${key} is required.`;
       }
     });
-
+    
     // Validate website URL
     if (companyData.website && !websiteRegex.test(companyData.website)) {
       newErrors.website = "Invalid website URL.";
       isValid = false;
     }
 
-    // Validate LinkedIn URL
-    if (companyData.linkedin && !websiteRegex.test(companyData.linkedin)) {
-      newErrors.linkedin = "Invalid LinkedIn URL.";
-      isValid = false;
-    }
+  
 
     // Validate phone number length
     if (companyData.phoneNumber && companyData.phoneNumber.length < 10) {
@@ -294,6 +290,7 @@ const AgentForm1 = ({ hide, handleCancel, updateData }) => {
             label="Company's LinkedIn"
             handleInput={handleInput}
             value={companyData.linkedin}
+            errors={errors.linkedin}
           />
           <div className="mt-5">
             {" "}

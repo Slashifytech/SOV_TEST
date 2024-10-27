@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import YesNoPopUp from "../reusable/YesNoPopUp";
 import { toast } from "react-toastify";
+import { BiPencil } from "react-icons/bi";
 
 const StudentCards = ({
   name,
@@ -19,10 +20,12 @@ const StudentCards = ({
   defaultId,
   status,
   page,
-  edit
+  edit,
 }) => {
   const [isFuncOpen, setIsFuncOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isHoveredSecond, setIsHoveredSecond] = useState(false);
+
   const closeFunc = () => {
     setIsFuncOpen(false);
   };
@@ -37,13 +40,17 @@ const StudentCards = ({
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+  const handleMouseSecondEnter = () => {
+    setIsHoveredSecond(true);
+  };
 
+  const handleMouseSecondLeave = () => {
+    setIsHoveredSecond(false);
+  };
   return (
     <>
-      <div className="bg-white border border-[#E8E8E8] py-4 px-4 rounded-md font-poppins  w-full">
-      
+      <div className="bg-white border border-[#E8E8E8] py-4 px-4 rounded-md font-poppins  w-full relative">
         <div className="flex items-center gap-4 mt-1 ">
-        
           <img
             src={profile || profileSkeleton}
             alt="Profile"
@@ -55,16 +62,11 @@ const StudentCards = ({
             <span className="text-primary font-medium text-[13px]">
               {application || 0} Applications
             </span>
-            <div
-              onClick={() => openFunc()}
-              className=" underline text-red-500 font-normal relative left-40 -top-7 px-1 text-[20px]  cursor-pointer"
-            >
-              <RiDeleteBin6Line />
-            </div>
+           
             <span className="text-sidebar text-[14px] font-medium ">
               {name?.slice(0, 24) || "NA"}
             </span>
-            
+
             <span
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -73,7 +75,7 @@ const StudentCards = ({
               {email.length > 20 ? `${email.slice(0, 20)}...` : email || "NA"}
             </span>
             {isHovered && (
-              <div className="text-start absolute  text-[13px] w-80 p-1 bg-white border  rounded-lg">
+              <div className="text-start absolute  text-[13px] w-auto px-3 py-1 bg-greyish border  rounded-lg">
                 <p> {email}</p>
               </div>
             )}
@@ -87,22 +89,45 @@ const StudentCards = ({
                     Completed
                   </span>
                 ) : (
-                  <Link
-                    to={`/student-form/${page}`}
-                    state={{ passPage: "passPage", id: defaultId, hide:edit }}
-                    className="text-[13px] underline text-yellow-500 font-normal  px-1 cursor-pointer"
-                  >
-                    Pending
-                  </Link>
+                  <span className="flex fex-row items-center">
+                    <span className="text-[13px] underline text-yellow-500">
+                      Pending
+                    </span>
+
+                    <Link
+                      onMouseEnter={handleMouseSecondEnter}
+                      onMouseLeave={handleMouseSecondLeave}
+                      to={`/student-form/${page}`}
+                      state={{
+                        passPage: "passPage",
+                        id: defaultId,
+                        hide: edit,
+                      }}
+                      className="text-[20px] text-sidebar font-normal  px-1 cursor-pointer"
+                    >
+                      <BiPencil />
+                    </Link>
+                  </span>
                 )}
               </span>
+              {isHoveredSecond && (
+                <div className="absolute text-center  text-[13px] w-36 p-1 bg-greyish border  rounded-lg">
+                  <p> Complete Profile</p>
+                </div>
+              )}
             </span>
             <span className="text-[13px] text-body font-normal">
               ID: {stId || "NA"}
             </span>
-       
           </span>
         </div>
+        <span
+
+              onClick={() => openFunc()}
+              className=" underline text-red-500 font-normal absolute px-1 text-[20px] right-2 top-3  cursor-pointer"
+            >
+              <RiDeleteBin6Line />
+            </span>
         {stId ? (
           <span className="flex flex-row items-center mt-4 gap-4 w-full">
             <Link

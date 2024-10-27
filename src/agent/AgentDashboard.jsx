@@ -223,7 +223,7 @@ const AgentDashboard = () => {
                   className="border w-10 p-2 rounded-md outline-none text-[13px]"
                 />
               </div>
-              <div className="md:mx-2 sm:px-16 md:px-0">
+              <div className="md:mx-2 sm:px-16 md:px-0 ">
                 <DonoughtChart data={filteredDoughnutData} />
               </div>
             </div>

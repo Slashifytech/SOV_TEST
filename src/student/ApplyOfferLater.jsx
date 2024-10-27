@@ -379,7 +379,7 @@ const ApplyOfferLater = () => {
       console.log("Form is valid");
     } else {
       setErrors(validationErrors);
-      toast.error(validationErrors || "Form contains errors");
+      toast.error("Please fill required fields");
       console.log("Form has errors", validationErrors);
       return; // Stop the submission process if there are validation errors
     }
@@ -671,15 +671,8 @@ const ApplyOfferLater = () => {
             )}
 
             {/* Error Display */}
-            {Object.keys(errors).length > 0 && (
-              <div className="mt-6">
-                {Object.values(errors).map((error, index) => (
-                  <p key={index} className="text-red-500">
-                    {error}
-                  </p>
-                ))}
-              </div>
-            )}
+         
+         
           </div>
           <div className="bg-white rounded-xl px-8 py-4 pb-12 mt-6">
             <span className="font-bold text-[25px] text-secondary ">

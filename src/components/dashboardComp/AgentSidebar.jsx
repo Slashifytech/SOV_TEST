@@ -112,7 +112,7 @@ const AgentSidebar = () => {
           <ul className="sm:mt-2 list-none text-[16px]">
             <Link to="/account-settings/profile-edit">
               <li
-                className={`text-sidebar py-2 mb-2 cursor-pointer md:px-14 sm:pl-14 md:ml-0 hover:bg-[#f5ebeb] hover:text-primary ${
+                className={`text-sidebar py-2 mb-2 cursor-pointer md:pl-14 lg:px-14 sm:pl-14 md:ml-0 hover:bg-[#f5ebeb] hover:text-primary ${
                   path === "/account-settings/profile-edit"  &&
                   "bg-[#FBD5D5] border-l-4 border-primary text-primary"
                 }`}
@@ -177,7 +177,7 @@ const AgentSidebar = () => {
               : "text-sidebar"
           }`}
         >
-          <Link to="/help-support" className="flex items-center gap-3 px-6">
+          <Link to="/help-support" className="flex items-center gap-3 md:pl-6 lg:px-6 sm:pl-6 ">
             <span className="text-[20px]">
               {" "}
               <AiFillQuestionCircle />
@@ -206,7 +206,8 @@ const AgentSidebar = () => {
           © 2024 All Rights Reserved
         </p>
       </div>
-      <LogoutPop isLogoutOpen={isLogoutOpen} closeLogout={closeLogout} />
+      <div className="z-50  ">      <LogoutPop isLogoutOpen={isLogoutOpen} closeLogout={closeLogout} /></div>
+
     </>
   );
 };
