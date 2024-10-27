@@ -42,6 +42,8 @@ const Sidebar = () => {
       pathPage: "/student/application",
       icon: <IoDocumentTextSharp />,
       label: "Applications",
+      otherPath: "/student/application",
+      otherPathTwo: "/offerletter-apply",
     },
     // {
     //   pathPage: "/student/visa-update",
@@ -62,7 +64,7 @@ const Sidebar = () => {
         <div
           key={index}
           className={`cursor-pointer py-4 hover:bg-[#FBD5D5] hover:text-primary hover:border-l-4 hover:font-medium ${
-            path === item.pathPage
+            path === item.pathPage || path === item?.otherPath || path === item?.otherPathTwo
               ? "bg-[#FBD5D5] text-primary border-l-4 border-primary font-medium"
               : "text-sidebar"
           }`}

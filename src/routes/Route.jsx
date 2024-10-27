@@ -32,6 +32,7 @@ import ApplicationReview from "../admin/ApplicationReview";
 import AdminLogin from "../admin/AdminLogin";
 import ProtectedAdmin from "./ProtectedAdmin";
 import HelpSupport from "../components/HelpSupport";
+import AllApplication from "../student/AllApplication";
 
 export const router = createBrowserRouter([
   {
@@ -98,9 +99,17 @@ export const router = createBrowserRouter([
   {
     path: "/student/dashboard",
     element: (
-      // <ProtectedStudent>
+      <ProtectedStudent>
       <Dashboard></Dashboard>
-      // </ProtectedStudent>
+       </ProtectedStudent>
+    ),
+  },
+  {
+    path: "/student/application",
+    element: (
+      <ProtectedStudent>
+      <AllApplication></AllApplication>
+       </ProtectedStudent>
     ),
   },
   {
