@@ -1,6 +1,6 @@
 import React from "react";
 import ImageComponent from "./reusable/Input";
-import { logo, mobile } from "../assets";
+import { logo, logo2, mobile } from "../assets";
 
 const Mobile = () => {
   return (
@@ -10,7 +10,7 @@ const Mobile = () => {
       </div>
 
       <div className="flex flex-col justify-center items-center font-poppins">
-        <ImageComponent src={mobile} alt="img" className="w-52 mt-20" />
+        <ImageComponent src={logo2} alt="img" className="w-52 mt-20" />
         <p className="text-sidebar font-semibold text-[29px] mt-3">Hey there !</p>
         <p className="text-body text-[14px] text-center mx-6 mt-6">
           Our platform is best experienced on a{" "}

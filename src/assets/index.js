@@ -24,9 +24,11 @@ import noInstitute from "./noInstitute.png"
 import greenTick from "./greenTick.png"
 import dnf from "./dnf.png";
 import mobile from "./mobile.png";
+import logo2 from "./logo2.png";
 
 
 export {
+  logo2,
   logo,
   mobile,
   noInstitute,
