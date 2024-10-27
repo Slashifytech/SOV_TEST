@@ -37,7 +37,7 @@ const InstituteCard = ({
               ? `${institutename.slice(0, 55)}...`
               : institutename}
           </p>
-           {isHovered && (   <div className="text-start absolute  text-[13px] w-80 p-1 bg-white border  rounded-lg">
+           {isHovered && (   <div className="text-start absolute  text-[13px] w-auto px-3 py-1 bg-white border  rounded-lg">
                       <p> {institutename}</p>
                     </div>
                   )} 

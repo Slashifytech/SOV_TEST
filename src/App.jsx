@@ -10,9 +10,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { router } from "./routes/Route";
 import { agentInformation } from "./features/agentSlice";
+import { studentInfo } from "./features/studentSlice";
 
 function App() {
   const role = localStorage.getItem("role");
+  const studentId = localStorage.getItem("student")
   const dispatch = useDispatch();
   const { prefCountryOption, courses, countryOption } = useSelector(
     (state) => state.general
@@ -30,6 +32,9 @@ function App() {
     }
     if (role === "2") {
       dispatch(agentInformation());
+    }
+    if (role==="3"){
+      dispatch(studentInfo(studentId))
     }
 
     // Interval to check every 3 seconds

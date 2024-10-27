@@ -18,7 +18,7 @@ const PopUp = ({
       heading === "Offer Letter Form Submitted" && role === "2"
         ? navigate("/agent/applications")
         : heading === "Offer Letter Form Submitted" && role === "3"
-        ? navigate("/student/applications")
+        ? navigate("/student/dashboard")
         : heading === "Successfully Registered" && role === "2"
         ? navigate("/agent/student-lists")
         : navigate("/login");

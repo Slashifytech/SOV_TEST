@@ -1,14 +1,16 @@
 import React from "react";
 import Header from "./dashboardComp/Header";
 import AgentSidebar from "./dashboardComp/AgentSidebar";
+import Sidebar from "./dashboardComp/Sidebar";
 
 const HelpSupport = () => {
+  const role = localStorage.getItem("role");
   return (
     <>
       <Header customLink="/agent/shortlist" />
       <div>
         <span className="fixed overflow-y-scroll scrollbar-hide  bg-white">
-          <AgentSidebar />
+        {role === "3" ? <Sidebar/> : role === "2" ? <AgentSidebar /> : null }
         </span>
       </div>
       <div className="bg-white rounded-md px-6 py-6 md:ml-[20%] sm:ml-[27%] font-poppins sm:mt-28 md:mt-22 mr-8 ">
@@ -38,7 +40,7 @@ const HelpSupport = () => {
         <p className=" text-body text-[14px]">
           {" "}
           <span className="font-semibold text-sidebar">Email:- </span>
-          maxjhonson738@gmail.com, sems.gaurav1701@gmail.com
+          dev@sovportal.in
         </p>
       </div>
       <div className="bg-white rounded-md px-6 py-6 md:ml-[20%] sm:ml-[27%] font-poppins mt-10 mr-8 mb-20">

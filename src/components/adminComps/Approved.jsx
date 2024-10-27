@@ -30,6 +30,7 @@ useEffect(()=>{
           applications.map((application, index) => (
             <div key={index}>
               <AdminCard
+                    
                    userType={
                   application?.customUserId?.startsWith("AG-")
                     ? "Agent"

@@ -35,6 +35,7 @@ import AgentSidebar from "../components/dashboardComp/AgentSidebar";
 import PopUp from "../components/reusable/PopUp";
 import { greenTick } from "../assets";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import Sidebar from "../components/dashboardComp/Sidebar";
 
 const initialPersonalInfo = {
   fullName: "",
@@ -107,14 +108,22 @@ const initialEducationDetails = {
 };
 
 const ApplyOfferLater = () => {
+  const role = localStorage.getItem("role");
+  const studentUserId = useSelector((state) =>state.student.studentInfoData)
   const location = useLocation();
-  const studentId = location?.state?.id || location?.state;
+  const studentId =
+    role === "3" ? studentUserId?.data?.studentInformation?._id : location?.state?.id || location?.state;
   const { courses } = useSelector((state) => state.general);
   const { countryOption, studentData, prefCountryOption } = useSelector(
     (state) => state.general
   );
-  const prefCountry = location?.state?.prefCountry;
-  const prefInstitute = location?.state?.prefInstitute;
+  const { studentInfoData } = useSelector((state) => state.student);
+  const StudentDataToGet = role === "2" ? studentData : studentInfoData?.data;
+  console.log(studentId, "testing");
+  const prefCountry =
+    role === "3" ? location?.state?.country : location?.state?.prefCountry;
+  const prefInstitute =
+    role === "3" ? location?.state?.institute : location?.state?.prefInstitute;
   const { instituteOption } = useSelector((state) => state.general);
   const [isFileType, seFileType] = useState();
   const dispatch = useDispatch();
@@ -129,24 +138,19 @@ const ApplyOfferLater = () => {
     TOEFL: { ...initialTOEFL },
     IELTS: { ...initialIELTS },
   });
-
   const [selectedEducation, setSelectedEducation] = useState("");
   const [errors, setErrors] = useState({});
 
   const [resetDoc, setResetDoc] = useState(false);
   const [resetSecondDoc, setResetSecondDoc] = useState(false);
-
   useEffect(() => {
     dispatch(studentById(studentId));
   }, [dispatch]);
 
   useEffect(() => {
-      if (offerLater?.preferences?.country) {
-     dispatch(
-          getInstituteOption(offerLater.preferences.country)
-        )
-      } 
-  
+    if (offerLater?.preferences?.country) {
+      dispatch(getInstituteOption(offerLater.preferences.country));
+    }
   }, [dispatch, offerLater?.preferences?.country]);
   const PopUpOpen = () => {
     setResetDoc(false);
@@ -453,7 +457,7 @@ const ApplyOfferLater = () => {
   };
 
   useEffect(() => {
-    if (studentData?.studentInformation) {
+    if (StudentDataToGet?.studentInformation) {
       setOfferLater((prevState) => ({
         ...prevState,
         preferences: {
@@ -464,32 +468,39 @@ const ApplyOfferLater = () => {
         personalInformation: {
           ...prevState.personalInformation, // Spread previous personalInformation state to retain other fields
           fullName:
-            (studentData?.studentInformation?.personalInformation?.firstName ||
-              "") +
+            (StudentDataToGet?.studentInformation?.personalInformation
+              ?.firstName || "") +
             " " +
-            (studentData?.studentInformation?.personalInformation?.lastName ||
-              ""),
+            (StudentDataToGet?.studentInformation?.personalInformation
+              ?.lastName || ""),
           email:
-            studentData?.studentInformation?.personalInformation?.email || "",
+            StudentDataToGet?.studentInformation?.personalInformation?.email ||
+            "",
           phoneNumber:
-            studentData?.studentInformation?.personalInformation?.phone
+            StudentDataToGet?.studentInformation?.personalInformation?.phone
               ?.phone || "",
           address: {
             ...prevState.personalInformation?.address, // Spread previous address state
             street:
-              studentData?.studentInformation?.residenceAddress?.address || "",
-            city: studentData?.studentInformation?.residenceAddress?.city || "",
+              StudentDataToGet?.studentInformation?.residenceAddress?.address ||
+              "",
+            city:
+              StudentDataToGet?.studentInformation?.residenceAddress?.city ||
+              "",
             state:
-              studentData?.studentInformation?.residenceAddress?.state || "",
+              StudentDataToGet?.studentInformation?.residenceAddress?.state ||
+              "",
             postalCode:
-              studentData?.studentInformation?.residenceAddress?.zipcode || "",
+              StudentDataToGet?.studentInformation?.residenceAddress?.zipcode ||
+              "",
             country:
-              studentData?.studentInformation?.residenceAddress?.country || "",
+              StudentDataToGet?.studentInformation?.residenceAddress?.country ||
+              "",
           },
         },
       }));
     }
-  }, [studentData]);
+  }, [StudentDataToGet]);
 
   const educationLevelLabels = {
     diploma: "Diploma",
@@ -505,7 +516,7 @@ const ApplyOfferLater = () => {
       />
       <div>
         <span className="fixed overflow-y-scroll scrollbar-hide pt-6 bg-white ">
-          <AgentSidebar />
+          {role === "3" ? <Sidebar /> : role === "2" ? <AgentSidebar /> : null}
         </span>
         <div className="ml-[17%] pt-16 pb-8 bg-white border-b-2 border-[#E8E8E8]  ">
           <span className="flex items-center">
@@ -671,8 +682,6 @@ const ApplyOfferLater = () => {
             )}
 
             {/* Error Display */}
-         
-         
           </div>
           <div className="bg-white rounded-xl px-8 py-4 pb-12 mt-6">
             <span className="font-bold text-[25px] text-secondary ">
@@ -796,7 +805,7 @@ const ApplyOfferLater = () => {
                             href={url}
                             target="_blank"
                             rel="noopener noreferrer"
-                               className="text-primary rounded-sm px-6 py-2 border border-greyish"
+                            className="text-primary rounded-sm px-6 py-2 border border-greyish"
                           >
                             Uploaded Document
                           </a>
@@ -804,7 +813,7 @@ const ApplyOfferLater = () => {
                             onClick={() => deleteFile(url, "certificate")}
                             className="ml-4 text-red-500"
                           >
-                           <RiDeleteBin6Line />
+                            <RiDeleteBin6Line />
                           </button>
                         </li>
                       ))}

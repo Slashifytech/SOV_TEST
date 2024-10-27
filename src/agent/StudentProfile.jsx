@@ -10,17 +10,24 @@ import studentEdit from "../components/dashboardComp/editfiles/studentEdit";
 import { StatusComp } from "../components/dashboardComp/InstituteCard";
 import Loader from "../components/Loader";
 import { getStudentById } from "../features/adminSlice";
+import Sidebar from "../components/dashboardComp/Sidebar";
+import { studentInfo } from "../features/studentSlice";
 
 const StudentProfile = () => {
   const role = localStorage.getItem("role");
+  const id = localStorage.getItem("student")
+  const { studentInfoData } = useSelector((state) => state.student);
+
   const studentData =
     role === "0"
       ? useSelector((state) => state.admin.getStudentDataById)
+      : role === "3"
+      ? studentInfoData?.data
       : useSelector((state) => state.general.studentData);
+
   const location = useLocation();
-  console.log(location);
   const dispatch = useDispatch();
-  const studentId = location?.state?.id;
+  const studentId = role === "3" ? id : location?.state?.id;
   const profileView = location.state?.isprofileView;
   const [isLoading, setIsLoading] = useState(true);
   const [profileUpdated, setProfileUpdated] = useState(false);
@@ -28,11 +35,15 @@ const StudentProfile = () => {
     if (role === "0") {
       dispatch(getStudentById(studentId));
     }
+     if(role === "3"){
+    dispatch(studentInfo(studentId));
 
+     }
     dispatch(studentById(studentId));
-  }, [dispatch, profileUpdated]);
+  }, [dispatch, profileUpdated, studentId]);
 
   const handleProfileUpdate = () => {
+    console.log("changed")
     setProfileUpdated((prev) => !prev);
   };
 
@@ -67,7 +78,11 @@ const StudentProfile = () => {
           <Header customLink="/agent/shortlist" />
           <div>
             <span className="fixed overflow-y-scroll scrollbar-hide  bg-white">
-              <AgentSidebar />
+              {role === "3" ? (
+                <Sidebar />
+              ) : role === "2" ? (
+                <AgentSidebar />
+              ) : null}
             </span>
           </div>{" "}
         </>
@@ -80,10 +95,11 @@ const StudentProfile = () => {
         <>
           <div>
             {profileView === "/admin/approvals" ||
-            profileView === "/admin/applications-review" ? (
+            profileView === "/admin/applications-review" ||
+            role === "3" ? (
               ""
             ) : (
-              <div className="pt-20 md:ml-[17.5%] sm:pl-[25%] bg-white">
+              <div className="pt-20 md:ml-[17.5%] md:pl-0 sm:pl-[25%] bg-white">
                 <StatusComp
                   statusOne={
                     studentData?.studentInformation?.pageCount === 3
@@ -100,7 +116,9 @@ const StudentProfile = () => {
                 profileView === "/admin/approvals" ||
                 profileView === "/admin/applications-review"
                   ? " mx-44 px-6 mt-10 pt-6 pb-10"
-                  : " pl-[19.5%] pt-10"
+                  : role === "3"
+                  ? "pt-20  pl-[19.5%] pb-6"
+                  : " pl-[19.5%] pt-10 pb-6"
               }`}
             >
               <span>
@@ -142,7 +160,7 @@ const StudentProfile = () => {
                 </div>
               </span>
             </span>
-            <div className ="ml-[9%]">
+            <div className="sm:ml-[9%] md:ml-0">
               <TabBar tabs={tabs} />
             </div>
           </div>

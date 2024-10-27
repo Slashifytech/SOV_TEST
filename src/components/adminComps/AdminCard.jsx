@@ -50,11 +50,11 @@ const AdminCard = ({
           </span>
           <span className="flex flex-row items-center gap-1 text-primary mt-2"> 
           <FaRegEye/>
-
+  {console.log(userType)}
           <Link
             to={
-              userType === ("Agent" || "offerLetter" || "gic" || "visa")
-                ? linkTwo
+              userType === ("Agent"  || "gic" || "visa")
+                ? linkTwo : applicationType ? linkTwo
                 : linkOne
             }
             state={{ isprofileView: location.pathname, id: id }}

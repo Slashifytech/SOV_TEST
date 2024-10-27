@@ -243,7 +243,7 @@ const AgentProfileEdit = ({ agentData, locationPath, updateData }) => {
               <MdCall />
             </span>
             <span className="font-semibold text-[22px]">
-              Primary Contact for Commision and Inovoices
+              Primary Contact for Commission and Invoices
             </span>
           </span>
         </div>

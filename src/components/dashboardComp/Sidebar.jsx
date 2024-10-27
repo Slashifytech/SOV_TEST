@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillCollectionFill, BsPieChartFill } from "react-icons/bs";
 import { FaPassport } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -9,11 +9,15 @@ import { MdOutlineHistory } from "react-icons/md";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import LogoutPop from "../login/LogoutPop";
+import ImageComponent from "../reusable/Input";
+import { logo } from "../../assets";
 
 const Sidebar = () => {
   const location = useLocation();
   const path = location.pathname;
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(
+    JSON.parse(localStorage.getItem("isOpen")) ?? true 
+  );
   const [isLogoutOpen, setisLogoutOpen] = useState(false);
 
   const openLogoutPopup = () => {
@@ -29,26 +33,31 @@ const Sidebar = () => {
       icon: <BsPieChartFill />,
       label: "Dashboard",
     },
-    {
-      pathPage: "/student/document",
-      icon: <BsFillCollectionFill />,
-      label: "Documents",
-    },
+    // {
+    //   pathPage: "/student/document",
+    //   icon: <BsFillCollectionFill />,
+    //   label: "Documents",
+    // },
     {
       pathPage: "/student/application",
       icon: <IoDocumentTextSharp />,
       label: "Applications",
     },
-    {
-      pathPage: "/student/visa-update",
-      icon: <FaPassport />,
-      label: "Visa Updates",
-    },
+    // {
+    //   pathPage: "/student/visa-update",
+    //   icon: <FaPassport />,
+    //   label: "Visa Updates",
+    // },
   ];
-
+  useEffect(() => {
+    localStorage.setItem("isOpen", JSON.stringify(isOpen));
+  }, [isOpen]);
   return (
     <>
-    <div className="bg-white md:w-[17.5vw] sm:w-[24vw] h-[100vh]  pt-8 pb-6 overflow-y-auto scrollbar-hide border-r-2 border-[#E8E8E8]">
+  <div className="bg-white md:w-[17.5vw] sm:w-[24vw] h-[100vh]  overflow-y-auto scrollbar-hide border-r-2 border-[#E8E8E8]">
+      <span>
+          <ImageComponent src={logo} alt="logo" className="w-44 h-24 ml-2 " />
+        </span>
       {sidebarList.map((item, index) => (
         <div
           key={index}
@@ -89,7 +98,20 @@ const Sidebar = () => {
         }`}
       >
         <ul className="sm:mt-2 list-none text-[16px]">
-          <Link to="/settings/contact-info">
+
+        <Link to="/account/profile-edit">
+              <li
+                className={`text-sidebar py-2 mb-2 cursor-pointer md:pl-14 lg:px-14 sm:pl-14 md:ml-0 hover:bg-[#f5ebeb] hover:text-primary ${
+                  path === "/account/profile-edit"  &&
+                  "bg-[#FBD5D5] border-l-4 border-primary text-primary"
+                }`}
+              >
+                Edit Profile
+              </li>
+            </Link>
+
+
+          {/* <Link to="/settings/contact-info">
             <li
               className={`text-sidebar py-2 mb-2 cursor-pointer px-14 hover:bg-[#FBD5D5] hover:text-primary ${
                 path === "/settings/contact-info" &&
@@ -118,10 +140,10 @@ const Sidebar = () => {
             >
               Delete Account
             </li>
-          </Link>
+          </Link> */}
         </ul>
       </div>
-      <div
+      {/* <div
         className={`cursor-pointer py-4 hover:bg-[#FBD5D5] hover:text-primary hover:border-l-4 hover:font-medium ${
           path === "/student/payment-details"
             ? "bg-[#FBD5D5] text-primary border-l-4 border-primary font-medium"
@@ -138,22 +160,24 @@ const Sidebar = () => {
           </span>{" "}
           <span>Payment Details</span>
         </Link>
-      </div>
-      <div
-        className={`cursor-pointer py-4 hover:bg-[#FBD5D5] hover:text-primary hover:border-l-4 hover:font-medium ${
-          path === "/student/help"
-            ? "bg-[#FBD5D5] text-primary border-l-4 border-primary font-medium"
-            : "text-sidebar"
-        }`}
-      >
-        <Link to="/student/help" className="flex items-center gap-3 px-6">
-          <span className="text-[20px]">
-            {" "}
-            <AiFillQuestionCircle />
-          </span>{" "}
-          <span>Help & Support</span>
-        </Link>
-      </div>
+      </div> */}
+    
+        <div
+          className={`cursor-pointer py-4 hover:bg-[#f5ebeb] hover:text-primary hover:border-l-4 hover:font-medium ${
+            path === "/help-support"
+              ? "bg-[#FBD5D5] text-primary border-l-4 border-primary font-medium"
+              : "text-sidebar"
+          }`}
+        >
+          <Link to="/help-support" className="flex items-center gap-3 md:pl-6 lg:px-6 sm:pl-6 ">
+            <span className="text-[20px]">
+              {" "}
+              <AiFillQuestionCircle />
+            </span>{" "}
+            <span>Help & Support</span>
+          </Link>
+        </div>
+    
       <div
         className={`cursor-pointer py-4 hover:bg-[#FBD5D5] hover:text-primary hover:border-l-4 hover:font-medium text-secondary`}
       >

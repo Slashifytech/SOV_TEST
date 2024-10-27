@@ -130,19 +130,19 @@ const LoginComponent = () => {
             return;
           }
           if (
-            studentInfo?.data?.pageCount === 3 &&
-            studentInfo?.data?.pageStatus?.status === "approved"
+            studentInfo?.data?.studentInformation?.pageCount === 3 &&
+            studentInfo?.data?.studentInformation?.pageStatus?.status === "approved"
           ) {
             redirectPath = `/student/dashboard`;
           }
           if (
-            studentInfo?.data?.pageCount === 3 &&
-            studentInfo?.data?.pageStatus?.status === "notapproved"
+            studentInfo?.data?.studentInformation?.pageCount === 3 &&
+            studentInfo?.data?.studentInformation?.pageStatus?.status === "notapproved"
           ) {
             redirectPath = `/waiting`;
           } else if (
-            studentInfo?.data?.pageCount !== 3 &&
-            studentInfo?.data?.pageStatus?.status === "registering"
+            studentInfo?.data?.studentInformation?.pageCount !== 3 &&
+            studentInfo?.data?.studentInformation?.pageStatus?.status === "registering"
           ) {
             redirectPath = `/student-form/${studentInfo.data.pageCount}`;
           } else {

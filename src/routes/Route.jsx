@@ -104,10 +104,18 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: "/account/profile-edit",
+    element: (
+      // <ProtectedStudent>
+      <StudentProfile></StudentProfile>
+      // </ProtectedStudent>
+    ),
+  },
+  {
     path: "/student/shortlist",
     element: (
       // <ProtectedStudent>
-      <Shortlist></Shortlist>
+      <AgentShortlist></AgentShortlist>
       // </ProtectedStudent>
     ),
   },
@@ -220,9 +228,9 @@ export const router = createBrowserRouter([
   {
     path: "/agent/shortlist",
     element: (
-      <ProtectedAgent>
+      // <ProtectedAgent>
         <AgentShortlist></AgentShortlist>
-      </ProtectedAgent>
+      // </ProtectedAgent>
     ),
     
   },
