@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import { shortlistedData } from "../features/agentSlice";
 import { shortlistAdd } from "../features/agentApi";
 import { toast } from "react-toastify";
+import Sidebar from "../components/dashboardComp/Sidebar";
 
 const AgentShortlist = () => {
+  const role = localStorage.getItem("role")
   const shortlisteduniversity = useSelector((state) => state.agent.shortlisted);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +43,7 @@ const AgentShortlist = () => {
       <Header icon={<FaStar />} customLink="/agent/shortlist" />
       <div className="">
         <span className="fixed overflow-y-scroll scrollbar-hide  bg-white">
-          <AgentSidebar />
+        {role === "3" ? <Sidebar/> :     <AgentSidebar />}
         </span>
       </div>
 
