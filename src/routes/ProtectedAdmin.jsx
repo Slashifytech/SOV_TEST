@@ -4,7 +4,7 @@ import Loader from "../components/Loader";
 import { useSelector } from "react-redux";
 
 const ProtectedAdmin = ({ children }) => {
-  const { getAdminProfile } = useSelector((state) => state.admin);
+  // const { getAdminProfile } = useSelector((state) => state.admin);
   const roleType = localStorage.getItem("role");
   const authToken = localStorage.getItem("userAuthToken");
 
@@ -25,6 +25,7 @@ const ProtectedAdmin = ({ children }) => {
       </div>
     );
   }
+
 
 
   // Check the conditions for navigation

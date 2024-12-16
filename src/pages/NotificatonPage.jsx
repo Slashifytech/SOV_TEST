@@ -145,14 +145,20 @@ const NotificationPage = () => {
           <Link
             onClick={() => handleNotificationClick(notification)}
             to={notification.routePath}
-            state={{ notifyId: notification.pathData?.studentId }}
+            state={{ notifyId: notification.pathData?.studentId, notify: notification?.pathData?.notify }}
             className="text-primary hover:underline text-sm mt-2"
           >
             Click to view{" "}
             {notification.title === "RECEIVED_OFFER_LETTER_AGENT"
               ? "> Go to Received document"
               : notification.title === "VISA_REJECTED_BY_EMBASSY_AGENT" ||
-                notification.title === "VISA_APPROVED_BY_EMBASSY_AGENT"
+                notification.title === "VISA_APPROVED_BY_EMBASSY_AGENT" ||
+                notification.title === "STUDENT_REQUESTED_AMOUNT_WITHDRAWAL"||
+                notification.title === "AGENT_REQUESTED_AMOUNT_WITHDRAWAL"||
+                notification.title === "AGENT_WITHDRAWAL_COMPLETE"
+
+
+
               ? "> Go to Visa Status"
               : null}
           </Link>
@@ -186,7 +192,7 @@ const NotificationPage = () => {
             <AdminSidebar />
           ) : null}
         </span>
-        <div className="ml-[17%] pt-16 pb-5 bg-white border-b-2 border-[#E8E8E8]">
+        <div className="md:ml-[17%] sm:ml-[18%] pt-16 pb-5 bg-white border-b-2 border-[#E8E8E8]">
           <span className="flex items-center pt-2 md:ml-[0%] sm:ml-7">
             <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
               Notifications Center

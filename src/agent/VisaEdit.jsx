@@ -96,7 +96,7 @@ const VisaEdit = () => {
             <span className="fixed overflow-y-scroll scrollbar-hide  bg-white">
               {role === "3" ? (
                 <Sidebar />
-              ) : role == "2" ? (
+              ) : role === "2" ? (
                 <AgentSidebar />
               ) : (
                 <AdminSidebar />
@@ -112,7 +112,7 @@ const VisaEdit = () => {
           <span className="flex items-center justify-between pr-7 md:pt-20 sm:pt-28 md:ml-[16.5%] sm:ml-[20%] ">
             <span>
               <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
-                Visa lodgement form
+                Visa lodgement form  ({applicationDataById?.visa?.country || "NA"})
               </p>
               <p className="mt-1 font-normal text-body mb-5 ml-9">
                 Check your details and make sure everything looks good. It's no
@@ -120,7 +120,7 @@ const VisaEdit = () => {
               </p>
             </span>
             {applicationDataById?.visa?.status === "rejected" &&
-              role !== "0" ||role !== "1" && (
+              ( role !== "0" && role !== "1" ) && (
                 <span
                   onClick={resSubmit}
                   className="px-6 py-2 bg-primary rounded-md text-white cursor-pointer"

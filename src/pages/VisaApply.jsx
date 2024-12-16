@@ -28,6 +28,7 @@ import {
 } from "../features/generalApi";
 import socketServiceInstance from "../services/socket";
 import { v4 as uuidv4 } from "uuid";
+import { createSprinklesEffect } from "../components/SprinklesParty";
 
 // Initial states
 const initialPersonalInfo = {
@@ -286,6 +287,15 @@ const VisaApply = () => {
 
     // toast.info("File marked for deletion.");
   };
+
+   function startSprinkles() {
+      const stopSprinkles = createSprinklesEffect();
+    
+      // Stop the sprinkles after 10 seconds
+      setTimeout(() => {
+        stopSprinkles();
+      }, 12000);
+    }
   const handleSubmit = async () => {
     const validationErrors = validateFields();
   
@@ -367,7 +377,7 @@ const VisaApply = () => {
       // Submit the updated data to the backend
       const res = await visaAdd(updatedStudentDocument);
       setIsConfirmPopUp(true);
-
+      startSprinkles();
       toast.success(res.message || "Data added successfully.");
       if (role === "2") {
         if (socketServiceInstance.isConnected()) {
@@ -376,7 +386,7 @@ const VisaApply = () => {
             title: " AGENT_SUBMITTED_VISA_LODGEMENT",
             message: `${agentData?.companyDetails?.businessName} ${
               agentData?.agId
-            } has submitted the  Visa lodgment application of ${countryName} for the student ${
+            } has submitted the  Visa lodgment application ${res?.data?.applicationId} of ${countryName} for the student ${
               studentData?.studentInformation?.personalInformation?.firstName +
               " " +
               studentData?.studentInformation?.personalInformation?.lastName
@@ -393,33 +403,33 @@ const VisaApply = () => {
           console.error("Socket connection failed, cannot emit notification.");
         }
       }
-      if (role === "3" ) {
-        if (socketServiceInstance.isConnected()) {
-          //from agent to admin
-          const notificationData = {
-            title: " STUDENT_SUBMITTED_VISA_LODGEMENT",
-            message: `${agentData?.companyDetails?.businessName} ${
-              agentData?.agId
-            } has submitted the  Visa lodgment application of ${CountryName}  for the student   ${
-              studentData?.studentInformation?.personalInformation?.firstName +
-              " " +
-              studentData?.studentInformation?.personalInformation?.lastName
-            } ${studentId}`,
+      // if (role === "3" ) {
+      //   if (socketServiceInstance.isConnected()) {
+      //     //from agent to admin
+      //     const notificationData = {
+      //       title: " STUDENT_SUBMITTED_VISA_LODGEMENT",
+      //       message: `${agentData?.companyDetails?.businessName} ${
+      //         agentData?.agId
+      //       } has submitted the  Visa lodgment application ${res?.data?.applicationId} of ${countryName}  for the student   ${
+      //         studentData?.studentInformation?.personalInformation?.firstName +
+      //         " " +
+      //         studentData?.studentInformation?.personalInformation?.lastName
+      //       } ${studentData?.studentInformation?.stId}`,
 
-            path: "/admin/applications-review",
-            pathData: {},
-            recieverId: "",
-          };
+      //       path: "/admin/applications-review",
+      //       pathData: {},
+      //       recieverId: "",
+      //     };
 
-          socketServiceInstance.socket.emit(
-            "NOTIFICATION_STUDENT_TO_ADMIN",
-            notificationData
-          );
-        } else {
-          console.error("Socket connection failed, cannot emit notification.");
-        }
-      }
-      if (role === "3" && res?.statusCode === 200) {
+      //     socketServiceInstance.socket.emit(
+      //       "NOTIFICATION_STUDENT_TO_ADMIN",
+      //       notificationData
+      //     );
+      //   } else {
+      //     console.error("Socket connection failed, cannot emit notification.");
+      //   }
+      // }
+      if (role === "3") {
         if (socketServiceInstance.isConnected()) {
           //from student to admin
           const notificationData = {
@@ -432,7 +442,7 @@ const VisaApply = () => {
                 ?.lastName
             } ${
               studentInfoData?.data?.studentInformation?.stId
-            }  has submitted the course fee application.  `,
+            }  has submitted the course fee application ${response.data.applicationId}.  `,
             agentId: agentData?._id,
             agId: agentData?.agId,
             agentName: agentData?.companyDetails?.businessName,

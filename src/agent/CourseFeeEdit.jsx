@@ -91,7 +91,7 @@ const CourseFeeEdit = () => {
           <Header customLink="/agent/shortlist" />
           <div>
             <span className="fixed overflow-y-scroll scrollbar-hide  bg-white">
-            {role === "3" ? <Sidebar /> : role == "2" ? <AgentSidebar /> : <AdminSidebar/> }
+            {role === "3" ? <Sidebar /> : role === "2" ? <AgentSidebar /> : <AdminSidebar/> }
         
             </span>
           </div>
@@ -111,8 +111,8 @@ const CourseFeeEdit = () => {
                 big deal if it's not - you can always change it.
               </p>
             </span>
-            {applicationDataById?.visa?.status === "rejected" &&
-              role !== "0" ||role !== "1" && (
+            {applicationDataById?.courseFeeApplication?.status === "rejected" &&
+              ( role !== "0" && role !== "1" ) && (
               <span
                 onClick={resSubmit}
                 className="px-6 py-2 bg-primary rounded-md text-white cursor-pointer"

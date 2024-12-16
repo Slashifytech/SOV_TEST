@@ -80,7 +80,12 @@ const AdminLogin = () => {
       setLoading(false);
     }
   };
-
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin(e);
+    }
+  };
+  
 
   return (
     <>
@@ -105,11 +110,11 @@ const AdminLogin = () => {
               Login Your Account
             </p>
 
-            <span className="flex flex-col bg-white rounded-md md:w-[80vh] xl:w-[80vh] sm:w-[30vh] px-10 py-9 md:ml-20 mt-3">
+            <span className="flex flex-col bg-white rounded-md md:w-[50vh] lg:w-[80vh] xl:w-[80vh] sm:w-[30vh] px-10 py-9 md:ml-20 mt-3">
               <p className="text-secondary text-[18px] font-medium">
                 Login account as a admin
               </p>
-
+              <div onKeyDown={handleKeyDown} className="login-container">
               <span className="font-poppins">
                 <div>
                   <div className="mt-6 text-secondary">Email Id</div>
@@ -165,7 +170,7 @@ const AdminLogin = () => {
                     </div>
                   )}
                 </div>
-              </span>
+              </span></div>
             </span>
           </span>
         </div>

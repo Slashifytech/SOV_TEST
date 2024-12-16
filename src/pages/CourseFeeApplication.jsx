@@ -40,6 +40,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Sidebar from "../components/dashboardComp/Sidebar";
 import { v4 as uuidv4 } from "uuid";
 import socketServiceInstance from "../services/socket";
+import { createSprinklesEffect } from "../components/SprinklesParty";
 
 const initialPersonalInfo = {
   fullName: "",
@@ -306,7 +307,14 @@ const courseFeeApplication = () => {
         return updatedState;
       });
     };
-
+  function startSprinkles() {
+      const stopSprinkles = createSprinklesEffect();
+    
+      // Stop the sprinkles after 10 seconds
+      setTimeout(() => {
+        stopSprinkles();
+      }, 12000);
+    }
     const handleSubmit = async (e) => {
       e.preventDefault();
 
@@ -316,6 +324,7 @@ const courseFeeApplication = () => {
         toast.error("Please fill required fields");
         return;
       }
+      setIsSubmitting(true);
 
       // Upload new files to Firebase
       for (const newFile of newFiles) {
@@ -326,7 +335,6 @@ const courseFeeApplication = () => {
           `uploads/courseFeeApplication/${uniqueFileName}`
         );
         try {
-        setIsSubmitting(true);
 
           const snapshot = await uploadBytes(storageRef, file);
           const downloadURL = await getDownloadURL(snapshot.ref);
@@ -388,6 +396,8 @@ const courseFeeApplication = () => {
       try {
         const res = await courseFeeAdd(filteredPayload);
         confirmPopUpOpen();
+        startSprinkles();
+
         toast.success(res?.message || "Form Submitted");
       // Trigger notifications based on role
       if (role === "2" ) {
@@ -397,7 +407,7 @@ const courseFeeApplication = () => {
             title: " AGENT_SUBMITTED_COURSE_FEE",
             message: `${agentData?.companyDetails?.businessName} ${
               agentData?.agId
-            } has submitted the course fee application   ${
+            } has submitted the course fee application ${res?.data?.applicationId}   ${
               applicationDataById?.applicationId
             } for the student ${
               studentData?.studentInformation?.personalInformation?.firstName +
@@ -415,9 +425,12 @@ const courseFeeApplication = () => {
           console.error("Socket connection failed, cannot emit notification.");
         }
       }
-      if (role === "3" ) {
+      if (role === "3") {
+        console.log("Entering")
         if (socketServiceInstance.isConnected()) {
           //from student to admin
+        console.log("entered")
+
           const notificationData = {
             title: " STUDENT_SUBMITTED_COURSE_FEE",
             message: `${
@@ -428,7 +441,7 @@ const courseFeeApplication = () => {
                 ?.lastName
             } ${
               studentInfoData?.data?.studentInformation?.stId
-            }  has submitted the course fee application.  `,
+            }  has submitted the course fee application ${res?.data?.applicationId}.  `,
             agentId: agentData?._id,
             agId: agentData?.agId,
             agentName: agentData?.companyDetails?.businessName,
@@ -443,6 +456,8 @@ const courseFeeApplication = () => {
             "NOTIFICATION_STUDENT_TO_ADMIN",
             notificationData
           );
+        console.log("done")
+
         } else {
           console.error("Socket connection failed, cannot emit notification.");
         }

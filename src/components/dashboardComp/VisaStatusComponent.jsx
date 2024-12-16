@@ -19,6 +19,7 @@ import WithdrwalChoosePop from "./WithdrwalChoosePop";
 import WithDrawalData from "./WithDrawalData";
 import socketServiceInstance from "../../services/socket";
 import { Link, useLocation } from "react-router-dom";
+import { createSprinklesEffect } from "../SprinklesParty";
 
 const VisaStatusComponent = ({ studentId }) => {
   const location = useLocation();
@@ -48,7 +49,7 @@ const VisaStatusComponent = ({ studentId }) => {
   const [isOpenOption, setIsOpenOption] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [showWithdrwalData, setShowWithdrawalData] = useState(false);
-
+console.log(showWithdrawForm)
   const closeOption = () => {
     setIsOpenOption(false);
   };
@@ -75,17 +76,31 @@ const VisaStatusComponent = ({ studentId }) => {
   const handleWithdrawalData = () => {
     setShowWithdrawalData(true);
   };
+  const handleClose = () => {
+    setShowWithdrawForm(false); 
+  };
+
   useEffect(() => {
     dispatch(visaStatusData(studId));
   }, [dispatch, studId]);
 
+  function startSprinkles() {
+    const stopSprinkles = createSprinklesEffect();
+  
+    // Stop the sprinkles after 10 seconds
+    setTimeout(() => {
+      stopSprinkles();
+    }, 12000);
+  }
   const applicationStatus = async (flag, message) => {
     try {
       const payload = { status: flag, message: message };
       const res = await changeVisaStatus(visaStatus?._id, payload);
       dispatch(visaStatusData(studId));
       toast.success(res.message || "Approval Status Updated");
-
+if(flag === "approvedbyembassy"){
+  startSprinkles()
+}
       if (socketServiceInstance.isConnected()) {
         let notificationTitle = "";
         let notificationMessage = "";
@@ -228,16 +243,18 @@ const VisaStatusComponent = ({ studentId }) => {
       ) : (
         ""
       )}
-      {showWithdrwalData ? (
+      {showWithdrwalData   ? (
         <WithDrawalData userId={visaStatus?.userId} />
       ) : showWithdrawForm ? (
         <div className={`${role === "3" ? "mt-20 ml-64" : ""} `}>
-          <VisaWithdrawlForm choosedOption={selectedOption} studId={studId} />
+          <VisaWithdrawlForm choosedOption={selectedOption} studId={studId} handleClose={handleClose}/>
         </div>
       ) : visaStatus?.visa?.status === "underreview" ? (
         <div
           className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-14 mb-20 ${
-              role === "3" ? "mt-60 mx-44 ml-96 " : ""
+            location.pathname === "/student/visa-update"
+              ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+              : null
           } `}
         >
           <img
@@ -250,19 +267,21 @@ const VisaStatusComponent = ({ studentId }) => {
             loading="lazy"
           />
           <p className="text-sidebar text-[22px] font-semibold mt-3 text-center">
-            {role === "0" ||role === "1" ? null : "Your"} Visa lodgement Application is under review.
-         
+            {role === "0" || role === "1" ? null : "Your"} Visa lodgement
+            Application is under review.
           </p>
           <p className="text-sidebar text-[16px] text-center font-light mt-3">
-          { role === "0" || role === "1" ? null :
-            "We’ll notify you with updates. Please ensure all required documents are submitted and check your email for further requests."
-            }
+            {role === "0" || role === "1"
+              ? null
+              : "We’ll notify you with updates. Please ensure all required documents are submitted and check your email for further requests."}
           </p>
         </div>
       ) : visaStatus?.visa?.status === "approved" ? (
         <div
           className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-14 mb-20 ${
-              role === "3" ? "mt-60 mx-44 ml-96 " : ""
+            location.pathname === "/student/visa-update"
+              ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+              : null
           } `}
         >
           <img
@@ -313,7 +332,9 @@ const VisaStatusComponent = ({ studentId }) => {
       ) : visaStatus?.visa?.status === "rejected" ? (
         <div
           className={`bg-white flex flex-col rounded-md justify-center items-center  py-9 font-poppins px-14 mb-20 ${
-            role === "3" ? "mt-60 mx-44 ml-96 " : ""
+            location.pathname === "/student/visa-update"
+              ? "md:mx-20 md:ml-[24%] sm:mx-9 sm:ml-[28%]  mt-36 "
+              : null
           } `}
         >
           {role === "2" || role === "3" ? (
@@ -346,7 +367,9 @@ const VisaStatusComponent = ({ studentId }) => {
           {role === "0" && (
             <div
               className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-14 mb-20 ${
-                  role === "3" ? "mt-60 mx-44 ml-96 " : ""
+                location.pathname === "/student/visa-update"
+                  ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+                  : null
               } `}
             >
               <p className="text-sidebar text-[22px] font-semibold mt-3 text-center">
@@ -377,7 +400,9 @@ const VisaStatusComponent = ({ studentId }) => {
           {role !== "0" && (
             <div
               className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-14 mb-20 ${
-                  role === "3" ? "mt-60 mx-44 ml-96 " : ""
+                location.pathname === "/student/visa-update"
+                  ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+                  : null
               } `}
             >
               <img
@@ -417,7 +442,9 @@ const VisaStatusComponent = ({ studentId }) => {
         <>
           <div
             className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-14 mb-20 ${
-                role === "3" ? "mt-60 mx-44 ml-96 " : ""
+              location.pathname === "/student/visa-update"
+                ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+                : null
             } `}
           >
             <span className="bg-[#F4FBF8] px-6 py-6">
@@ -472,7 +499,9 @@ const VisaStatusComponent = ({ studentId }) => {
         <>
           <div
             className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-14 mb-20 ${
-                role === "3" ? "mt-60 mx-44 ml-96 " : ""
+              location.pathname === "/student/visa-update"
+                ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+                : null
             } `}
           >
             <span className="bg-[#F4FBF8] px-6 py-6">
@@ -487,23 +516,32 @@ const VisaStatusComponent = ({ studentId }) => {
                   loading="lazy"
                 />
                 <p className="text-sidebar text-[22px] font-normal mt-3">
-                  <span className="font-semibold">Congratulations!</span> {role === "0" || role === "1" ? "Visa Application has been accepted from embassy for this student." : "Your Visa Application has been accepted"}
+                  <span className="font-semibold">Congratulations!</span>{" "}
+                  {role === "0" || role === "1"
+                    ? "Visa Application has been accepted from embassy for this student."
+                    : "Your Visa Application has been accepted"}
                 </p>
               </span>
-              {role === "0" || role === "1" ? <p className="text-sidebar mt-3 text-[16px] font-light text-center">Student has uploaded the PPR and Visa Stamp. Review it! </p> :
-              <>
-              <p className="text-sidebar text-[16px] text-start font-light mt-3">
-                Thank you for completing the PPR submission and receiving your
-                visa stamp! <br /> With your visa now in hand, you are one step
-                closer to experiencing new opportunities, broadening your
-                horizons, and embarking on an exciting educational adventure.{" "}
-                <br />{" "}
-                <span className="font-medium">
-                  {" "}
-                  Wishing you all the best as you begin this incredible chapter
-                  of your life.
-                </span>
-              </p></>}
+              {role === "0" || role === "1" ? (
+                <p className="text-sidebar mt-3 text-[16px] font-light text-center">
+                  Student has uploaded the PPR and Visa Stamp. Review it!{" "}
+                </p>
+              ) : (
+                <>
+                  <p className="text-sidebar text-[16px] text-start font-light mt-3">
+                    Thank you for completing the PPR submission and receiving
+                    your visa stamp! <br /> With your visa now in hand, you are
+                    one step closer to experiencing new opportunities,
+                    broadening your horizons, and embarking on an exciting
+                    educational adventure. <br />{" "}
+                    <span className="font-medium">
+                      {" "}
+                      Wishing you all the best as you begin this incredible
+                      chapter of your life.
+                    </span>
+                  </p>
+                </>
+              )}
             </span>
 
             <span className="flex flex-row items-center justify-between w-full mt-6">
@@ -553,7 +591,9 @@ const VisaStatusComponent = ({ studentId }) => {
       ) : visaStatus?.visa?.status === "rejectedbyembassy" ? (
         <div
           className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-14 mb-20 ${
-              location.pathname === "/student/visa-update" ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 ":null
+            location.pathname === "/student/visa-update"
+              ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+              : null
           } `}
         >
           {role !== "0" ? (
@@ -580,18 +620,22 @@ const VisaStatusComponent = ({ studentId }) => {
             </>
           ) : (
             <>
-            <p className="text-sidebar text-[22px] font-semibold mt-3 text-center">
-              Visa Application Rejected
-            </p>
-            <p className="text-sidebar text-[17px] font-normal mt-3 text-center">
-            Visa Application has been rejected from embassy for this student.
-            </p></>
+              <p className="text-sidebar text-[22px] font-semibold mt-3 text-center">
+                Visa Application Rejected
+              </p>
+              <p className="text-sidebar text-[17px] font-normal mt-3 text-center">
+                Visa Application has been rejected from embassy for
+                this student.
+              </p>
+            </>
           )}
         </div>
       ) : visaStatus?.visa?.status === "approvedbyembassy" ? (
         <div
           className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-6 mb-20 ${
-              role === "3" ? "mt-60 mx-44 ml-96 " : ""
+            location.pathname === "/student/visa-update"
+              ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+              : null
           } `}
         >
           {role === "3" || role === "2" ? (
@@ -619,8 +663,7 @@ const VisaStatusComponent = ({ studentId }) => {
                 </p>
               </span>
 
-              <VisaCompleteUpload
-               appId={visaStatus?._id} studId={studId} />
+              <VisaCompleteUpload appId={visaStatus?._id} studId={studId} />
             </>
           ) : (
             <>
@@ -649,7 +692,9 @@ const VisaStatusComponent = ({ studentId }) => {
       ) : (
         <div
           className={`bg-white flex flex-col rounded-md justify-center items-center md:mx-52 py-9 font-poppins px-14 mb-20 ${
-              role === "3" ? "mt-60 mx-44 ml-96 " : ""
+            location.pathname === "/student/visa-update"
+              ? "md:mx-20 md:ml-[28%] sm:mx-9 sm:ml-[28%]  mt-36 "
+              : null
           } `}
         >
           <img

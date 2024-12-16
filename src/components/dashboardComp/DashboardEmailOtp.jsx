@@ -77,7 +77,7 @@ const DashboardEmailOtp = () => {
       if (res.statusCode === 200) {
         setIsOtpConfirmed(true);
         toast.success(
-          res.message ||
+        
             " Your registered email has been successfully updated. Please log in using your new email to regain access to your account"
         );
         if (socketServiceInstance.isConnected()) {
@@ -91,7 +91,11 @@ const DashboardEmailOtp = () => {
         // Redirect to the login page after 3 seconds
         setTimeout(() => {
           navigate("/login");
-          localStorage.removeItem("authToken");
+          localStorage.removeItem("userAuthToken");
+          localStorage.removeItem("role");
+          localStorage.removeItem("student");
+
+
         }, 3000);
       } else {
         throw new Error("Invalid OTP");
@@ -124,7 +128,7 @@ const DashboardEmailOtp = () => {
         </span>
       </div>
       <div className="font-poppins">
-        <span className="flex md:flex-row sm:flex-col items-center bg-white mt-20 md:ml-[16.5%] sm:ml-[22%] pb-6">
+        <span className="flex md:flex-row sm:flex-col items-center bg-white mt-16 md:ml-[16.5%] sm:ml-[10%] pb-6">
           <span>
             <p className="text-[28px] font-bold text-sidebar mt-6 ml-9">
               Change Email Address
@@ -134,7 +138,7 @@ const DashboardEmailOtp = () => {
             </p>
           </span>
         </span>
-        <div className="bg-white py-6 mb-2 md:ml-[31.5%] md:mr-[16%] sm:ml-[26%] mt-12 text-[20px] sm:mx-[22%] text-secondary">
+        <div className="bg-white py-6 mb-2 md:ml-[31.5%] md:mr-[16%] sm:ml-[39%] mt-12 text-[20px] sm:mx-[16%] text-secondary">
           {isOtpConfirmed ? (
             <div className="flex flex-col justify-center w-full items-center">
               <img

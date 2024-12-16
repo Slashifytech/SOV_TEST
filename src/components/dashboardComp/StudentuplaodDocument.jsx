@@ -149,7 +149,7 @@ console.log(studentId)
           <span className="flex flex-row justify-between w-full items-center">
             <span className="flex flex-row items-center">
              
-              <span className="flex flex-row items-center  md:ml-9">
+              <span className="flex flex-row items-center  md:ml-9 ">
                 <CustomInput
                   className="h-11 w-80 rounded-md text-body placeholder:px-3 pl-7 border border-[#E8E8E8] outline-none"
                   type="text"

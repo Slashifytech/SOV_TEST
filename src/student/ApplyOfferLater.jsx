@@ -113,6 +113,7 @@ const initialEducationDetails = {
   markSheetPostGraduate: "",
 };
 import { v4 as uuidv4 } from "uuid";
+import { createSprinklesEffect } from "../components/SprinklesParty";
 const ApplyOfferLater = () => {
   const role = localStorage.getItem("role");
   const studentUserId = useSelector((state) => state.student.studentInfoData);
@@ -409,6 +410,16 @@ const ApplyOfferLater = () => {
     // toast.info("File marked for deletion. Changes will be applied upon saving.");
   };
 
+
+
+  function startSprinkles() {
+    const stopSprinkles = createSprinklesEffect();
+  
+    // Stop the sprinkles after 10 seconds
+    setTimeout(() => {
+      stopSprinkles();
+    }, 12000);
+  }
   const handleSubmit = async () => {
     const validationErrors = validateFields();
 
@@ -538,9 +549,10 @@ const ApplyOfferLater = () => {
       // Submit the form data
 
       const response = await newOfferLetter(updatedOfferLater);
-   
+      // console.log(response)
       // Handle successful submission
       confirmPopUpOpen();
+      startSprinkles();
       toast.success(response.message || "Data added successfully.");
       if (role === "2") {
         if (socketServiceInstance.isConnected()) {
@@ -549,13 +561,13 @@ const ApplyOfferLater = () => {
             title: " AGENT_SUBMITTED_OFFER_LETTER",
             message: `${agentData?.companyDetails?.businessName} ${
               agentData?.agId
-            } has submitted the offer letter application of ${
+            } has submitted the offer letter application ${response.data.applicationId} of ${
               offerLater.preferences.institution
-            } ${offerLater.preferences.country} for the student ${
+            } ${offerLater.preferences.country}  for the student ${
               studentData?.studentInformation?.personalInformation?.firstName +
               " " +
               studentData?.studentInformation?.personalInformation?.lastName
-            } ${studentId}
+            } ${studentData?.studentInformation?.stId}
 `,           path: "/admin/applications-review",
             agentId: agentData?._id,
             agId: agentData?.agId,
@@ -596,7 +608,7 @@ const ApplyOfferLater = () => {
                   ?.lastName || ""
             } ${
               studentInfoData?.data?.studentInformation?.stId || ""
-            } has submitted the offer letter application.`,
+            } has submitted the offer letter application ${response.data.applicationId}.`,
             path: "/admin/applications-review",
             recieverId: "",
           };
@@ -786,7 +798,7 @@ const ApplyOfferLater = () => {
             <span className="font-bold text-[25px] text-secondary  sm:px-6">
               Education Details
             </span>
-            <div className="grid md:grid-cols-3 grid-cols-2 mt-4 md:px-8 sm:px-6 gap-6 text-body">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-2 mt-4 md:px-8 sm:px-6 gap-6 text-body">
               {Object.keys(educationLevels).map((level) => (
                 <span
                   key={level}

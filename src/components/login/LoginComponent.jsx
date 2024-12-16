@@ -171,7 +171,7 @@ const LoginComponent = () => {
             studentInfoData?.data?.studentInformation?.pageStatus?.status ===
               "registering"
           ) {
-            redirectPath = `/student-form/${studentInfoData?.data?.studentInformation?.pageCount}`;
+            redirectPath = `/student-form/1`;
           }
           if (
             studentInfoData?.data?.studentInformation?.pageCount === 3 &&
@@ -202,7 +202,13 @@ const LoginComponent = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin(e);
+    }
+  };
   return (
+    <div onKeyDown={handleKeyDown} className="login-container">
     <span className="font-poppins">
       <div className="flex justify-center space-x-6 my-4">
         <button
@@ -292,7 +298,7 @@ const LoginComponent = () => {
           </Link>
         </p>
       </div>
-    </span>
+    </span></div>
   );
 };
 
